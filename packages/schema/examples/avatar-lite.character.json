@@ -1,0 +1,67 @@
+{
+  "$schema": "../character.schema.json",
+  "schemaVersion": "0.1.0",
+  "character": {
+    "id": "assistant-mascot",
+    "displayName": "Assistant Mascot",
+    "template": "avatar-lite"
+  },
+  "assets": {
+    "primary": "assets/avatar.svg"
+  },
+  "slots": {
+    "head": "head_group",
+    "eye.l": "eye_left",
+    "eye.r": "eye_right",
+    "pupil.l": "pupil_left",
+    "pupil.r": "pupil_right",
+    "brow.l": "brow_left",
+    "brow.r": "brow_right",
+    "mouth": "mouth_group",
+    "neck": "neck_group",
+    "torso": "torso_group"
+  },
+  "behaviors": [
+    {
+      "id": "blink-default",
+      "type": "blink",
+      "targets": ["eye.l", "eye.r"],
+      "params": {
+        "closeMs": 120,
+        "openMs": 140,
+        "minIntervalMs": 2500,
+        "maxIntervalMs": 4500
+      }
+    },
+    {
+      "id": "look-at-default",
+      "type": "look-at",
+      "targets": ["eye.l", "eye.r", "pupil.l", "pupil.r", "head", "neck"],
+      "params": {
+        "radiusX": 0.18,
+        "radiusY": 0.12,
+        "headFollow": 0.35,
+        "smoothing": 0.2
+      }
+    },
+    {
+      "id": "breathing-default",
+      "type": "breathing",
+      "targets": ["torso", "neck", "head"],
+      "params": {
+        "cycleMs": 3200,
+        "amplitudeY": 0.06,
+        "torsoTiltDeg": 1.5
+      }
+    },
+    {
+      "id": "mouth-open-default",
+      "type": "mouth-open",
+      "targets": ["mouth"],
+      "params": {
+        "maxOpen": 0.9,
+        "smoothing": 0.2
+      }
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 320 320"
+  fill="none"
+  aria-labelledby="title desc"
+  role="img"
+>
+  <title id="title">Kugutu Mascot</title>
+  <desc id="desc">Simple layered SVG with slot ids for Kugutu runtime playback.</desc>
+
+  <defs>
+    <linearGradient id="torsoFill" x1="92" y1="170" x2="222" y2="286" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E907F" />
+      <stop offset="1" stop-color="#1A5D68" />
+    </linearGradient>
+    <linearGradient id="headFill" x1="98" y1="58" x2="232" y2="184" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF5DD" />
+      <stop offset="1" stop-color="#FFD8B2" />
+    </linearGradient>
+    <linearGradient id="mouthFill" x1="132" y1="165" x2="189" y2="196" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9D3B4A" />
+      <stop offset="1" stop-color="#662531" />
+    </linearGradient>
+  </defs>
+
+  <g id="torso_group">
+    <path
+      d="M92 282C92 231.19 122.19 190 159.5 190C196.81 190 227 231.19 227 282V292H92V282Z"
+      fill="url(#torsoFill)"
+    />
+    <path
+      d="M124 205C135 198 146 194 159.5 194C173 194 184 198 195 205"
+      stroke="rgba(255,255,255,0.28)"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <g id="neck_group">
+    <rect x="144" y="168" width="31" height="24" rx="12" fill="#F3C197" />
+  </g>
+
+  <g id="head_group">
+    <path
+      d="M160 48C205.84 48 243 83.82 243 128C243 172.18 205.84 208 160 208C114.16 208 77 172.18 77 128C77 83.82 114.16 48 160 48Z"
+      fill="url(#headFill)"
+    />
+    <path
+      d="M105 95C121 67 150 54 178 54C201 54 219 62 230 76C223 55 192 35 159 35C126 35 95 52 86 87C90 88 96 91 105 95Z"
+      fill="#20364B"
+    />
+    <circle cx="128" cy="135" r="6" fill="#FFCF84" opacity="0.55" />
+    <circle cx="194" cy="135" r="6" fill="#FFCF84" opacity="0.55" />
+  </g>
+
+  <g id="brow_left">
+    <path
+      d="M105 103C114 97 125 95 136 96"
+      stroke="#1A2230"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <g id="brow_right">
+    <path
+      d="M182 96C193 95 204 97 213 103"
+      stroke="#1A2230"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <g id="eye_left">
+    <ellipse cx="122" cy="123" rx="18" ry="12" fill="white" />
+  </g>
+
+  <g id="eye_right">
+    <ellipse cx="198" cy="123" rx="18" ry="12" fill="white" />
+  </g>
+
+  <g id="pupil_left">
+    <circle cx="122" cy="123" r="6" fill="#142133" />
+    <circle cx="124" cy="121" r="2" fill="#F2FBFF" />
+  </g>
+
+  <g id="pupil_right">
+    <circle cx="198" cy="123" r="6" fill="#142133" />
+    <circle cx="200" cy="121" r="2" fill="#F2FBFF" />
+  </g>
+
+  <g id="mouth_group">
+    <path
+      d="M132 172C143 181 152 185 160 185C168 185 177 181 188 172C184 188 173 198 160 198C147 198 136 188 132 172Z"
+      fill="url(#mouthFill)"
+    />
+    <path
+      d="M142 179C149 184 154 186 160 186C166 186 171 184 178 179"
+      stroke="#F8A3AE"
+      stroke-width="4"
+      stroke-linecap="round"
+      opacity="0.8"
+    />
+  </g>
+</svg>

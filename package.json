@@ -1,0 +1,22 @@
+{
+  "name": "kugutu",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "check": "npm run build && node dist/scripts/check.js",
+    "check:schema": "npm run check",
+    "validate:example": "npm run build && node dist/packages/cli/src/main.js validate packages/schema/examples/avatar-lite.character.json",
+    "build:example": "npm run build && node dist/packages/cli/src/main.js build packages/schema/examples/avatar-lite.character.json --out /tmp/kugutu-avatar-lite.charbundle.json",
+    "sync:web-basic-demo": "npm run build && node dist/scripts/sync-web-basic-demo.js"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  }
+}

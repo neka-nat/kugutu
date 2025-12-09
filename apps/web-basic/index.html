@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kugutu Web Basic</title>
+    <style>
+      :root {
+        --bg: #f6efe4;
+        --ink: #0f1720;
+        --panel: rgba(255, 251, 245, 0.84);
+        --line: rgba(15, 23, 32, 0.12);
+        --accent: #ff7b54;
+        --accent-2: #2c7a7b;
+        --muted: #5f6770;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Avenir Next", "Trebuchet MS", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(255, 123, 84, 0.26), transparent 28%),
+          radial-gradient(circle at top right, rgba(44, 122, 123, 0.18), transparent 32%),
+          linear-gradient(180deg, #fcf8f1 0%, var(--bg) 100%);
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: minmax(320px, 1.35fr) minmax(280px, 0.9fr);
+        gap: 24px;
+        width: min(1160px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
+      }
+
+      .stage-shell,
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--panel);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 48px rgba(15, 23, 32, 0.08);
+      }
+
+      .stage-shell {
+        overflow: hidden;
+      }
+
+      .hero {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding: 22px 24px 10px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.8rem);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+      }
+
+      .hero p {
+        max-width: 32rem;
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .capsule {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 123, 84, 0.12);
+        color: var(--accent);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .stage {
+        position: relative;
+        min-height: 560px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0)),
+          radial-gradient(circle at 50% 12%, rgba(255, 201, 185, 0.65), transparent 24%),
+          radial-gradient(circle at 50% 78%, rgba(44, 122, 123, 0.18), transparent 34%);
+      }
+
+      .stage::before,
+      .stage::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .stage::before {
+        width: 520px;
+        height: 520px;
+        background: linear-gradient(180deg, rgba(255, 123, 84, 0.16), rgba(255, 123, 84, 0));
+        top: -240px;
+      }
+
+      .stage::after {
+        width: 440px;
+        height: 84px;
+        background: rgba(15, 23, 32, 0.08);
+        bottom: 82px;
+        filter: blur(28px);
+      }
+
+      .character-frame {
+        position: relative;
+        z-index: 1;
+        width: min(92%, 520px);
+      }
+
+      .character-frame svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .hint {
+        position: absolute;
+        left: 24px;
+        bottom: 22px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(15, 23, 32, 0.74);
+        color: white;
+        font-size: 13px;
+        letter-spacing: 0.01em;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      .panel h2 {
+        margin: 0 0 8px;
+        font-size: 1.15rem;
+      }
+
+      .panel p {
+        margin: 0 0 22px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .panel section + section {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button {
+        border: 1px solid rgba(15, 23, 32, 0.1);
+        border-radius: 999px;
+        background: white;
+        color: var(--ink);
+        padding: 10px 14px;
+        font: inherit;
+        cursor: pointer;
+        transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        border-color: rgba(15, 23, 32, 0.24);
+      }
+
+      button[data-emotion] {
+        min-width: 96px;
+      }
+
+      button.active {
+        background: var(--ink);
+        color: white;
+      }
+
+      button.accent {
+        background: var(--accent);
+        color: white;
+        border-color: transparent;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--accent);
+      }
+
+      .meter {
+        display: grid;
+        gap: 6px;
+      }
+
+      .readout {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .code {
+        margin-top: 18px;
+        padding: 14px;
+        border-radius: 18px;
+        background: #101824;
+        color: #eef4f7;
+        font-family: "SFMono-Regular", "Consolas", monospace;
+        font-size: 13px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+      }
+
+      code {
+        padding: 0.1em 0.38em;
+        border-radius: 0.4em;
+        background: rgba(15, 23, 32, 0.06);
+        font-family: "SFMono-Regular", "Consolas", monospace;
+        font-size: 0.92em;
+      }
+
+      @media (max-width: 920px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+
+        .stage {
+          min-height: 480px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="stage-shell">
+        <header class="hero">
+          <div>
+            <p class="eyebrow">Kugutu Runtime Demo</p>
+            <h1>Web Basic</h1>
+            <p>
+              Move the pointer over the stage, trigger a blink, and drive mouth open
+              and emotion from code.
+            </p>
+          </div>
+          <div class="capsule">blink + gaze + breath + mouth</div>
+        </header>
+        <div class="stage" id="stage">
+          <div class="character-frame" id="character-frame"></div>
+          <div class="hint">Move pointer to steer gaze</div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <section>
+          <h2>Emotion</h2>
+          <p>These buttons call the actor API on top of the compiled charbundle.</p>
+          <div class="row" id="emotion-buttons">
+            <button data-emotion="neutral" class="active">Neutral</button>
+            <button data-emotion="happy">Happy</button>
+            <button data-emotion="sad">Sad</button>
+            <button data-emotion="angry">Angry</button>
+            <button data-emotion="surprised">Surprised</button>
+          </div>
+        </section>
+
+        <section>
+          <h2>Speech</h2>
+          <p>The slider maps directly to <code>player.setMouthOpen(value)</code>.</p>
+          <div class="meter">
+            <label for="mouth-open">Mouth Open</label>
+            <input id="mouth-open" type="range" min="0" max="1" step="0.01" value="0.08" />
+            <div class="readout">
+              <span>Closed</span>
+              <span id="mouth-open-value">0.08</span>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Actions</h2>
+          <p><code>playBehavior("blink-default")</code> forces an immediate blink.</p>
+          <div class="row">
+            <button class="accent" id="blink-now">Blink Now</button>
+            <button id="look-center">Center Gaze</button>
+          </div>
+        </section>
+
+        <section>
+          <h2>Bundle</h2>
+          <p>The demo loads a compiled JSON charbundle and a layered SVG asset.</p>
+          <div class="code" id="bundle-readout">Loading...</div>
+        </section>
+      </aside>
+    </main>
+
+    <script type="module" src="../../dist/apps/web-basic/src/main.js"></script>
+  </body>
+</html>

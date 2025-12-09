@@ -1,0 +1,87 @@
+{
+  "$schema": "../charbundle.schema.json",
+  "bundleVersion": "0.1.0",
+  "sourceSchemaVersion": "0.1.0",
+  "character": {
+    "id": "assistant-mascot",
+    "template": "avatar-lite"
+  },
+  "assets": [
+    {
+      "id": "primary-svg",
+      "type": "svg",
+      "path": "assets/avatar.svg"
+    }
+  ],
+  "bindings": {
+    "slots": {
+      "head": "transform.head_group",
+      "brow.l": "transform.brow_left",
+      "brow.r": "transform.brow_right",
+      "eye.l": "transform.eye_left",
+      "eye.r": "transform.eye_right",
+      "pupil.l": "transform.pupil_left",
+      "pupil.r": "transform.pupil_right",
+      "mouth": "transform.mouth_group",
+      "neck": "transform.neck_group",
+      "torso": "transform.torso_group"
+    }
+  },
+  "behaviors": [
+    {
+      "id": "blink-default",
+      "type": "blink",
+      "channels": ["transform.eye_left.scaleY", "transform.eye_right.scaleY"],
+      "params": {
+        "closeMs": 120,
+        "openMs": 140,
+        "minIntervalMs": 2500,
+        "maxIntervalMs": 4500
+      }
+    },
+    {
+      "id": "look-at-default",
+      "type": "look-at",
+      "channels": [
+        "transform.eye_left.translate",
+        "transform.eye_right.translate",
+        "transform.pupil_left.translate",
+        "transform.pupil_right.translate",
+        "transform.head_group.rotate",
+        "transform.neck_group.rotate"
+      ],
+      "params": {
+        "radiusX": 0.18,
+        "radiusY": 0.12,
+        "headFollow": 0.35,
+        "smoothing": 0.2
+      }
+    },
+    {
+      "id": "breathing-default",
+      "type": "breathing",
+      "channels": [
+        "transform.torso_group.translateY",
+        "transform.neck_group.translateY",
+        "transform.head_group.rotate"
+      ],
+      "params": {
+        "cycleMs": 3200,
+        "amplitudeY": 0.06,
+        "torsoTiltDeg": 1.5
+      }
+    },
+    {
+      "id": "mouth-open-default",
+      "type": "mouth-open",
+      "channels": ["transform.mouth_group.scaleY"],
+      "params": {
+        "maxOpen": 0.9,
+        "smoothing": 0.2
+      }
+    }
+  ],
+  "runtime": {
+    "api": ["lookAt", "playBehavior", "setEmotion", "setMouthOpen"]
+  }
+}
