@@ -66,8 +66,8 @@ async function main(): Promise<void> {
   }
 
   const [svgText, bundle] = await Promise.all([
-    fetchText("./public/avatar.svg"),
-    fetchJson<CharBundle>("./public/avatar-lite.charbundle.json"),
+    fetchText(`${import.meta.env.BASE_URL}avatar.svg`),
+    fetchJson<CharBundle>(`${import.meta.env.BASE_URL}avatar-lite.charbundle.json`),
   ]);
 
   frame.innerHTML = svgText;

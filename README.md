@@ -26,7 +26,6 @@ npm run sync:web-basic-demo
 Web demo:
 
 ```bash
-npm run sync:web-basic-demo
-python -m http.server 4173
-# open http://localhost:4173/apps/web-basic/
+npm run dev:web-basic
+# open the Vite URL shown in the terminal
 ```
