@@ -2,104 +2,78 @@
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 320 320"
   fill="none"
-  aria-labelledby="title desc"
   role="img"
 >
-  <title id="title">Kugutu Mascot</title>
-  <desc id="desc">Simple layered SVG with slot ids for Kugutu runtime playback.</desc>
-
-  <defs>
-    <linearGradient id="torsoFill" x1="92" y1="170" x2="222" y2="286" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#1E907F" />
-      <stop offset="1" stop-color="#1A5D68" />
-    </linearGradient>
-    <linearGradient id="headFill" x1="98" y1="58" x2="232" y2="184" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFF5DD" />
-      <stop offset="1" stop-color="#FFD8B2" />
-    </linearGradient>
-    <linearGradient id="mouthFill" x1="132" y1="165" x2="189" y2="196" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#9D3B4A" />
-      <stop offset="1" stop-color="#662531" />
-    </linearGradient>
-  </defs>
-
+  <title>Kugutu Mascot - Refined</title>
+  
+  <!-- Torso -->
   <g id="torso_group">
     <path
-      d="M92 282C92 231.19 122.19 190 159.5 190C196.81 190 227 231.19 227 282V292H92V282Z"
-      fill="url(#torsoFill)"
+      d="M100 260C100 230 130 220 160 220C190 220 220 230 220 260V310H100V260Z"
+      fill="#93C5FD"
     />
     <path
-      d="M124 205C135 198 146 194 159.5 194C173 194 184 198 195 205"
-      stroke="rgba(255,255,255,0.28)"
-      stroke-width="6"
-      stroke-linecap="round"
-    />
-  </g>
-
-  <g id="neck_group">
-    <rect x="144" y="168" width="31" height="24" rx="12" fill="#F3C197" />
-  </g>
-
-  <g id="head_group">
-    <path
-      d="M160 48C205.84 48 243 83.82 243 128C243 172.18 205.84 208 160 208C114.16 208 77 172.18 77 128C77 83.82 114.16 48 160 48Z"
-      fill="url(#headFill)"
-    />
-    <path
-      d="M105 95C121 67 150 54 178 54C201 54 219 62 230 76C223 55 192 35 159 35C126 35 95 52 86 87C90 88 96 91 105 95Z"
-      fill="#20364B"
-    />
-    <circle cx="128" cy="135" r="6" fill="#FFCF84" opacity="0.55" />
-    <circle cx="194" cy="135" r="6" fill="#FFCF84" opacity="0.55" />
-  </g>
-
-  <g id="brow_left">
-    <path
-      d="M105 103C114 97 125 95 136 96"
-      stroke="#1A2230"
-      stroke-width="7"
-      stroke-linecap="round"
-    />
-  </g>
-
-  <g id="brow_right">
-    <path
-      d="M182 96C193 95 204 97 213 103"
-      stroke="#1A2230"
-      stroke-width="7"
-      stroke-linecap="round"
-    />
-  </g>
-
-  <g id="eye_left">
-    <ellipse cx="122" cy="123" rx="18" ry="12" fill="white" />
-  </g>
-
-  <g id="eye_right">
-    <ellipse cx="198" cy="123" rx="18" ry="12" fill="white" />
-  </g>
-
-  <g id="pupil_left">
-    <circle cx="122" cy="123" r="6" fill="#142133" />
-    <circle cx="124" cy="121" r="2" fill="#F2FBFF" />
-  </g>
-
-  <g id="pupil_right">
-    <circle cx="198" cy="123" r="6" fill="#142133" />
-    <circle cx="200" cy="121" r="2" fill="#F2FBFF" />
-  </g>
-
-  <g id="mouth_group">
-    <path
-      d="M132 172C143 181 152 185 160 185C168 185 177 181 188 172C184 188 173 198 160 198C147 198 136 188 132 172Z"
-      fill="url(#mouthFill)"
-    />
-    <path
-      d="M142 179C149 184 154 186 160 186C166 186 171 184 178 179"
-      stroke="#F8A3AE"
+      d="M140 225L160 240L180 225"
+      stroke="white"
       stroke-width="4"
       stroke-linecap="round"
-      opacity="0.8"
+      opacity="0.6"
+    />
+  </g>
+
+  <!-- Neck -->
+  <g id="neck_group">
+    <rect x="148" y="210" width="24" height="20" rx="10" fill="#FFE4E6" />
+  </g>
+
+  <!-- Head Group -->
+  <g id="head_group">
+    <!-- Hair Back -->
+    <path
+      d="M80 140C80 90 110 60 160 60C210 60 240 90 240 140V180H80V140Z"
+      fill="#1E293B"
+    />
+
+    <!-- Skin -->
+    <circle cx="160" cy="140" r="80" fill="#FFF1F2" />
+    
+    <!-- Blush -->
+    <circle cx="110" cy="165" r="8" fill="#FDA4AF" opacity="0.4" />
+    <circle cx="210" cy="165" r="8" fill="#FDA4AF" opacity="0.4" />
+
+    <!-- Brows -->
+    <g id="brow_left">
+      <path d="M115 110C125 105 135 105 145 110" stroke="#334155" stroke-width="4" stroke-linecap="round" />
+    </g>
+    <g id="brow_right">
+      <path d="M175 110C185 105 195 105 205 110" stroke="#334155" stroke-width="4" stroke-linecap="round" />
+    </g>
+
+    <!-- Eyes -->
+    <g id="eye_left">
+      <circle cx="130" cy="140" r="16" fill="white" />
+      <g id="pupil_left">
+        <circle cx="130" cy="140" r="8" fill="#1E293B" />
+        <circle cx="133" cy="137" r="3" fill="white" />
+      </g>
+    </g>
+    <g id="eye_right">
+      <circle cx="190" cy="140" r="16" fill="white" />
+      <g id="pupil_right">
+        <circle cx="190" cy="140" r="8" fill="#1E293B" />
+        <circle cx="193" cy="137" r="3" fill="white" />
+      </g>
+    </g>
+
+    <!-- Mouth -->
+    <g id="mouth_group">
+      <rect x="150" y="175" width="20" height="10" rx="5" fill="#FB7185" />
+    </g>
+
+    <!-- Hair Bangs (Front) -->
+    <path
+      d="M80 140C80 100 110 80 160 80C210 80 240 100 240 140C240 120 220 100 160 100C100 100 80 120 80 140Z"
+      fill="#1E293B"
     />
   </g>
 </svg>

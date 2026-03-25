@@ -1,0 +1,14 @@
+{
+  "name": "@kugutu/react",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "dependencies": {
+    "@kugutu/runtime-web": "workspace:*",
+    "@kugutu/schema": "workspace:*"
+  }
+}

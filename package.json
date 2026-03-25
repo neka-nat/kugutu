@@ -2,23 +2,26 @@
   "name": "kugutu",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "packageManager": "pnpm@9.15.1",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "check": "npm run build && node dist/scripts/check.js",
-    "check:schema": "npm run check",
-    "validate:example": "npm run build && node dist/packages/cli/src/main.js validate packages/schema/examples/avatar-lite.character.json",
-    "build:example": "npm run build && node dist/packages/cli/src/main.js build packages/schema/examples/avatar-lite.character.json --out /tmp/kugutu-avatar-lite.charbundle.json",
-    "sync:web-basic-demo": "npm run build && node dist/scripts/sync-web-basic-demo.js",
-    "dev:web-basic": "npm run sync:web-basic-demo && vite --config apps/web-basic/vite.config.ts",
-    "build:web-basic": "npm run sync:web-basic-demo && vite build --config apps/web-basic/vite.config.ts",
-    "preview:web-basic": "vite preview --config apps/web-basic/vite.config.ts --host 0.0.0.0 --port 4173"
+    "check": "pnpm run build && node dist/scripts/check.js",
+    "check:schema": "pnpm run check",
+    "kugutu": "pnpm run build && node dist/packages/cli/src/main.js",
+    "validate:example": "pnpm run build && node dist/packages/cli/src/main.js validate packages/schema/examples/avatar-lite.character.json",
+    "build:example": "pnpm run build && node dist/packages/cli/src/main.js build packages/schema/examples/avatar-lite.character.json --out /tmp/kugutu-avatar-lite.charbundle.json",
+    "sync:web-basic-demo": "pnpm run build && node dist/scripts/sync-web-basic-demo.js",
+    "dev:web-basic": "pnpm run sync:web-basic-demo && vite --config apps/web-basic/vite.config.ts",
+    "build:web-basic": "pnpm run sync:web-basic-demo && vite build --config apps/web-basic/vite.config.ts",
+    "preview:web-basic": "vite preview --config apps/web-basic/vite.config.ts --host 0.0.0.0 --port 4173",
+    "dev:react-basic": "pnpm run sync:web-basic-demo && vite --config apps/react-basic/vite.config.ts",
+    "build:react-basic": "pnpm run sync:web-basic-demo && vite build --config apps/react-basic/vite.config.ts",
+    "preview:react-basic": "vite preview --config apps/react-basic/vite.config.ts --host 0.0.0.0 --port 4174"
   },
   "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@types/node": "^25.5.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.2"

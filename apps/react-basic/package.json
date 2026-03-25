@@ -1,0 +1,10 @@
+{
+  "name": "@kugutu/react-basic",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@kugutu/react": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
