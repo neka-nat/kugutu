@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   buildCharacterBundle,
+  buildCharacterPack,
   composeCharacterSvg,
 } from "../packages/compiler/src/index.js";
 import type { CharacterDefinition } from "../packages/schema/src/index.js";
@@ -25,6 +26,7 @@ async function main(): Promise<void> {
     "apps/web-basic/source/avatar.base.svg"
   );
   const outputSvgPath = path.join(repoDir, "apps/web-basic/public/avatar.svg");
+  const outputPackPath = path.join(repoDir, "apps/web-basic/public/avatar.charpack");
 
   const [raw, baseSvg] = await Promise.all([
     readFile(sourcePath, "utf8"),
@@ -34,13 +36,17 @@ async function main(): Promise<void> {
   const bundle = buildCharacterBundle(document);
   const serialized = `${JSON.stringify(bundle, null, 2)}\n`;
   const composedSvg = composeCharacterSvg(document, baseSvg);
+  const pack = buildCharacterPack(document, baseSvg);
+  const serializedPack = `${JSON.stringify(pack, null, 2)}\n`;
 
   await Promise.all([
     writeFile(outputPath, serialized, "utf8"),
     writeFile(outputSvgPath, composedSvg, "utf8"),
+    writeFile(outputPackPath, serializedPack, "utf8"),
   ]);
   console.log(`synced: ${outputPath}`);
   console.log(`synced: ${outputSvgPath}`);
+  console.log(`synced: ${outputPackPath}`);
 }
 
 main().catch((error: unknown) => {

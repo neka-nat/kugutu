@@ -8,6 +8,7 @@ const repoRoot = path.resolve(appRoot, "../..");
 
 export default defineConfig({
   root: appRoot,
+  publicDir: path.resolve(repoRoot, "apps/web-basic/public"),
   server: {
     host: "0.0.0.0",
     port: 4175,

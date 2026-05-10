@@ -489,6 +489,11 @@ export function buildCharacterPack(
         type: "svg",
         content: composedSvg,
       },
+      {
+        id: "source-svg",
+        type: "svg",
+        content: svgText,
+      },
     ],
   };
 

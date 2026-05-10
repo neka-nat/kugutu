@@ -434,7 +434,9 @@ export function createCharacterPlayerFromPack(
   container: HTMLElement,
   options: { autoStart?: boolean } = {}
 ): CharacterPlayer {
-  const svgAsset = pack.assets.find((asset) => asset.type === "svg");
+  const svgAsset =
+    pack.assets.find((asset) => asset.id === "primary-svg" && asset.type === "svg") ??
+    pack.assets.find((asset) => asset.type === "svg");
   if (!svgAsset) {
     throw new Error("CharPack does not contain an SVG asset.");
   }

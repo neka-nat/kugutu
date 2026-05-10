@@ -5,15 +5,13 @@ import {
 } from "../../../packages/compiler/src/index.js";
 import { createCharacterPlayer, type CharacterPlayer } from "../../../packages/runtime-web/src/index.js";
 import type {
+  CharPack,
   CharacterDefinition,
   CharacterPartCatalogItem,
   CharacterPartSelection,
   PartSlotKey,
   PartTransform,
 } from "../../../packages/schema/src/index.js";
-
-import baseSvgText from "../../web-basic/source/avatar.base.svg?raw";
-import characterJsonText from "../../web-basic/source/avatar-lite.character.json?raw";
 
 import "./styles.css";
 
@@ -151,12 +149,39 @@ if (!root) {
 }
 const app: HTMLElement = root;
 
-const state: StudioState = {
-  character: JSON.parse(characterJsonText) as CharacterDefinition,
-  activeSlot: "eye",
-  emotion: "neutral",
-  mouthOpen: 0.08,
-};
+async function loadInitialPack(): Promise<CharPack> {
+  const response = await fetch(`${import.meta.env.BASE_URL}avatar.charpack`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch avatar.charpack: ${response.status}`);
+  }
+
+  return response.json() as Promise<CharPack>;
+}
+
+function getInitialCharacter(pack: CharPack): CharacterDefinition {
+  if (!pack.source) {
+    throw new Error("Studio requires a charpack with embedded source data.");
+  }
+
+  return pack.source;
+}
+
+function getInitialBaseSvg(pack: CharPack): string {
+  const sourceSvg =
+    pack.assets.find((asset) => asset.id === "source-svg" && asset.type === "svg") ??
+    pack.assets.find((asset) => asset.id === "primary-svg" && asset.type === "svg") ??
+    pack.assets.find((asset) => asset.type === "svg");
+
+  if (!sourceSvg) {
+    throw new Error("Studio requires a charpack with an SVG asset.");
+  }
+
+  return sourceSvg.content;
+}
+
+let baseSvgText = "";
+
+let state: StudioState;
 
 let player: CharacterPlayer | null = null;
 
@@ -622,4 +647,21 @@ function bindEvents(): void {
   });
 }
 
-renderApp();
+function initializeStudio(initialPack: CharPack): void {
+  baseSvgText = getInitialBaseSvg(initialPack);
+  state = {
+    character: getInitialCharacter(initialPack),
+    activeSlot: "eye",
+    emotion: "neutral",
+    mouthOpen: 0.08,
+  };
+  renderApp();
+}
+
+function renderLoadError(error: unknown): void {
+  const message = error instanceof Error ? error.message : String(error);
+  app.textContent = `Failed to load avatar.charpack: ${message}`;
+  console.error(error);
+}
+
+loadInitialPack().then(initializeStudio).catch(renderLoadError);

@@ -2,6 +2,8 @@
 
 Minimal React demo for `@kugutu/react`.
 
+The demo loads `avatar.charpack` and mounts it through `<KugutuCharacterPack />`.
+
 Run:
 
 ```bash

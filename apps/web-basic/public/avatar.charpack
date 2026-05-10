@@ -1,0 +1,2312 @@
+{
+  "packVersion": "0.1.0",
+  "bundle": {
+    "bundleVersion": "0.1.0",
+    "sourceSchemaVersion": "0.1.0",
+    "character": {
+      "id": "web-basic-mascot",
+      "template": "avatar-lite"
+    },
+    "assets": [
+      {
+        "id": "primary-svg",
+        "type": "svg",
+        "path": "../public/avatar.svg"
+      }
+    ],
+    "bindings": {
+      "slots": {
+        "head": "transform.head_group",
+        "eye.l": "transform.eye_left",
+        "eye.r": "transform.eye_right",
+        "pupil.l": "transform.pupil_left",
+        "pupil.r": "transform.pupil_right",
+        "brow.l": "transform.brow_left",
+        "brow.r": "transform.brow_right",
+        "nose": "transform.nose",
+        "mouth": "transform.mouth_group",
+        "hair.front": "transform.hair_front",
+        "hair.back": "transform.hair_back",
+        "neck": "transform.neck_group",
+        "torso": "transform.torso_group"
+      }
+    },
+    "behaviors": [
+      {
+        "id": "blink-default",
+        "type": "blink",
+        "channels": [
+          "transform.eye_left.scaleY",
+          "transform.eye_right.scaleY"
+        ],
+        "params": {
+          "closeMs": 120,
+          "openMs": 140,
+          "minIntervalMs": 2500,
+          "maxIntervalMs": 4500
+        }
+      },
+      {
+        "id": "look-at-default",
+        "type": "look-at",
+        "channels": [
+          "transform.eye_left.translate",
+          "transform.eye_right.translate",
+          "transform.pupil_left.translate",
+          "transform.pupil_right.translate",
+          "transform.head_group.rotate",
+          "transform.neck_group.rotate"
+        ],
+        "params": {
+          "radiusX": 0.18,
+          "radiusY": 0.12,
+          "headFollow": 0.35,
+          "smoothing": 0.2
+        }
+      },
+      {
+        "id": "breathing-default",
+        "type": "breathing",
+        "channels": [
+          "transform.torso_group.translateY",
+          "transform.neck_group.translateY",
+          "transform.head_group.rotate"
+        ],
+        "params": {
+          "cycleMs": 3200,
+          "amplitudeY": 0.06,
+          "torsoTiltDeg": 1.5
+        }
+      },
+      {
+        "id": "mouth-open-default",
+        "type": "mouth-open",
+        "channels": [
+          "transform.mouth_group.scaleY"
+        ],
+        "params": {
+          "maxOpen": 0.9,
+          "smoothing": 0.2
+        }
+      }
+    ],
+    "runtime": {
+      "api": [
+        "lookAt",
+        "playBehavior",
+        "setEmotion",
+        "setMouthOpen"
+      ]
+    },
+    "parts": {
+      "catalog": {
+        "face-soft-01": {
+          "id": "face-soft-01",
+          "slot": "face",
+          "displayName": "Soft face",
+          "asset": "parts/inline/face-soft-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FFF1F2",
+            "layer": 0
+          }
+        },
+        "face-warm-01": {
+          "id": "face-warm-01",
+          "slot": "face",
+          "displayName": "Puppet guide face",
+          "asset": "parts/inline/face-warm-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F6BE66",
+            "layer": 0
+          }
+        },
+        "face-display-01": {
+          "id": "face-display-01",
+          "slot": "face",
+          "displayName": "Robot display face",
+          "asset": "parts/inline/face-display-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F4E8C6",
+            "layer": 0
+          }
+        },
+        "face-paper-01": {
+          "id": "face-paper-01",
+          "slot": "face",
+          "displayName": "Paper doll face",
+          "asset": "parts/inline/face-paper-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#EBD6AA",
+            "layer": 0
+          }
+        },
+        "face-stage-01": {
+          "id": "face-stage-01",
+          "slot": "face",
+          "displayName": "Stage performer face",
+          "asset": "parts/inline/face-stage-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FFE0C2",
+            "layer": 0
+          }
+        },
+        "face-dev-01": {
+          "id": "face-dev-01",
+          "slot": "face",
+          "displayName": "Developer face",
+          "asset": "parts/inline/face-dev-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F2B767",
+            "layer": 0
+          }
+        },
+        "hair-back-none-01": {
+          "id": "hair-back-none-01",
+          "slot": "hair.back",
+          "displayName": "No back hair",
+          "asset": "parts/inline/hair-back-none-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": -10
+          }
+        },
+        "hair-back-soft-01": {
+          "id": "hair-back-soft-01",
+          "slot": "hair.back",
+          "displayName": "Soft back hair",
+          "asset": "parts/inline/hair-back-soft-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": -10
+          }
+        },
+        "hair-back-puppet-01": {
+          "id": "hair-back-puppet-01",
+          "slot": "hair.back",
+          "displayName": "Puppet back hair",
+          "asset": "parts/inline/hair-back-puppet-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#4C1D95",
+            "layer": -10
+          }
+        },
+        "hair-back-bob-01": {
+          "id": "hair-back-bob-01",
+          "slot": "hair.back",
+          "displayName": "Assistant bob back",
+          "asset": "parts/inline/hair-back-bob-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1D4E89",
+            "layer": -10
+          }
+        },
+        "hair-back-paper-01": {
+          "id": "hair-back-paper-01",
+          "slot": "hair.back",
+          "displayName": "Paper doll back hair",
+          "asset": "parts/inline/hair-back-paper-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#5A4634",
+            "layer": -10
+          }
+        },
+        "hair-back-stage-01": {
+          "id": "hair-back-stage-01",
+          "slot": "hair.back",
+          "displayName": "Stage back hair",
+          "asset": "parts/inline/hair-back-stage-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#111827",
+            "layer": -10
+          }
+        },
+        "hair-back-dev-01": {
+          "id": "hair-back-dev-01",
+          "slot": "hair.back",
+          "displayName": "Developer back hair",
+          "asset": "parts/inline/hair-back-dev-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#0F766E",
+            "layer": -10
+          }
+        },
+        "hair-front-none-01": {
+          "id": "hair-front-none-01",
+          "slot": "hair.front",
+          "displayName": "No front hair",
+          "asset": "parts/inline/hair-front-none-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": 10
+          }
+        },
+        "hair-front-soft-01": {
+          "id": "hair-front-soft-01",
+          "slot": "hair.front",
+          "displayName": "Soft bangs",
+          "asset": "parts/inline/hair-front-soft-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": 10
+          }
+        },
+        "hair-front-puppet-01": {
+          "id": "hair-front-puppet-01",
+          "slot": "hair.front",
+          "displayName": "Puppet spikes",
+          "asset": "parts/inline/hair-front-puppet-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#6D28D9",
+            "layer": 10
+          }
+        },
+        "hair-front-leaf-01": {
+          "id": "hair-front-leaf-01",
+          "slot": "hair.front",
+          "displayName": "Robot leaf tuft",
+          "asset": "parts/inline/hair-front-leaf-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#5AC7A6",
+            "layer": 10
+          }
+        },
+        "hair-front-bob-01": {
+          "id": "hair-front-bob-01",
+          "slot": "hair.front",
+          "displayName": "Assistant bob fringe",
+          "asset": "parts/inline/hair-front-bob-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1D4E89",
+            "layer": 10
+          }
+        },
+        "hair-front-paper-01": {
+          "id": "hair-front-paper-01",
+          "slot": "hair.front",
+          "displayName": "Paper doll fringe",
+          "asset": "parts/inline/hair-front-paper-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#4A3729",
+            "layer": 10
+          }
+        },
+        "hair-front-stage-01": {
+          "id": "hair-front-stage-01",
+          "slot": "hair.front",
+          "displayName": "Stage swoop",
+          "asset": "parts/inline/hair-front-stage-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#111827",
+            "layer": 10
+          }
+        },
+        "hair-front-dev-01": {
+          "id": "hair-front-dev-01",
+          "slot": "hair.front",
+          "displayName": "Developer teal spikes",
+          "asset": "parts/inline/hair-front-dev-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#0F766E",
+            "layer": 10
+          }
+        },
+        "eye-round-01": {
+          "id": "eye-round-01",
+          "slot": "eye",
+          "displayName": "Round eyes",
+          "asset": "parts/inline/eye-round-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#1E293B"
+          }
+        },
+        "eye-puppet-01": {
+          "id": "eye-puppet-01",
+          "slot": "eye",
+          "displayName": "Puppet eyes",
+          "asset": "parts/inline/eye-puppet-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#3A2513"
+          }
+        },
+        "eye-screen-01": {
+          "id": "eye-screen-01",
+          "slot": "eye",
+          "displayName": "Screen eyes",
+          "asset": "parts/inline/eye-screen-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#A7F3D0"
+          }
+        },
+        "eye-paper-01": {
+          "id": "eye-paper-01",
+          "slot": "eye",
+          "displayName": "Paper doll eyes",
+          "asset": "parts/inline/eye-paper-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#4B3828"
+          }
+        },
+        "eye-stage-01": {
+          "id": "eye-stage-01",
+          "slot": "eye",
+          "displayName": "Stage eyes",
+          "asset": "parts/inline/eye-stage-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#4338CA"
+          }
+        },
+        "eye-glasses-01": {
+          "id": "eye-glasses-01",
+          "slot": "eye",
+          "displayName": "Developer glasses",
+          "asset": "parts/inline/eye-glasses-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#0F766E"
+          }
+        },
+        "brow-soft-01": {
+          "id": "brow-soft-01",
+          "slot": "brow",
+          "displayName": "Soft brows",
+          "asset": "parts/inline/brow-soft-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#334155"
+          }
+        },
+        "brow-rounded-01": {
+          "id": "brow-rounded-01",
+          "slot": "brow",
+          "displayName": "Rounded puppet brows",
+          "asset": "parts/inline/brow-rounded-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#3A2513"
+          }
+        },
+        "brow-screen-01": {
+          "id": "brow-screen-01",
+          "slot": "brow",
+          "displayName": "Screen brows",
+          "asset": "parts/inline/brow-screen-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#A7F3D0"
+          }
+        },
+        "brow-paper-01": {
+          "id": "brow-paper-01",
+          "slot": "brow",
+          "displayName": "Paper doll brows",
+          "asset": "parts/inline/brow-paper-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#4B3828"
+          }
+        },
+        "brow-stage-01": {
+          "id": "brow-stage-01",
+          "slot": "brow",
+          "displayName": "Stage brows",
+          "asset": "parts/inline/brow-stage-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#111827"
+          }
+        },
+        "brow-dev-01": {
+          "id": "brow-dev-01",
+          "slot": "brow",
+          "displayName": "Developer brows",
+          "asset": "parts/inline/brow-dev-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#0F766E"
+          }
+        },
+        "nose-dot-01": {
+          "id": "nose-dot-01",
+          "slot": "nose",
+          "displayName": "Subtle nose",
+          "asset": "parts/inline/nose-dot-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FDA4AF"
+          }
+        },
+        "nose-round-01": {
+          "id": "nose-round-01",
+          "slot": "nose",
+          "displayName": "Round puppet nose",
+          "asset": "parts/inline/nose-round-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#D97706"
+          }
+        },
+        "nose-triangle-01": {
+          "id": "nose-triangle-01",
+          "slot": "nose",
+          "displayName": "Paper triangle nose",
+          "asset": "parts/inline/nose-triangle-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#D97706"
+          }
+        },
+        "nose-button-01": {
+          "id": "nose-button-01",
+          "slot": "nose",
+          "displayName": "Stage button nose",
+          "asset": "parts/inline/nose-button-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#D33B2F"
+          }
+        },
+        "nose-soft-01": {
+          "id": "nose-soft-01",
+          "slot": "nose",
+          "displayName": "Developer nose",
+          "asset": "parts/inline/nose-soft-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#B96C37"
+          }
+        },
+        "mouth-smile-01": {
+          "id": "mouth-smile-01",
+          "slot": "mouth",
+          "displayName": "Small smile",
+          "asset": "parts/inline/mouth-smile-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FB7185"
+          }
+        },
+        "mouth-open-01": {
+          "id": "mouth-open-01",
+          "slot": "mouth",
+          "displayName": "Open puppet smile",
+          "asset": "parts/inline/mouth-open-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#3A0B0B"
+          }
+        },
+        "mouth-screen-01": {
+          "id": "mouth-screen-01",
+          "slot": "mouth",
+          "displayName": "Screen smile",
+          "asset": "parts/inline/mouth-screen-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#A7F3D0"
+          }
+        },
+        "mouth-paper-01": {
+          "id": "mouth-paper-01",
+          "slot": "mouth",
+          "displayName": "Paper doll smile",
+          "asset": "parts/inline/mouth-paper-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#4B3828"
+          }
+        },
+        "mouth-stage-01": {
+          "id": "mouth-stage-01",
+          "slot": "mouth",
+          "displayName": "Stage smile",
+          "asset": "parts/inline/mouth-stage-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#411313"
+          }
+        },
+        "mouth-smirk-01": {
+          "id": "mouth-smirk-01",
+          "slot": "mouth",
+          "displayName": "Developer smirk",
+          "asset": "parts/inline/mouth-smirk-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#7C3F1D"
+          }
+        },
+        "outfit-blue-01": {
+          "id": "outfit-blue-01",
+          "slot": "outfit",
+          "displayName": "Blue outfit",
+          "asset": "parts/inline/outfit-blue-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#93C5FD",
+            "layer": 0
+          }
+        },
+        "outfit-hoodie-01": {
+          "id": "outfit-hoodie-01",
+          "slot": "outfit",
+          "displayName": "Puppet hoodie",
+          "asset": "parts/inline/outfit-hoodie-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#6D28D9",
+            "layer": 0
+          }
+        },
+        "outfit-robot-01": {
+          "id": "outfit-robot-01",
+          "slot": "outfit",
+          "displayName": "Robot shell",
+          "asset": "parts/inline/outfit-robot-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F4E8C6",
+            "layer": 0
+          }
+        },
+        "outfit-overalls-01": {
+          "id": "outfit-overalls-01",
+          "slot": "outfit",
+          "displayName": "Paper overalls",
+          "asset": "parts/inline/outfit-overalls-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1F9A8A",
+            "layer": 0
+          }
+        },
+        "outfit-stage-01": {
+          "id": "outfit-stage-01",
+          "slot": "outfit",
+          "displayName": "Stage costume",
+          "asset": "parts/inline/outfit-stage-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#B91C1C",
+            "layer": 0
+          }
+        },
+        "outfit-dev-01": {
+          "id": "outfit-dev-01",
+          "slot": "outfit",
+          "displayName": "Developer hoodie",
+          "asset": "parts/inline/outfit-dev-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#18212F",
+            "layer": 0
+          }
+        }
+      },
+      "selections": {
+        "face": {
+          "partId": "face-dev-01"
+        },
+        "hair.back": {
+          "partId": "hair-back-dev-01"
+        },
+        "hair.front": {
+          "partId": "hair-front-dev-01"
+        },
+        "eye": {
+          "partId": "eye-glasses-01",
+          "transform": {
+            "scale": 1,
+            "spacing": 0
+          }
+        },
+        "brow": {
+          "partId": "brow-dev-01"
+        },
+        "nose": {
+          "partId": "nose-soft-01",
+          "transform": {
+            "scale": 1
+          }
+        },
+        "mouth": {
+          "partId": "mouth-smirk-01",
+          "transform": {
+            "scale": 1
+          }
+        },
+        "outfit": {
+          "partId": "outfit-dev-01"
+        }
+      }
+    }
+  },
+  "assets": [
+    {
+      "id": "primary-svg",
+      "type": "svg",
+      "content": "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  viewBox=\"0 0 320 320\"\n  fill=\"none\"\n  role=\"img\"\n>\n  <style id=\"kugutu-parts-style\">\n[data-kugutu-variant-slot=\"face\"] { display: none; }\n[data-kugutu-variant-slot=\"face\"][data-kugutu-variant-id=\"face-dev-01\"] { display: inline; }\n[data-kugutu-variant-slot=\"hair.back\"] { display: none; }\n[data-kugutu-variant-slot=\"hair.back\"][data-kugutu-variant-id=\"hair-back-dev-01\"] { display: inline; }\n[data-kugutu-variant-slot=\"hair.front\"] { display: none; }\n[data-kugutu-variant-slot=\"hair.front\"][data-kugutu-variant-id=\"hair-front-dev-01\"] { display: inline; }\n[data-kugutu-variant-slot=\"eye\"] { display: none; }\n[data-kugutu-variant-slot=\"eye\"][data-kugutu-variant-id=\"eye-glasses-01\"] { display: inline; }\n[data-kugutu-variant-slot=\"brow\"] { display: none; }\n[data-kugutu-variant-slot=\"brow\"][data-kugutu-variant-id=\"brow-dev-01\"] { display: inline; }\n[data-kugutu-variant-slot=\"nose\"] { display: none; }\n[data-kugutu-variant-slot=\"nose\"][data-kugutu-variant-id=\"nose-soft-01\"] { display: inline; }\n[data-kugutu-variant-slot=\"mouth\"] { display: none; }\n[data-kugutu-variant-slot=\"mouth\"][data-kugutu-variant-id=\"mouth-smirk-01\"] { display: inline; }\n[data-kugutu-variant-slot=\"outfit\"] { display: none; }\n[data-kugutu-variant-slot=\"outfit\"][data-kugutu-variant-id=\"outfit-dev-01\"] { display: inline; }\n</style>\n  <title>Kugutu Mascot Parts Prototype</title>\n\n  <g id=\"torso_group\">\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-blue-01\">\n      <path d=\"M102 260C102 230 130 219 160 219C190 219 218 230 218 260V310H102V260Z\" fill=\"#93C5FD\" />\n      <path d=\"M138 226L160 241L182 226\" stroke=\"#FFFFFF\" stroke-width=\"4\" stroke-linecap=\"round\" opacity=\"0.68\" />\n      <circle cx=\"160\" cy=\"268\" r=\"7\" fill=\"#2563EB\" opacity=\"0.8\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-hoodie-01\">\n      <path d=\"M88 264C88 229 124 212 160 212C196 212 232 229 232 264V310H88V264Z\" fill=\"#6D28D9\" />\n      <path d=\"M116 230C126 216 139 208 160 208C181 208 194 216 204 230C191 224 178 222 160 222C142 222 129 224 116 230Z\" fill=\"#4C1D95\" />\n      <path d=\"M145 229L132 263\" stroke=\"#FDE68A\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      <path d=\"M175 229L188 263\" stroke=\"#FDE68A\" stroke-width=\"5\" stroke-linecap=\"round\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-robot-01\">\n      <path d=\"M100 260C100 228 125 212 160 212C195 212 220 228 220 260V310H100V260Z\" fill=\"#F4E8C6\" />\n      <path d=\"M112 255C112 235 132 224 160 224C188 224 208 235 208 255V310H112V255Z\" fill=\"#E6D7AC\" opacity=\"0.58\" />\n      <circle cx=\"160\" cy=\"263\" r=\"21\" fill=\"#50C7B5\" />\n      <circle cx=\"160\" cy=\"263\" r=\"12\" fill=\"#0F172A\" />\n      <circle cx=\"160\" cy=\"263\" r=\"7\" fill=\"#1F2937\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-overalls-01\">\n      <path d=\"M105 254C105 226 132 218 160 218C188 218 215 226 215 254V310H105V254Z\" fill=\"#F5E7C8\" />\n      <path d=\"M117 240H203V310H117V240Z\" fill=\"#1F9A8A\" />\n      <path d=\"M130 222L143 250\" stroke=\"#D6B36A\" stroke-width=\"8\" stroke-linecap=\"round\" />\n      <path d=\"M190 222L177 250\" stroke=\"#D6B36A\" stroke-width=\"8\" stroke-linecap=\"round\" />\n      <circle cx=\"138\" cy=\"257\" r=\"6\" fill=\"#EAB308\" />\n      <circle cx=\"182\" cy=\"257\" r=\"6\" fill=\"#EAB308\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-stage-01\">\n      <path d=\"M98 260C98 227 128 216 160 216C192 216 222 227 222 260V310H98V260Z\" fill=\"#1E293B\" />\n      <path d=\"M126 221L160 252L194 221L180 310H140L126 221Z\" fill=\"#FFF7ED\" />\n      <path d=\"M123 226H141V310H106V257C106 242 112 232 123 226Z\" fill=\"#B91C1C\" />\n      <path d=\"M197 226H179V310H214V257C214 242 208 232 197 226Z\" fill=\"#B91C1C\" />\n      <path d=\"M139 240C151 230 169 230 181 240C170 250 150 250 139 240Z\" fill=\"#DC2626\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-dev-01\">\n      <path d=\"M90 262C90 226 125 212 160 212C195 212 230 226 230 262V310H90V262Z\" fill=\"#18212F\" />\n      <path d=\"M112 234C124 218 139 212 160 212C181 212 196 218 208 234C194 229 179 226 160 226C141 226 126 229 112 234Z\" fill=\"#111827\" />\n      <path d=\"M130 282H190\" stroke=\"#14B8A6\" stroke-width=\"11\" stroke-linecap=\"round\" opacity=\"0.85\" />\n      <path d=\"M143 231L135 266\" stroke=\"#2DD4BF\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      <path d=\"M177 231L185 266\" stroke=\"#2DD4BF\" stroke-width=\"5\" stroke-linecap=\"round\" />\n    </g>\n  </g>\n\n  <g id=\"neck_group\">\n    <rect x=\"148\" y=\"208\" width=\"24\" height=\"28\" rx=\"10\" fill=\"#C09A5A\" />\n    <rect x=\"149\" y=\"208\" width=\"22\" height=\"20\" rx=\"9\" fill=\"#9A783F\" opacity=\"0.2\" />\n  </g>\n\n  <g id=\"head_group\">\n    <g id=\"hair_back\">\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-none-01\" />\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-soft-01\">\n        <path d=\"M81 141C81 91 111 60 160 60C209 60 239 91 239 141V178H81V141Z\" fill=\"#1E293B\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-puppet-01\">\n        <path d=\"M82 139C82 88 111 55 160 55C209 55 238 88 238 139C228 113 200 92 160 92C120 92 92 113 82 139Z\" fill=\"#4C1D95\" />\n        <path d=\"M98 120C111 79 142 51 180 52C155 72 127 97 98 120Z\" fill=\"#5B21B6\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-bob-01\">\n        <path d=\"M84 135C84 83 116 58 160 58C204 58 236 83 236 135V197C216 212 190 220 160 220C130 220 104 212 84 197V135Z\" fill=\"#1D4E89\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-paper-01\">\n        <path d=\"M83 102L150 59L238 105L221 198L95 198L83 102Z\" fill=\"#5A4634\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-stage-01\">\n        <path d=\"M80 145C83 90 118 62 160 62C209 62 235 94 231 146C213 126 192 115 160 115C128 115 101 126 80 145Z\" fill=\"#111827\" />\n        <path d=\"M216 121C244 137 244 169 219 189C225 165 224 143 216 121Z\" fill=\"#111827\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-dev-01\">\n        <path d=\"M85 138C86 92 116 62 160 62C204 62 234 92 235 138C217 116 191 102 160 102C129 102 103 116 85 138Z\" fill=\"#0F766E\" />\n      </g>\n    </g>\n\n    <g id=\"face_shape\">\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-soft-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"80\" fill=\"#FFF1F2\" />\n        <circle cx=\"92\" cy=\"146\" r=\"17\" fill=\"#FFE4E6\" />\n        <circle cx=\"228\" cy=\"146\" r=\"17\" fill=\"#FFE4E6\" />\n        <circle cx=\"111\" cy=\"166\" r=\"8\" fill=\"#FDA4AF\" opacity=\"0.38\" />\n        <circle cx=\"209\" cy=\"166\" r=\"8\" fill=\"#FDA4AF\" opacity=\"0.38\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-warm-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"78\" fill=\"#F6BE66\" />\n        <circle cx=\"91\" cy=\"147\" r=\"19\" fill=\"#E0A241\" />\n        <circle cx=\"229\" cy=\"147\" r=\"19\" fill=\"#E0A241\" />\n        <circle cx=\"109\" cy=\"164\" r=\"10\" fill=\"#E79546\" opacity=\"0.42\" />\n        <circle cx=\"211\" cy=\"164\" r=\"10\" fill=\"#E79546\" opacity=\"0.42\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-display-01\">\n        <rect x=\"89\" y=\"76\" width=\"142\" height=\"125\" rx=\"34\" fill=\"#F4E8C6\" />\n        <rect x=\"106\" y=\"94\" width=\"108\" height=\"86\" rx=\"22\" fill=\"#0F172A\" />\n        <circle cx=\"91\" cy=\"139\" r=\"22\" fill=\"#62CDBB\" />\n        <circle cx=\"229\" cy=\"139\" r=\"22\" fill=\"#62CDBB\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-paper-01\">\n        <path d=\"M91 104L148 63L230 108L211 203L109 203L91 104Z\" fill=\"#EBD6AA\" />\n        <path d=\"M112 113C128 100 146 94 160 94C182 94 199 104 211 121\" stroke=\"#C9A76B\" stroke-width=\"2\" stroke-dasharray=\"5 5\" opacity=\"0.75\" />\n        <path d=\"M105 142C104 158 106 177 114 190\" stroke=\"#C9A76B\" stroke-width=\"2\" stroke-dasharray=\"5 5\" opacity=\"0.75\" />\n        <path d=\"M215 140C216 158 213 177 206 190\" stroke=\"#C9A76B\" stroke-width=\"2\" stroke-dasharray=\"5 5\" opacity=\"0.75\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-stage-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"76\" fill=\"#FFE0C2\" />\n        <circle cx=\"92\" cy=\"145\" r=\"17\" fill=\"#F6C28F\" />\n        <circle cx=\"228\" cy=\"145\" r=\"17\" fill=\"#F6C28F\" />\n        <circle cx=\"111\" cy=\"165\" r=\"8\" fill=\"#F43F5E\" opacity=\"0.34\" />\n        <circle cx=\"209\" cy=\"165\" r=\"8\" fill=\"#F43F5E\" opacity=\"0.34\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-dev-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"78\" fill=\"#F2B767\" />\n        <circle cx=\"93\" cy=\"147\" r=\"18\" fill=\"#D59443\" />\n        <circle cx=\"227\" cy=\"147\" r=\"18\" fill=\"#D59443\" />\n        <path d=\"M110 178C128 204 192 204 210 178\" stroke=\"#C07A3A\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.24\" />\n      </g>\n    </g>\n\n    <g id=\"brow_left\">\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft-01\">\n        <path d=\"M115 110C125 105 135 105 145 110\" stroke=\"#334155\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-rounded-01\">\n        <path d=\"M112 111C121 101 137 100 147 109\" stroke=\"#3A2513\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-screen-01\">\n        <path d=\"M119 121C126 116 135 116 142 121\" stroke=\"#A7F3D0\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-paper-01\">\n        <path d=\"M116 115L144 109\" stroke=\"#4B3828\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-stage-01\">\n        <path d=\"M113 109C124 100 139 100 149 109\" stroke=\"#111827\" stroke-width=\"6\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-dev-01\">\n        <path d=\"M112 109C122 104 137 104 148 109\" stroke=\"#0F766E\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n    <g id=\"brow_right\">\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft-01\">\n        <path d=\"M175 110C185 105 195 105 205 110\" stroke=\"#334155\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-rounded-01\">\n        <path d=\"M173 109C183 100 199 101 208 111\" stroke=\"#3A2513\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-screen-01\">\n        <path d=\"M178 121C185 116 194 116 201 121\" stroke=\"#A7F3D0\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-paper-01\">\n        <path d=\"M176 109L204 115\" stroke=\"#4B3828\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-stage-01\">\n        <path d=\"M171 109C181 100 196 100 207 109\" stroke=\"#111827\" stroke-width=\"6\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-dev-01\">\n        <path d=\"M172 109C183 104 198 104 208 109\" stroke=\"#0F766E\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n\n    <g id=\"eye_left\">\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round-01\">\n        <circle cx=\"130\" cy=\"140\" r=\"16\" fill=\"#FFFFFF\" />\n        <g id=\"pupil_left\">\n          <circle cx=\"130\" cy=\"140\" r=\"8\" fill=\"#1E293B\" />\n          <circle cx=\"133\" cy=\"137\" r=\"3\" fill=\"#FFFFFF\" />\n        </g>\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-puppet-01\">\n        <circle cx=\"130\" cy=\"139\" r=\"17\" fill=\"#FFFFFF\" />\n        <circle cx=\"130\" cy=\"140\" r=\"10\" fill=\"#3A2513\" />\n        <circle cx=\"126\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-screen-01\">\n        <ellipse cx=\"130\" cy=\"141\" rx=\"10\" ry=\"18\" fill=\"#A7F3D0\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-paper-01\">\n        <ellipse cx=\"130\" cy=\"140\" rx=\"12\" ry=\"17\" fill=\"#F8EFD9\" />\n        <ellipse cx=\"130\" cy=\"141\" rx=\"8\" ry=\"12\" fill=\"#4B3828\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-stage-01\">\n        <ellipse cx=\"130\" cy=\"139\" rx=\"17\" ry=\"19\" fill=\"#FFFFFF\" />\n        <circle cx=\"131\" cy=\"141\" r=\"9\" fill=\"#4338CA\" />\n        <circle cx=\"127\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <path d=\"M114 132C121 124 140 124 147 133\" stroke=\"#111827\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-glasses-01\">\n        <circle cx=\"130\" cy=\"140\" r=\"17\" fill=\"#F8FAFC\" />\n        <circle cx=\"130\" cy=\"140\" r=\"9\" fill=\"#0F766E\" />\n        <circle cx=\"133\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <rect x=\"111\" y=\"122\" width=\"38\" height=\"36\" rx=\"10\" stroke=\"#111827\" stroke-width=\"5\" />\n      </g>\n    </g>\n\n    <g id=\"eye_right\">\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round-01\">\n        <circle cx=\"190\" cy=\"140\" r=\"16\" fill=\"#FFFFFF\" />\n        <g id=\"pupil_right\">\n          <circle cx=\"190\" cy=\"140\" r=\"8\" fill=\"#1E293B\" />\n          <circle cx=\"193\" cy=\"137\" r=\"3\" fill=\"#FFFFFF\" />\n        </g>\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-puppet-01\">\n        <circle cx=\"190\" cy=\"139\" r=\"17\" fill=\"#FFFFFF\" />\n        <circle cx=\"190\" cy=\"140\" r=\"10\" fill=\"#3A2513\" />\n        <circle cx=\"186\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-screen-01\">\n        <ellipse cx=\"190\" cy=\"141\" rx=\"10\" ry=\"18\" fill=\"#A7F3D0\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-paper-01\">\n        <ellipse cx=\"190\" cy=\"140\" rx=\"12\" ry=\"17\" fill=\"#F8EFD9\" />\n        <ellipse cx=\"190\" cy=\"141\" rx=\"8\" ry=\"12\" fill=\"#4B3828\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-stage-01\">\n        <ellipse cx=\"190\" cy=\"139\" rx=\"17\" ry=\"19\" fill=\"#FFFFFF\" />\n        <circle cx=\"191\" cy=\"141\" r=\"9\" fill=\"#4338CA\" />\n        <circle cx=\"187\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <path d=\"M173 133C180 124 199 124 206 132\" stroke=\"#111827\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-glasses-01\">\n        <circle cx=\"190\" cy=\"140\" r=\"17\" fill=\"#F8FAFC\" />\n        <circle cx=\"190\" cy=\"140\" r=\"9\" fill=\"#0F766E\" />\n        <circle cx=\"193\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <rect x=\"171\" y=\"122\" width=\"38\" height=\"36\" rx=\"10\" stroke=\"#111827\" stroke-width=\"5\" />\n      </g>\n    </g>\n\n    <path d=\"M149 140H171\" stroke=\"#111827\" stroke-width=\"4\" stroke-linecap=\"round\" data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-glasses-01\" />\n\n    <g id=\"nose\">\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-dot-01\">\n        <path d=\"M160 150L155 162H164\" stroke=\"#FDA4AF\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-round-01\">\n        <circle cx=\"160\" cy=\"151\" r=\"17\" fill=\"#D97706\" />\n        <circle cx=\"154\" cy=\"145\" r=\"5\" fill=\"#FBBF24\" opacity=\"0.45\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-triangle-01\">\n        <path d=\"M160 142L174 166H146L160 142Z\" fill=\"#D97706\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-button-01\">\n        <circle cx=\"160\" cy=\"153\" r=\"10\" fill=\"#D33B2F\" />\n        <circle cx=\"156\" cy=\"150\" r=\"3\" fill=\"#FCA5A5\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-soft-01\">\n        <path d=\"M162 147C168 157 165 164 156 164\" stroke=\"#B96C37\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n\n    <g id=\"mouth_group\">\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-smile-01\">\n        <rect x=\"150\" y=\"175\" width=\"20\" height=\"10\" rx=\"5\" fill=\"#FB7185\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-open-01\">\n        <path d=\"M126 170C145 197 175 197 194 170C187 209 134 209 126 170Z\" fill=\"#3A0B0B\" />\n        <path d=\"M142 191C153 183 167 183 178 191C169 199 151 199 142 191Z\" fill=\"#EF4444\" />\n        <path d=\"M130 170C147 180 173 180 190 170\" stroke=\"#FFFFFF\" stroke-width=\"4\" stroke-linecap=\"round\" opacity=\"0.82\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-screen-01\">\n        <path d=\"M145 164C153 173 167 173 175 164\" stroke=\"#A7F3D0\" stroke-width=\"8\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-paper-01\">\n        <path d=\"M140 174C151 184 169 184 180 174\" stroke=\"#4B3828\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-stage-01\">\n        <path d=\"M137 171C147 187 174 187 184 171C178 197 143 197 137 171Z\" fill=\"#411313\" />\n        <path d=\"M148 188C156 183 166 183 173 188C166 194 155 194 148 188Z\" fill=\"#F87171\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-smirk-01\">\n        <path d=\"M139 175C153 185 176 185 188 171\" stroke=\"#7C3F1D\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n\n    <g id=\"hair_front\">\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-none-01\" />\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-soft-01\">\n        <path d=\"M80 140C80 100 110 80 160 80C210 80 240 100 240 140C240 120 220 100 160 100C100 100 80 120 80 140Z\" fill=\"#1E293B\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-puppet-01\">\n        <path d=\"M82 132C92 82 119 52 154 49C147 75 122 103 82 132Z\" fill=\"#6D28D9\" />\n        <path d=\"M114 103C121 64 151 39 184 43C176 73 151 94 114 103Z\" fill=\"#5B21B6\" />\n        <path d=\"M151 95C169 55 204 54 231 75C199 89 174 96 151 95Z\" fill=\"#4C1D95\" />\n        <path d=\"M185 100C213 74 244 92 255 119C227 118 204 111 185 100Z\" fill=\"#5B21B6\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-leaf-01\">\n        <path d=\"M116 83C143 47 189 53 218 74C190 84 156 94 116 83Z\" fill=\"#5AC7A6\" />\n        <path d=\"M92 136C107 89 143 71 191 76C162 99 126 121 92 136Z\" fill=\"#43B89C\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-bob-01\">\n        <path d=\"M85 134C90 90 121 66 160 66C199 66 230 90 235 134C211 113 184 101 160 101C136 101 109 113 85 134Z\" fill=\"#1D4E89\" />\n        <path d=\"M172 66C196 76 216 96 232 123C205 115 184 96 172 66Z\" fill=\"#2563A5\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-paper-01\">\n        <path d=\"M88 107L151 59L229 106L213 123C191 104 168 96 144 99C119 102 100 112 88 107Z\" fill=\"#4A3729\" />\n        <path d=\"M177 69L214 91L201 119L177 69Z\" fill=\"#6B523F\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-stage-01\">\n        <path d=\"M84 137C95 83 132 62 160 70C144 96 118 119 84 137Z\" fill=\"#111827\" />\n        <path d=\"M136 91C163 48 207 69 225 99C190 95 162 96 136 91Z\" fill=\"#111827\" />\n        <path d=\"M204 94C232 107 241 133 226 158C222 132 215 111 204 94Z\" fill=\"#111827\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-dev-01\">\n        <path d=\"M83 136C91 91 124 62 160 62C152 84 126 109 83 136Z\" fill=\"#0F766E\" />\n        <path d=\"M120 93C143 55 183 52 212 71C187 83 156 94 120 93Z\" fill=\"#0D9488\" />\n        <path d=\"M176 92C205 72 236 91 247 119C218 116 194 108 176 92Z\" fill=\"#0F766E\" />\n      </g>\n    </g>\n  </g>\n</svg>\n"
+    },
+    {
+      "id": "source-svg",
+      "type": "svg",
+      "content": "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  viewBox=\"0 0 320 320\"\n  fill=\"none\"\n  role=\"img\"\n>\n  <title>Kugutu Mascot Parts Prototype</title>\n\n  <g id=\"torso_group\">\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-blue-01\">\n      <path d=\"M102 260C102 230 130 219 160 219C190 219 218 230 218 260V310H102V260Z\" fill=\"#93C5FD\" />\n      <path d=\"M138 226L160 241L182 226\" stroke=\"#FFFFFF\" stroke-width=\"4\" stroke-linecap=\"round\" opacity=\"0.68\" />\n      <circle cx=\"160\" cy=\"268\" r=\"7\" fill=\"#2563EB\" opacity=\"0.8\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-hoodie-01\">\n      <path d=\"M88 264C88 229 124 212 160 212C196 212 232 229 232 264V310H88V264Z\" fill=\"#6D28D9\" />\n      <path d=\"M116 230C126 216 139 208 160 208C181 208 194 216 204 230C191 224 178 222 160 222C142 222 129 224 116 230Z\" fill=\"#4C1D95\" />\n      <path d=\"M145 229L132 263\" stroke=\"#FDE68A\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      <path d=\"M175 229L188 263\" stroke=\"#FDE68A\" stroke-width=\"5\" stroke-linecap=\"round\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-robot-01\">\n      <path d=\"M100 260C100 228 125 212 160 212C195 212 220 228 220 260V310H100V260Z\" fill=\"#F4E8C6\" />\n      <path d=\"M112 255C112 235 132 224 160 224C188 224 208 235 208 255V310H112V255Z\" fill=\"#E6D7AC\" opacity=\"0.58\" />\n      <circle cx=\"160\" cy=\"263\" r=\"21\" fill=\"#50C7B5\" />\n      <circle cx=\"160\" cy=\"263\" r=\"12\" fill=\"#0F172A\" />\n      <circle cx=\"160\" cy=\"263\" r=\"7\" fill=\"#1F2937\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-overalls-01\">\n      <path d=\"M105 254C105 226 132 218 160 218C188 218 215 226 215 254V310H105V254Z\" fill=\"#F5E7C8\" />\n      <path d=\"M117 240H203V310H117V240Z\" fill=\"#1F9A8A\" />\n      <path d=\"M130 222L143 250\" stroke=\"#D6B36A\" stroke-width=\"8\" stroke-linecap=\"round\" />\n      <path d=\"M190 222L177 250\" stroke=\"#D6B36A\" stroke-width=\"8\" stroke-linecap=\"round\" />\n      <circle cx=\"138\" cy=\"257\" r=\"6\" fill=\"#EAB308\" />\n      <circle cx=\"182\" cy=\"257\" r=\"6\" fill=\"#EAB308\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-stage-01\">\n      <path d=\"M98 260C98 227 128 216 160 216C192 216 222 227 222 260V310H98V260Z\" fill=\"#1E293B\" />\n      <path d=\"M126 221L160 252L194 221L180 310H140L126 221Z\" fill=\"#FFF7ED\" />\n      <path d=\"M123 226H141V310H106V257C106 242 112 232 123 226Z\" fill=\"#B91C1C\" />\n      <path d=\"M197 226H179V310H214V257C214 242 208 232 197 226Z\" fill=\"#B91C1C\" />\n      <path d=\"M139 240C151 230 169 230 181 240C170 250 150 250 139 240Z\" fill=\"#DC2626\" />\n    </g>\n\n    <g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-dev-01\">\n      <path d=\"M90 262C90 226 125 212 160 212C195 212 230 226 230 262V310H90V262Z\" fill=\"#18212F\" />\n      <path d=\"M112 234C124 218 139 212 160 212C181 212 196 218 208 234C194 229 179 226 160 226C141 226 126 229 112 234Z\" fill=\"#111827\" />\n      <path d=\"M130 282H190\" stroke=\"#14B8A6\" stroke-width=\"11\" stroke-linecap=\"round\" opacity=\"0.85\" />\n      <path d=\"M143 231L135 266\" stroke=\"#2DD4BF\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      <path d=\"M177 231L185 266\" stroke=\"#2DD4BF\" stroke-width=\"5\" stroke-linecap=\"round\" />\n    </g>\n  </g>\n\n  <g id=\"neck_group\">\n    <rect x=\"148\" y=\"208\" width=\"24\" height=\"28\" rx=\"10\" fill=\"#C09A5A\" />\n    <rect x=\"149\" y=\"208\" width=\"22\" height=\"20\" rx=\"9\" fill=\"#9A783F\" opacity=\"0.2\" />\n  </g>\n\n  <g id=\"head_group\">\n    <g id=\"hair_back\">\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-none-01\" />\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-soft-01\">\n        <path d=\"M81 141C81 91 111 60 160 60C209 60 239 91 239 141V178H81V141Z\" fill=\"#1E293B\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-puppet-01\">\n        <path d=\"M82 139C82 88 111 55 160 55C209 55 238 88 238 139C228 113 200 92 160 92C120 92 92 113 82 139Z\" fill=\"#4C1D95\" />\n        <path d=\"M98 120C111 79 142 51 180 52C155 72 127 97 98 120Z\" fill=\"#5B21B6\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-bob-01\">\n        <path d=\"M84 135C84 83 116 58 160 58C204 58 236 83 236 135V197C216 212 190 220 160 220C130 220 104 212 84 197V135Z\" fill=\"#1D4E89\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-paper-01\">\n        <path d=\"M83 102L150 59L238 105L221 198L95 198L83 102Z\" fill=\"#5A4634\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-stage-01\">\n        <path d=\"M80 145C83 90 118 62 160 62C209 62 235 94 231 146C213 126 192 115 160 115C128 115 101 126 80 145Z\" fill=\"#111827\" />\n        <path d=\"M216 121C244 137 244 169 219 189C225 165 224 143 216 121Z\" fill=\"#111827\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-dev-01\">\n        <path d=\"M85 138C86 92 116 62 160 62C204 62 234 92 235 138C217 116 191 102 160 102C129 102 103 116 85 138Z\" fill=\"#0F766E\" />\n      </g>\n    </g>\n\n    <g id=\"face_shape\">\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-soft-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"80\" fill=\"#FFF1F2\" />\n        <circle cx=\"92\" cy=\"146\" r=\"17\" fill=\"#FFE4E6\" />\n        <circle cx=\"228\" cy=\"146\" r=\"17\" fill=\"#FFE4E6\" />\n        <circle cx=\"111\" cy=\"166\" r=\"8\" fill=\"#FDA4AF\" opacity=\"0.38\" />\n        <circle cx=\"209\" cy=\"166\" r=\"8\" fill=\"#FDA4AF\" opacity=\"0.38\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-warm-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"78\" fill=\"#F6BE66\" />\n        <circle cx=\"91\" cy=\"147\" r=\"19\" fill=\"#E0A241\" />\n        <circle cx=\"229\" cy=\"147\" r=\"19\" fill=\"#E0A241\" />\n        <circle cx=\"109\" cy=\"164\" r=\"10\" fill=\"#E79546\" opacity=\"0.42\" />\n        <circle cx=\"211\" cy=\"164\" r=\"10\" fill=\"#E79546\" opacity=\"0.42\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-display-01\">\n        <rect x=\"89\" y=\"76\" width=\"142\" height=\"125\" rx=\"34\" fill=\"#F4E8C6\" />\n        <rect x=\"106\" y=\"94\" width=\"108\" height=\"86\" rx=\"22\" fill=\"#0F172A\" />\n        <circle cx=\"91\" cy=\"139\" r=\"22\" fill=\"#62CDBB\" />\n        <circle cx=\"229\" cy=\"139\" r=\"22\" fill=\"#62CDBB\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-paper-01\">\n        <path d=\"M91 104L148 63L230 108L211 203L109 203L91 104Z\" fill=\"#EBD6AA\" />\n        <path d=\"M112 113C128 100 146 94 160 94C182 94 199 104 211 121\" stroke=\"#C9A76B\" stroke-width=\"2\" stroke-dasharray=\"5 5\" opacity=\"0.75\" />\n        <path d=\"M105 142C104 158 106 177 114 190\" stroke=\"#C9A76B\" stroke-width=\"2\" stroke-dasharray=\"5 5\" opacity=\"0.75\" />\n        <path d=\"M215 140C216 158 213 177 206 190\" stroke=\"#C9A76B\" stroke-width=\"2\" stroke-dasharray=\"5 5\" opacity=\"0.75\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-stage-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"76\" fill=\"#FFE0C2\" />\n        <circle cx=\"92\" cy=\"145\" r=\"17\" fill=\"#F6C28F\" />\n        <circle cx=\"228\" cy=\"145\" r=\"17\" fill=\"#F6C28F\" />\n        <circle cx=\"111\" cy=\"165\" r=\"8\" fill=\"#F43F5E\" opacity=\"0.34\" />\n        <circle cx=\"209\" cy=\"165\" r=\"8\" fill=\"#F43F5E\" opacity=\"0.34\" />\n      </g>\n      <g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-dev-01\">\n        <circle cx=\"160\" cy=\"140\" r=\"78\" fill=\"#F2B767\" />\n        <circle cx=\"93\" cy=\"147\" r=\"18\" fill=\"#D59443\" />\n        <circle cx=\"227\" cy=\"147\" r=\"18\" fill=\"#D59443\" />\n        <path d=\"M110 178C128 204 192 204 210 178\" stroke=\"#C07A3A\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.24\" />\n      </g>\n    </g>\n\n    <g id=\"brow_left\">\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft-01\">\n        <path d=\"M115 110C125 105 135 105 145 110\" stroke=\"#334155\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-rounded-01\">\n        <path d=\"M112 111C121 101 137 100 147 109\" stroke=\"#3A2513\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-screen-01\">\n        <path d=\"M119 121C126 116 135 116 142 121\" stroke=\"#A7F3D0\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-paper-01\">\n        <path d=\"M116 115L144 109\" stroke=\"#4B3828\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-stage-01\">\n        <path d=\"M113 109C124 100 139 100 149 109\" stroke=\"#111827\" stroke-width=\"6\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-dev-01\">\n        <path d=\"M112 109C122 104 137 104 148 109\" stroke=\"#0F766E\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n    <g id=\"brow_right\">\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft-01\">\n        <path d=\"M175 110C185 105 195 105 205 110\" stroke=\"#334155\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-rounded-01\">\n        <path d=\"M173 109C183 100 199 101 208 111\" stroke=\"#3A2513\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-screen-01\">\n        <path d=\"M178 121C185 116 194 116 201 121\" stroke=\"#A7F3D0\" stroke-width=\"5\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-paper-01\">\n        <path d=\"M176 109L204 115\" stroke=\"#4B3828\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-stage-01\">\n        <path d=\"M171 109C181 100 196 100 207 109\" stroke=\"#111827\" stroke-width=\"6\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-dev-01\">\n        <path d=\"M172 109C183 104 198 104 208 109\" stroke=\"#0F766E\" stroke-width=\"7\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n\n    <g id=\"eye_left\">\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round-01\">\n        <circle cx=\"130\" cy=\"140\" r=\"16\" fill=\"#FFFFFF\" />\n        <g id=\"pupil_left\">\n          <circle cx=\"130\" cy=\"140\" r=\"8\" fill=\"#1E293B\" />\n          <circle cx=\"133\" cy=\"137\" r=\"3\" fill=\"#FFFFFF\" />\n        </g>\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-puppet-01\">\n        <circle cx=\"130\" cy=\"139\" r=\"17\" fill=\"#FFFFFF\" />\n        <circle cx=\"130\" cy=\"140\" r=\"10\" fill=\"#3A2513\" />\n        <circle cx=\"126\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-screen-01\">\n        <ellipse cx=\"130\" cy=\"141\" rx=\"10\" ry=\"18\" fill=\"#A7F3D0\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-paper-01\">\n        <ellipse cx=\"130\" cy=\"140\" rx=\"12\" ry=\"17\" fill=\"#F8EFD9\" />\n        <ellipse cx=\"130\" cy=\"141\" rx=\"8\" ry=\"12\" fill=\"#4B3828\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-stage-01\">\n        <ellipse cx=\"130\" cy=\"139\" rx=\"17\" ry=\"19\" fill=\"#FFFFFF\" />\n        <circle cx=\"131\" cy=\"141\" r=\"9\" fill=\"#4338CA\" />\n        <circle cx=\"127\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <path d=\"M114 132C121 124 140 124 147 133\" stroke=\"#111827\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-glasses-01\">\n        <circle cx=\"130\" cy=\"140\" r=\"17\" fill=\"#F8FAFC\" />\n        <circle cx=\"130\" cy=\"140\" r=\"9\" fill=\"#0F766E\" />\n        <circle cx=\"133\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <rect x=\"111\" y=\"122\" width=\"38\" height=\"36\" rx=\"10\" stroke=\"#111827\" stroke-width=\"5\" />\n      </g>\n    </g>\n\n    <g id=\"eye_right\">\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round-01\">\n        <circle cx=\"190\" cy=\"140\" r=\"16\" fill=\"#FFFFFF\" />\n        <g id=\"pupil_right\">\n          <circle cx=\"190\" cy=\"140\" r=\"8\" fill=\"#1E293B\" />\n          <circle cx=\"193\" cy=\"137\" r=\"3\" fill=\"#FFFFFF\" />\n        </g>\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-puppet-01\">\n        <circle cx=\"190\" cy=\"139\" r=\"17\" fill=\"#FFFFFF\" />\n        <circle cx=\"190\" cy=\"140\" r=\"10\" fill=\"#3A2513\" />\n        <circle cx=\"186\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-screen-01\">\n        <ellipse cx=\"190\" cy=\"141\" rx=\"10\" ry=\"18\" fill=\"#A7F3D0\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-paper-01\">\n        <ellipse cx=\"190\" cy=\"140\" rx=\"12\" ry=\"17\" fill=\"#F8EFD9\" />\n        <ellipse cx=\"190\" cy=\"141\" rx=\"8\" ry=\"12\" fill=\"#4B3828\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-stage-01\">\n        <ellipse cx=\"190\" cy=\"139\" rx=\"17\" ry=\"19\" fill=\"#FFFFFF\" />\n        <circle cx=\"191\" cy=\"141\" r=\"9\" fill=\"#4338CA\" />\n        <circle cx=\"187\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <path d=\"M173 133C180 124 199 124 206 132\" stroke=\"#111827\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-glasses-01\">\n        <circle cx=\"190\" cy=\"140\" r=\"17\" fill=\"#F8FAFC\" />\n        <circle cx=\"190\" cy=\"140\" r=\"9\" fill=\"#0F766E\" />\n        <circle cx=\"193\" cy=\"136\" r=\"3\" fill=\"#FFFFFF\" />\n        <rect x=\"171\" y=\"122\" width=\"38\" height=\"36\" rx=\"10\" stroke=\"#111827\" stroke-width=\"5\" />\n      </g>\n    </g>\n\n    <path d=\"M149 140H171\" stroke=\"#111827\" stroke-width=\"4\" stroke-linecap=\"round\" data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-glasses-01\" />\n\n    <g id=\"nose\">\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-dot-01\">\n        <path d=\"M160 150L155 162H164\" stroke=\"#FDA4AF\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-round-01\">\n        <circle cx=\"160\" cy=\"151\" r=\"17\" fill=\"#D97706\" />\n        <circle cx=\"154\" cy=\"145\" r=\"5\" fill=\"#FBBF24\" opacity=\"0.45\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-triangle-01\">\n        <path d=\"M160 142L174 166H146L160 142Z\" fill=\"#D97706\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-button-01\">\n        <circle cx=\"160\" cy=\"153\" r=\"10\" fill=\"#D33B2F\" />\n        <circle cx=\"156\" cy=\"150\" r=\"3\" fill=\"#FCA5A5\" />\n      </g>\n      <g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-soft-01\">\n        <path d=\"M162 147C168 157 165 164 156 164\" stroke=\"#B96C37\" stroke-width=\"3\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n\n    <g id=\"mouth_group\">\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-smile-01\">\n        <rect x=\"150\" y=\"175\" width=\"20\" height=\"10\" rx=\"5\" fill=\"#FB7185\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-open-01\">\n        <path d=\"M126 170C145 197 175 197 194 170C187 209 134 209 126 170Z\" fill=\"#3A0B0B\" />\n        <path d=\"M142 191C153 183 167 183 178 191C169 199 151 199 142 191Z\" fill=\"#EF4444\" />\n        <path d=\"M130 170C147 180 173 180 190 170\" stroke=\"#FFFFFF\" stroke-width=\"4\" stroke-linecap=\"round\" opacity=\"0.82\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-screen-01\">\n        <path d=\"M145 164C153 173 167 173 175 164\" stroke=\"#A7F3D0\" stroke-width=\"8\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-paper-01\">\n        <path d=\"M140 174C151 184 169 184 180 174\" stroke=\"#4B3828\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-stage-01\">\n        <path d=\"M137 171C147 187 174 187 184 171C178 197 143 197 137 171Z\" fill=\"#411313\" />\n        <path d=\"M148 188C156 183 166 183 173 188C166 194 155 194 148 188Z\" fill=\"#F87171\" />\n      </g>\n      <g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-smirk-01\">\n        <path d=\"M139 175C153 185 176 185 188 171\" stroke=\"#7C3F1D\" stroke-width=\"4\" stroke-linecap=\"round\" />\n      </g>\n    </g>\n\n    <g id=\"hair_front\">\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-none-01\" />\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-soft-01\">\n        <path d=\"M80 140C80 100 110 80 160 80C210 80 240 100 240 140C240 120 220 100 160 100C100 100 80 120 80 140Z\" fill=\"#1E293B\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-puppet-01\">\n        <path d=\"M82 132C92 82 119 52 154 49C147 75 122 103 82 132Z\" fill=\"#6D28D9\" />\n        <path d=\"M114 103C121 64 151 39 184 43C176 73 151 94 114 103Z\" fill=\"#5B21B6\" />\n        <path d=\"M151 95C169 55 204 54 231 75C199 89 174 96 151 95Z\" fill=\"#4C1D95\" />\n        <path d=\"M185 100C213 74 244 92 255 119C227 118 204 111 185 100Z\" fill=\"#5B21B6\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-leaf-01\">\n        <path d=\"M116 83C143 47 189 53 218 74C190 84 156 94 116 83Z\" fill=\"#5AC7A6\" />\n        <path d=\"M92 136C107 89 143 71 191 76C162 99 126 121 92 136Z\" fill=\"#43B89C\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-bob-01\">\n        <path d=\"M85 134C90 90 121 66 160 66C199 66 230 90 235 134C211 113 184 101 160 101C136 101 109 113 85 134Z\" fill=\"#1D4E89\" />\n        <path d=\"M172 66C196 76 216 96 232 123C205 115 184 96 172 66Z\" fill=\"#2563A5\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-paper-01\">\n        <path d=\"M88 107L151 59L229 106L213 123C191 104 168 96 144 99C119 102 100 112 88 107Z\" fill=\"#4A3729\" />\n        <path d=\"M177 69L214 91L201 119L177 69Z\" fill=\"#6B523F\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-stage-01\">\n        <path d=\"M84 137C95 83 132 62 160 70C144 96 118 119 84 137Z\" fill=\"#111827\" />\n        <path d=\"M136 91C163 48 207 69 225 99C190 95 162 96 136 91Z\" fill=\"#111827\" />\n        <path d=\"M204 94C232 107 241 133 226 158C222 132 215 111 204 94Z\" fill=\"#111827\" />\n      </g>\n      <g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-dev-01\">\n        <path d=\"M83 136C91 91 124 62 160 62C152 84 126 109 83 136Z\" fill=\"#0F766E\" />\n        <path d=\"M120 93C143 55 183 52 212 71C187 83 156 94 120 93Z\" fill=\"#0D9488\" />\n        <path d=\"M176 92C205 72 236 91 247 119C218 116 194 108 176 92Z\" fill=\"#0F766E\" />\n      </g>\n    </g>\n  </g>\n</svg>\n"
+    }
+  ],
+  "source": {
+    "$schema": "../../../packages/schema/character.schema.json",
+    "schemaVersion": "0.1.0",
+    "character": {
+      "id": "web-basic-mascot",
+      "displayName": "Web Basic Mascot",
+      "template": "avatar-lite"
+    },
+    "assets": {
+      "primary": "../public/avatar.svg"
+    },
+    "slots": {
+      "head": "head_group",
+      "eye.l": "eye_left",
+      "eye.r": "eye_right",
+      "pupil.l": "pupil_left",
+      "pupil.r": "pupil_right",
+      "brow.l": "brow_left",
+      "brow.r": "brow_right",
+      "nose": "nose",
+      "mouth": "mouth_group",
+      "hair.front": "hair_front",
+      "hair.back": "hair_back",
+      "neck": "neck_group",
+      "torso": "torso_group"
+    },
+    "parts": {
+      "catalog": {
+        "face-soft-01": {
+          "id": "face-soft-01",
+          "slot": "face",
+          "displayName": "Soft face",
+          "asset": "parts/inline/face-soft-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FFF1F2",
+            "layer": 0
+          }
+        },
+        "face-warm-01": {
+          "id": "face-warm-01",
+          "slot": "face",
+          "displayName": "Puppet guide face",
+          "asset": "parts/inline/face-warm-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F6BE66",
+            "layer": 0
+          }
+        },
+        "face-display-01": {
+          "id": "face-display-01",
+          "slot": "face",
+          "displayName": "Robot display face",
+          "asset": "parts/inline/face-display-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F4E8C6",
+            "layer": 0
+          }
+        },
+        "face-paper-01": {
+          "id": "face-paper-01",
+          "slot": "face",
+          "displayName": "Paper doll face",
+          "asset": "parts/inline/face-paper-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#EBD6AA",
+            "layer": 0
+          }
+        },
+        "face-stage-01": {
+          "id": "face-stage-01",
+          "slot": "face",
+          "displayName": "Stage performer face",
+          "asset": "parts/inline/face-stage-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FFE0C2",
+            "layer": 0
+          }
+        },
+        "face-dev-01": {
+          "id": "face-dev-01",
+          "slot": "face",
+          "displayName": "Developer face",
+          "asset": "parts/inline/face-dev-01.svg",
+          "nodes": {
+            "head": "face_shape"
+          },
+          "editable": [
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F2B767",
+            "layer": 0
+          }
+        },
+        "hair-back-none-01": {
+          "id": "hair-back-none-01",
+          "slot": "hair.back",
+          "displayName": "No back hair",
+          "asset": "parts/inline/hair-back-none-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": -10
+          }
+        },
+        "hair-back-soft-01": {
+          "id": "hair-back-soft-01",
+          "slot": "hair.back",
+          "displayName": "Soft back hair",
+          "asset": "parts/inline/hair-back-soft-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": -10
+          }
+        },
+        "hair-back-puppet-01": {
+          "id": "hair-back-puppet-01",
+          "slot": "hair.back",
+          "displayName": "Puppet back hair",
+          "asset": "parts/inline/hair-back-puppet-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#4C1D95",
+            "layer": -10
+          }
+        },
+        "hair-back-bob-01": {
+          "id": "hair-back-bob-01",
+          "slot": "hair.back",
+          "displayName": "Assistant bob back",
+          "asset": "parts/inline/hair-back-bob-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1D4E89",
+            "layer": -10
+          }
+        },
+        "hair-back-paper-01": {
+          "id": "hair-back-paper-01",
+          "slot": "hair.back",
+          "displayName": "Paper doll back hair",
+          "asset": "parts/inline/hair-back-paper-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#5A4634",
+            "layer": -10
+          }
+        },
+        "hair-back-stage-01": {
+          "id": "hair-back-stage-01",
+          "slot": "hair.back",
+          "displayName": "Stage back hair",
+          "asset": "parts/inline/hair-back-stage-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#111827",
+            "layer": -10
+          }
+        },
+        "hair-back-dev-01": {
+          "id": "hair-back-dev-01",
+          "slot": "hair.back",
+          "displayName": "Developer back hair",
+          "asset": "parts/inline/hair-back-dev-01.svg",
+          "nodes": {
+            "hair.back": "hair_back"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#0F766E",
+            "layer": -10
+          }
+        },
+        "hair-front-none-01": {
+          "id": "hair-front-none-01",
+          "slot": "hair.front",
+          "displayName": "No front hair",
+          "asset": "parts/inline/hair-front-none-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": 10
+          }
+        },
+        "hair-front-soft-01": {
+          "id": "hair-front-soft-01",
+          "slot": "hair.front",
+          "displayName": "Soft bangs",
+          "asset": "parts/inline/hair-front-soft-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1E293B",
+            "layer": 10
+          }
+        },
+        "hair-front-puppet-01": {
+          "id": "hair-front-puppet-01",
+          "slot": "hair.front",
+          "displayName": "Puppet spikes",
+          "asset": "parts/inline/hair-front-puppet-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#6D28D9",
+            "layer": 10
+          }
+        },
+        "hair-front-leaf-01": {
+          "id": "hair-front-leaf-01",
+          "slot": "hair.front",
+          "displayName": "Robot leaf tuft",
+          "asset": "parts/inline/hair-front-leaf-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#5AC7A6",
+            "layer": 10
+          }
+        },
+        "hair-front-bob-01": {
+          "id": "hair-front-bob-01",
+          "slot": "hair.front",
+          "displayName": "Assistant bob fringe",
+          "asset": "parts/inline/hair-front-bob-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1D4E89",
+            "layer": 10
+          }
+        },
+        "hair-front-paper-01": {
+          "id": "hair-front-paper-01",
+          "slot": "hair.front",
+          "displayName": "Paper doll fringe",
+          "asset": "parts/inline/hair-front-paper-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#4A3729",
+            "layer": 10
+          }
+        },
+        "hair-front-stage-01": {
+          "id": "hair-front-stage-01",
+          "slot": "hair.front",
+          "displayName": "Stage swoop",
+          "asset": "parts/inline/hair-front-stage-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#111827",
+            "layer": 10
+          }
+        },
+        "hair-front-dev-01": {
+          "id": "hair-front-dev-01",
+          "slot": "hair.front",
+          "displayName": "Developer teal spikes",
+          "asset": "parts/inline/hair-front-dev-01.svg",
+          "nodes": {
+            "hair.front": "hair_front"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#0F766E",
+            "layer": 10
+          }
+        },
+        "eye-round-01": {
+          "id": "eye-round-01",
+          "slot": "eye",
+          "displayName": "Round eyes",
+          "asset": "parts/inline/eye-round-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#1E293B"
+          }
+        },
+        "eye-puppet-01": {
+          "id": "eye-puppet-01",
+          "slot": "eye",
+          "displayName": "Puppet eyes",
+          "asset": "parts/inline/eye-puppet-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#3A2513"
+          }
+        },
+        "eye-screen-01": {
+          "id": "eye-screen-01",
+          "slot": "eye",
+          "displayName": "Screen eyes",
+          "asset": "parts/inline/eye-screen-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#A7F3D0"
+          }
+        },
+        "eye-paper-01": {
+          "id": "eye-paper-01",
+          "slot": "eye",
+          "displayName": "Paper doll eyes",
+          "asset": "parts/inline/eye-paper-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#4B3828"
+          }
+        },
+        "eye-stage-01": {
+          "id": "eye-stage-01",
+          "slot": "eye",
+          "displayName": "Stage eyes",
+          "asset": "parts/inline/eye-stage-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#4338CA"
+          }
+        },
+        "eye-glasses-01": {
+          "id": "eye-glasses-01",
+          "slot": "eye",
+          "displayName": "Developer glasses",
+          "asset": "parts/inline/eye-glasses-01.svg",
+          "nodes": {
+            "eye.l": "eye_left",
+            "eye.r": "eye_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#0F766E"
+          }
+        },
+        "brow-soft-01": {
+          "id": "brow-soft-01",
+          "slot": "brow",
+          "displayName": "Soft brows",
+          "asset": "parts/inline/brow-soft-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#334155"
+          }
+        },
+        "brow-rounded-01": {
+          "id": "brow-rounded-01",
+          "slot": "brow",
+          "displayName": "Rounded puppet brows",
+          "asset": "parts/inline/brow-rounded-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#3A2513"
+          }
+        },
+        "brow-screen-01": {
+          "id": "brow-screen-01",
+          "slot": "brow",
+          "displayName": "Screen brows",
+          "asset": "parts/inline/brow-screen-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#A7F3D0"
+          }
+        },
+        "brow-paper-01": {
+          "id": "brow-paper-01",
+          "slot": "brow",
+          "displayName": "Paper doll brows",
+          "asset": "parts/inline/brow-paper-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#4B3828"
+          }
+        },
+        "brow-stage-01": {
+          "id": "brow-stage-01",
+          "slot": "brow",
+          "displayName": "Stage brows",
+          "asset": "parts/inline/brow-stage-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#111827"
+          }
+        },
+        "brow-dev-01": {
+          "id": "brow-dev-01",
+          "slot": "brow",
+          "displayName": "Developer brows",
+          "asset": "parts/inline/brow-dev-01.svg",
+          "nodes": {
+            "brow.l": "brow_left",
+            "brow.r": "brow_right"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "spacing",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "spacing": 0,
+            "color": "#0F766E"
+          }
+        },
+        "nose-dot-01": {
+          "id": "nose-dot-01",
+          "slot": "nose",
+          "displayName": "Subtle nose",
+          "asset": "parts/inline/nose-dot-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FDA4AF"
+          }
+        },
+        "nose-round-01": {
+          "id": "nose-round-01",
+          "slot": "nose",
+          "displayName": "Round puppet nose",
+          "asset": "parts/inline/nose-round-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#D97706"
+          }
+        },
+        "nose-triangle-01": {
+          "id": "nose-triangle-01",
+          "slot": "nose",
+          "displayName": "Paper triangle nose",
+          "asset": "parts/inline/nose-triangle-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#D97706"
+          }
+        },
+        "nose-button-01": {
+          "id": "nose-button-01",
+          "slot": "nose",
+          "displayName": "Stage button nose",
+          "asset": "parts/inline/nose-button-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#D33B2F"
+          }
+        },
+        "nose-soft-01": {
+          "id": "nose-soft-01",
+          "slot": "nose",
+          "displayName": "Developer nose",
+          "asset": "parts/inline/nose-soft-01.svg",
+          "nodes": {
+            "nose": "nose"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#B96C37"
+          }
+        },
+        "mouth-smile-01": {
+          "id": "mouth-smile-01",
+          "slot": "mouth",
+          "displayName": "Small smile",
+          "asset": "parts/inline/mouth-smile-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#FB7185"
+          }
+        },
+        "mouth-open-01": {
+          "id": "mouth-open-01",
+          "slot": "mouth",
+          "displayName": "Open puppet smile",
+          "asset": "parts/inline/mouth-open-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#3A0B0B"
+          }
+        },
+        "mouth-screen-01": {
+          "id": "mouth-screen-01",
+          "slot": "mouth",
+          "displayName": "Screen smile",
+          "asset": "parts/inline/mouth-screen-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#A7F3D0"
+          }
+        },
+        "mouth-paper-01": {
+          "id": "mouth-paper-01",
+          "slot": "mouth",
+          "displayName": "Paper doll smile",
+          "asset": "parts/inline/mouth-paper-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#4B3828"
+          }
+        },
+        "mouth-stage-01": {
+          "id": "mouth-stage-01",
+          "slot": "mouth",
+          "displayName": "Stage smile",
+          "asset": "parts/inline/mouth-stage-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#411313"
+          }
+        },
+        "mouth-smirk-01": {
+          "id": "mouth-smirk-01",
+          "slot": "mouth",
+          "displayName": "Developer smirk",
+          "asset": "parts/inline/mouth-smirk-01.svg",
+          "nodes": {
+            "mouth": "mouth_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "rotation",
+            "color"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#7C3F1D"
+          }
+        },
+        "outfit-blue-01": {
+          "id": "outfit-blue-01",
+          "slot": "outfit",
+          "displayName": "Blue outfit",
+          "asset": "parts/inline/outfit-blue-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#93C5FD",
+            "layer": 0
+          }
+        },
+        "outfit-hoodie-01": {
+          "id": "outfit-hoodie-01",
+          "slot": "outfit",
+          "displayName": "Puppet hoodie",
+          "asset": "parts/inline/outfit-hoodie-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#6D28D9",
+            "layer": 0
+          }
+        },
+        "outfit-robot-01": {
+          "id": "outfit-robot-01",
+          "slot": "outfit",
+          "displayName": "Robot shell",
+          "asset": "parts/inline/outfit-robot-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#F4E8C6",
+            "layer": 0
+          }
+        },
+        "outfit-overalls-01": {
+          "id": "outfit-overalls-01",
+          "slot": "outfit",
+          "displayName": "Paper overalls",
+          "asset": "parts/inline/outfit-overalls-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#1F9A8A",
+            "layer": 0
+          }
+        },
+        "outfit-stage-01": {
+          "id": "outfit-stage-01",
+          "slot": "outfit",
+          "displayName": "Stage costume",
+          "asset": "parts/inline/outfit-stage-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#B91C1C",
+            "layer": 0
+          }
+        },
+        "outfit-dev-01": {
+          "id": "outfit-dev-01",
+          "slot": "outfit",
+          "displayName": "Developer hoodie",
+          "asset": "parts/inline/outfit-dev-01.svg",
+          "nodes": {
+            "torso": "torso_group"
+          },
+          "editable": [
+            "position",
+            "scale",
+            "color",
+            "layer"
+          ],
+          "defaults": {
+            "scale": 1,
+            "color": "#18212F",
+            "layer": 0
+          }
+        }
+      },
+      "selections": {
+        "face": {
+          "partId": "face-dev-01"
+        },
+        "hair.back": {
+          "partId": "hair-back-dev-01"
+        },
+        "hair.front": {
+          "partId": "hair-front-dev-01"
+        },
+        "eye": {
+          "partId": "eye-glasses-01",
+          "transform": {
+            "scale": 1,
+            "spacing": 0
+          }
+        },
+        "brow": {
+          "partId": "brow-dev-01"
+        },
+        "nose": {
+          "partId": "nose-soft-01",
+          "transform": {
+            "scale": 1
+          }
+        },
+        "mouth": {
+          "partId": "mouth-smirk-01",
+          "transform": {
+            "scale": 1
+          }
+        },
+        "outfit": {
+          "partId": "outfit-dev-01"
+        }
+      }
+    },
+    "behaviors": [
+      {
+        "id": "blink-default",
+        "type": "blink",
+        "targets": [
+          "eye.l",
+          "eye.r"
+        ],
+        "params": {
+          "closeMs": 120,
+          "openMs": 140,
+          "minIntervalMs": 2500,
+          "maxIntervalMs": 4500
+        }
+      },
+      {
+        "id": "look-at-default",
+        "type": "look-at",
+        "targets": [
+          "eye.l",
+          "eye.r",
+          "pupil.l",
+          "pupil.r",
+          "head",
+          "neck"
+        ],
+        "params": {
+          "radiusX": 0.18,
+          "radiusY": 0.12,
+          "headFollow": 0.35,
+          "smoothing": 0.2
+        }
+      },
+      {
+        "id": "breathing-default",
+        "type": "breathing",
+        "targets": [
+          "torso",
+          "neck",
+          "head"
+        ],
+        "params": {
+          "cycleMs": 3200,
+          "amplitudeY": 0.06,
+          "torsoTiltDeg": 1.5
+        }
+      },
+      {
+        "id": "mouth-open-default",
+        "type": "mouth-open",
+        "targets": [
+          "mouth"
+        ],
+        "params": {
+          "maxOpen": 0.9,
+          "smoothing": 0.2
+        }
+      }
+    ]
+  }
+}

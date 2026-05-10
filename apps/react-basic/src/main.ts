@@ -8,10 +8,10 @@ import {
 import { createRoot } from "react-dom/client";
 
 import {
-  KugutuCharacter,
+  KugutuCharacterPack,
   type CharacterPlayer,
 } from "../../../packages/react/src/index.js";
-import type { CharBundle } from "../../../packages/schema/src/index.js";
+import type { CharPack } from "../../../packages/schema/src/index.js";
 
 import "./styles.css";
 
@@ -37,16 +37,16 @@ function emotionIntensity(emotion: string): number {
 }
 
 function App(): ReactElement {
-  const [bundle, setBundle] = useState<CharBundle | null>(null);
+  const [pack, setPack] = useState<CharPack | null>(null);
   const [player, setPlayer] = useState<CharacterPlayer | null>(null);
   const [emotion, setEmotion] = useState("neutral");
   const [mouthOpen, setMouthOpen] = useState(0.08);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchJson<CharBundle>(`${import.meta.env.BASE_URL}avatar-lite.charbundle.json`)
-      .then((nextBundle) => {
-        setBundle(nextBundle);
+    fetchJson<CharPack>(`${import.meta.env.BASE_URL}avatar.charpack`)
+      .then((nextPack) => {
+        setPack(nextPack);
         setError(null);
       })
       .catch((loadError: unknown) => {
@@ -101,10 +101,9 @@ function App(): ReactElement {
         onPointerMove: handlePointerMove,
         onPointerLeave: handlePointerLeave,
       },
-      bundle
-        ? createElement(KugutuCharacter, {
-            bundle,
-            svgUrl: `${import.meta.env.BASE_URL}avatar.svg`,
+      pack
+        ? createElement(KugutuCharacterPack, {
+            pack,
             className: "character",
             onPlayerReady: setPlayer,
           })

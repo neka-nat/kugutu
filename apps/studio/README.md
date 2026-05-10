@@ -1,6 +1,7 @@
 # `apps/studio`
 
 Local parts-first editor prototype for Kugutu characters.
+The initial editable character is loaded from `apps/web-basic/public/avatar.charpack`.
 
 Current surface:
 

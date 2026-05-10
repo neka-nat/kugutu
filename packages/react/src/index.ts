@@ -9,9 +9,10 @@ import {
 
 import {
   createCharacterPlayer,
+  createCharacterPlayerFromPack,
   type CharacterPlayer,
 } from "../../runtime-web/src/index.js";
-import type { CharBundle } from "../../schema/src/index.js";
+import type { CharBundle, CharPack } from "../../schema/src/index.js";
 
 export type { CharacterPlayer, LookAtPoint } from "../../runtime-web/src/index.js";
 
@@ -19,6 +20,14 @@ export interface KugutuCharacterProps {
   bundle: CharBundle;
   svgText?: string;
   svgUrl?: string;
+  autoStart?: boolean;
+  className?: string;
+  style?: CSSProperties;
+  onPlayerReady?: (player: CharacterPlayer | null) => void;
+}
+
+export interface KugutuCharacterPackProps {
+  pack: CharPack;
   autoStart?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -120,6 +129,56 @@ export function KugutuCharacter({
       }
     };
   }, [autoStart, bundle, loadError, onPlayerReady, resolvedSvgText]);
+
+  return createElement("div", {
+    ref: containerRef,
+    className,
+    style,
+    "data-kugutu-error": loadError ?? undefined,
+  });
+}
+
+export function KugutuCharacterPack({
+  pack,
+  autoStart = true,
+  className,
+  style,
+  onPlayerReady,
+}: KugutuCharacterPackProps): ReactElement {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<CharacterPlayer | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) {
+      return undefined;
+    }
+
+    playerRef.current?.destroy();
+    playerRef.current = null;
+    onPlayerReady?.(null);
+
+    try {
+      const player = createCharacterPlayerFromPack(pack, container, { autoStart });
+      playerRef.current = player;
+      setLoadError(null);
+      onPlayerReady?.(player);
+
+      return () => {
+        onPlayerReady?.(null);
+        player.destroy();
+        if (playerRef.current === player) {
+          playerRef.current = null;
+        }
+      };
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      setLoadError(message);
+      container.textContent = message;
+      return undefined;
+    }
+  }, [autoStart, onPlayerReady, pack]);
 
   return createElement("div", {
     ref: containerRef,
