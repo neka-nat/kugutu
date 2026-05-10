@@ -11,9 +11,25 @@ import {
   CHARBUNDLE_VERSION,
   CHARACTER_SCHEMA_VERSION,
 } from "./bundle.js";
+import {
+  PART_TRANSFORM_NUMBER_DEFINITIONS,
+  isKnownPartEditableProperty,
+  isKnownPartSlot,
+  type PartSlotKey,
+  type PartTransformNumberDefinition,
+  type PartTransformNumberKey,
+} from "./parts.js";
 import { isKnownSlot, type SlotKey } from "./slots.js";
 import { TEMPLATES, isKnownTemplate, type TemplateDefinition, type TemplateKey } from "./templates.js";
-import type { CharacterBehavior, SlotBindingMap, ValidationResult } from "./types.js";
+import type {
+  CharacterBehavior,
+  CharacterPartCatalogItem,
+  CharacterPartSelection,
+  CharacterParts,
+  PartTransform,
+  SlotBindingMap,
+  ValidationResult,
+} from "./types.js";
 
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -84,6 +100,217 @@ function validateBehaviorParams(
       (behavior.params as Partial<BlinkParams>).minIntervalMs!
   ) {
     errors.push(`${path}.params.maxIntervalMs must be greater than or equal to minIntervalMs`);
+  }
+}
+
+function validatePartTransformNumber(
+  value: unknown,
+  definition: PartTransformNumberDefinition,
+  path: string,
+  errors: string[]
+): void {
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    errors.push(`${path} must be a number`);
+    return;
+  }
+
+  if (definition.type === "integer" && !Number.isInteger(value)) {
+    errors.push(`${path} must be an integer`);
+  }
+
+  if (value < definition.min || value > definition.max) {
+    errors.push(`${path} must be between ${definition.min} and ${definition.max}`);
+  }
+}
+
+function validatePartTransform(
+  transformValue: unknown,
+  path: string,
+  errors: string[]
+): transformValue is PartTransform {
+  if (!isPlainObject(transformValue)) {
+    errors.push(`${path} must be an object`);
+    return false;
+  }
+
+  for (const [name, value] of Object.entries(transformValue)) {
+    const definition =
+      PART_TRANSFORM_NUMBER_DEFINITIONS[name as PartTransformNumberKey];
+
+    if (definition) {
+      validatePartTransformNumber(value, definition, `${path}.${name}`, errors);
+      continue;
+    }
+
+    if (name === "color") {
+      if (!isNonEmptyString(value)) {
+        errors.push(`${path}.color must be a non-empty string`);
+      }
+      continue;
+    }
+
+    errors.push(`${path}.${name} is not a supported part transform property`);
+  }
+
+  return true;
+}
+
+function validatePartCatalogItem(
+  itemValue: unknown,
+  partId: string,
+  path: string,
+  errors: string[]
+): CharacterPartCatalogItem | undefined {
+  if (!isPlainObject(itemValue)) {
+    errors.push(`${path} must be an object`);
+    return undefined;
+  }
+
+  const item = itemValue as unknown as CharacterPartCatalogItem;
+
+  validateIdentifier(item.id, `${path}.id`, errors);
+
+  if (item.id !== partId) {
+    errors.push(`${path}.id must match its catalog key`);
+  }
+
+  if (!isKnownPartSlot(String(item.slot))) {
+    errors.push(`${path}.slot must be a supported part slot`);
+  }
+
+  if (
+    item.displayName !== undefined &&
+    !isNonEmptyString(item.displayName)
+  ) {
+    errors.push(`${path}.displayName must be a non-empty string`);
+  }
+
+  if (!isNonEmptyString(item.asset)) {
+    errors.push(`${path}.asset must be a non-empty string`);
+  }
+
+  if (item.nodes !== undefined) {
+    if (!isPlainObject(item.nodes)) {
+      errors.push(`${path}.nodes must be an object`);
+    } else {
+      for (const [slotKey, nodeId] of Object.entries(item.nodes)) {
+        if (!isKnownSlot(slotKey)) {
+          errors.push(`${path}.nodes.${slotKey} is not a supported slot key`);
+        }
+
+        if (!isNonEmptyString(nodeId)) {
+          errors.push(`${path}.nodes.${slotKey} must be a non-empty string`);
+        }
+      }
+    }
+  }
+
+  if (item.editable !== undefined) {
+    if (!Array.isArray(item.editable)) {
+      errors.push(`${path}.editable must be an array`);
+    } else {
+      const seen = new Set<string>();
+
+      for (let index = 0; index < item.editable.length; index += 1) {
+        const property = item.editable[index];
+        const propertyPath = `${path}.editable[${index}]`;
+
+        if (!isNonEmptyString(property)) {
+          errors.push(`${propertyPath} must be a string`);
+          continue;
+        }
+
+        if (!isKnownPartEditableProperty(property)) {
+          errors.push(`${propertyPath} is not a supported editable property`);
+        }
+
+        if (seen.has(property)) {
+          errors.push(`${propertyPath} must not be duplicated`);
+        }
+        seen.add(property);
+      }
+    }
+  }
+
+  if (item.defaults !== undefined) {
+    validatePartTransform(item.defaults, `${path}.defaults`, errors);
+  }
+
+  return item;
+}
+
+function validatePartSelection(
+  selectionValue: unknown,
+  partSlot: PartSlotKey,
+  catalog: Record<string, CharacterPartCatalogItem>,
+  path: string,
+  errors: string[]
+): void {
+  if (!isPlainObject(selectionValue)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  const selection = selectionValue as unknown as CharacterPartSelection;
+
+  validateIdentifier(selection.partId, `${path}.partId`, errors);
+
+  const catalogItem = catalog[selection.partId];
+  if (!catalogItem) {
+    errors.push(`${path}.partId must reference parts.catalog.${selection.partId}`);
+  } else if (catalogItem.slot !== partSlot) {
+    errors.push(`${path}.partId must reference a ${partSlot} part`);
+  }
+
+  if (selection.transform !== undefined) {
+    validatePartTransform(selection.transform, `${path}.transform`, errors);
+  }
+}
+
+function validateParts(partsValue: unknown, path: string, errors: string[]): void {
+  if (!isPlainObject(partsValue)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  const parts = partsValue as unknown as CharacterParts;
+  const catalog: Record<string, CharacterPartCatalogItem> = {};
+
+  if (!isPlainObject(parts.catalog)) {
+    errors.push(`${path}.catalog must be an object`);
+  } else {
+    for (const [partId, itemValue] of Object.entries(parts.catalog)) {
+      validateIdentifier(partId, `${path}.catalog.${partId}`, errors);
+      const item = validatePartCatalogItem(
+        itemValue,
+        partId,
+        `${path}.catalog.${partId}`,
+        errors
+      );
+
+      if (item && isKnownPartSlot(String(item.slot))) {
+        catalog[partId] = item;
+      }
+    }
+  }
+
+  if (!isPlainObject(parts.selections)) {
+    errors.push(`${path}.selections must be an object`);
+  } else {
+    for (const [slotKey, selectionValue] of Object.entries(parts.selections)) {
+      if (!isKnownPartSlot(slotKey)) {
+        errors.push(`${path}.selections.${slotKey} is not a supported part slot`);
+        continue;
+      }
+
+      validatePartSelection(
+        selectionValue,
+        slotKey,
+        catalog,
+        `${path}.selections.${slotKey}`,
+        errors
+      );
+    }
   }
 }
 
@@ -215,6 +442,10 @@ export function validateCharacterDefinition(document: unknown): ValidationResult
     errors.push(`assets.primary must be a non-empty string`);
   }
 
+  if (document.parts !== undefined) {
+    validateParts(document.parts, "parts", errors);
+  }
+
   let hasValidSlots = false;
 
   if (
@@ -302,6 +533,10 @@ export function validateCharBundle(bundle: unknown): ValidationResult {
         errors.push(`bindings.slots.${slotKey} must be a non-empty string`);
       }
     }
+  }
+
+  if (bundle.parts !== undefined) {
+    validateParts(bundle.parts, "parts", errors);
   }
 
   if (!Array.isArray(bundle.behaviors)) {

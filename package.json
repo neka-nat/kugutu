@@ -17,7 +17,10 @@
     "preview:web-basic": "vite preview --config apps/web-basic/vite.config.ts --host 0.0.0.0 --port 4173",
     "dev:react-basic": "pnpm run sync:web-basic-demo && vite --config apps/react-basic/vite.config.ts",
     "build:react-basic": "pnpm run sync:web-basic-demo && vite build --config apps/react-basic/vite.config.ts",
-    "preview:react-basic": "vite preview --config apps/react-basic/vite.config.ts --host 0.0.0.0 --port 4174"
+    "preview:react-basic": "vite preview --config apps/react-basic/vite.config.ts --host 0.0.0.0 --port 4174",
+    "dev:studio": "vite --config apps/studio/vite.config.ts",
+    "build:studio": "vite build --config apps/studio/vite.config.ts",
+    "preview:studio": "vite preview --config apps/studio/vite.config.ts --host 0.0.0.0 --port 4175"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

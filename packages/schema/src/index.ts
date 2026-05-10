@@ -27,6 +27,19 @@ export {
   type SlotSide,
 } from "./slots.js";
 export {
+  PART_EDITABLE_PROPERTIES,
+  PART_SLOT_DEFINITIONS,
+  PART_SLOT_KEYS,
+  PART_TRANSFORM_NUMBER_DEFINITIONS,
+  isKnownPartEditableProperty,
+  isKnownPartSlot,
+  type PartEditableProperty,
+  type PartSlotDefinition,
+  type PartSlotKey,
+  type PartTransformNumberDefinition,
+  type PartTransformNumberKey,
+} from "./parts.js";
+export {
   TEMPLATE_KEYS,
   TEMPLATES,
   isKnownTemplate,
@@ -46,7 +59,11 @@ export type {
   CharacterBehavior,
   CharacterDefinition,
   CharacterMetadata,
+  CharacterPartCatalogItem,
+  CharacterPartSelection,
+  CharacterParts,
   CompiledBehavior,
+  PartTransform,
   SlotBindingMap,
   ValidationResult,
 } from "./types.js";

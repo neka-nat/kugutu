@@ -51,10 +51,25 @@ export const SLOT_DEFINITIONS = {
     side: "right",
     description: "Right brow control.",
   },
+  nose: {
+    group: SLOT_GROUPS.face,
+    side: "center",
+    description: "Nose control.",
+  },
   mouth: {
     group: SLOT_GROUPS.face,
     side: "center",
     description: "Primary mouth control.",
+  },
+  "hair.front": {
+    group: SLOT_GROUPS.face,
+    side: "center",
+    description: "Front hair control.",
+  },
+  "hair.back": {
+    group: SLOT_GROUPS.face,
+    side: "center",
+    description: "Back hair control.",
   },
   jaw: {
     group: SLOT_GROUPS.face,

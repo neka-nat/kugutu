@@ -71,6 +71,9 @@
         }
       }
     },
+    "parts": {
+      "$ref": "#/$defs/parts"
+    },
     "behaviors": {
       "type": "array",
       "items": {
@@ -114,6 +117,145 @@
           }
         }
       }
+    }
+  },
+  "$defs": {
+    "parts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["catalog", "selections"],
+      "properties": {
+        "catalog": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/partCatalogItem"
+          }
+        },
+        "selections": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/partSlot"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/partSelection"
+          }
+        }
+      }
+    },
+    "partCatalogItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slot", "asset"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "slot": {
+          "$ref": "#/$defs/partSlot"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "editable": {
+          "type": "array",
+          "items": {
+            "enum": ["position", "scale", "rotation", "spacing", "color", "layer"]
+          },
+          "uniqueItems": true
+        },
+        "defaults": {
+          "$ref": "#/$defs/partTransform"
+        }
+      }
+    },
+    "partSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partId"],
+      "properties": {
+        "partId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "transform": {
+          "$ref": "#/$defs/partTransform"
+        }
+      }
+    },
+    "partTransform": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "y": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "scale": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 10
+        },
+        "scaleX": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 10
+        },
+        "scaleY": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 10
+        },
+        "rotation": {
+          "type": "number",
+          "minimum": -360,
+          "maximum": 360
+        },
+        "spacing": {
+          "type": "number",
+          "minimum": -500,
+          "maximum": 500
+        },
+        "color": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layer": {
+          "type": "integer",
+          "minimum": -1000,
+          "maximum": 1000
+        }
+      }
+    },
+    "partSlot": {
+      "enum": [
+        "face",
+        "hair.front",
+        "hair.back",
+        "eye",
+        "brow",
+        "nose",
+        "mouth",
+        "outfit"
+      ]
     }
   }
 }

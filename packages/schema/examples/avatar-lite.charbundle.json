@@ -22,9 +22,172 @@
       "eye.r": "transform.eye_right",
       "pupil.l": "transform.pupil_left",
       "pupil.r": "transform.pupil_right",
+      "nose": "transform.nose",
       "mouth": "transform.mouth_group",
+      "hair.front": "transform.hair_front",
+      "hair.back": "transform.hair_back",
       "neck": "transform.neck_group",
       "torso": "transform.torso_group"
+    }
+  },
+  "parts": {
+    "catalog": {
+      "face-soft-01": {
+        "id": "face-soft-01",
+        "slot": "face",
+        "displayName": "Soft face",
+        "asset": "parts/face/soft-01.svg",
+        "nodes": {
+          "head": "head_group"
+        },
+        "editable": ["scale", "color", "layer"],
+        "defaults": {
+          "scale": 1,
+          "color": "#FFF1F2",
+          "layer": 0
+        }
+      },
+      "hair-back-soft-01": {
+        "id": "hair-back-soft-01",
+        "slot": "hair.back",
+        "displayName": "Soft back hair",
+        "asset": "parts/hair/back-soft-01.svg",
+        "nodes": {
+          "hair.back": "hair_back"
+        },
+        "editable": ["position", "scale", "rotation", "color", "layer"],
+        "defaults": {
+          "scale": 1,
+          "color": "#1E293B",
+          "layer": -10
+        }
+      },
+      "hair-front-soft-01": {
+        "id": "hair-front-soft-01",
+        "slot": "hair.front",
+        "displayName": "Soft bangs",
+        "asset": "parts/hair/front-soft-01.svg",
+        "nodes": {
+          "hair.front": "hair_front"
+        },
+        "editable": ["position", "scale", "rotation", "color", "layer"],
+        "defaults": {
+          "scale": 1,
+          "color": "#1E293B",
+          "layer": 10
+        }
+      },
+      "eye-round-01": {
+        "id": "eye-round-01",
+        "slot": "eye",
+        "displayName": "Round eyes",
+        "asset": "parts/eyes/round-01.svg",
+        "nodes": {
+          "eye.l": "eye_left",
+          "eye.r": "eye_right"
+        },
+        "editable": ["position", "scale", "spacing", "color"],
+        "defaults": {
+          "scale": 1,
+          "spacing": 0,
+          "color": "#1E293B"
+        }
+      },
+      "brow-soft-01": {
+        "id": "brow-soft-01",
+        "slot": "brow",
+        "displayName": "Soft brows",
+        "asset": "parts/brows/soft-01.svg",
+        "nodes": {
+          "brow.l": "brow_left",
+          "brow.r": "brow_right"
+        },
+        "editable": ["position", "scale", "rotation", "spacing", "color"],
+        "defaults": {
+          "scale": 1,
+          "spacing": 0,
+          "color": "#334155"
+        }
+      },
+      "nose-dot-01": {
+        "id": "nose-dot-01",
+        "slot": "nose",
+        "displayName": "Dot nose",
+        "asset": "parts/nose/dot-01.svg",
+        "nodes": {
+          "nose": "nose"
+        },
+        "editable": ["position", "scale", "rotation", "color"],
+        "defaults": {
+          "scale": 1,
+          "color": "#FDA4AF"
+        }
+      },
+      "mouth-smile-01": {
+        "id": "mouth-smile-01",
+        "slot": "mouth",
+        "displayName": "Small smile",
+        "asset": "parts/mouths/smile-01.svg",
+        "nodes": {
+          "mouth": "mouth_group"
+        },
+        "editable": ["position", "scale", "rotation", "color"],
+        "defaults": {
+          "scale": 1,
+          "color": "#FB7185"
+        }
+      },
+      "outfit-blue-01": {
+        "id": "outfit-blue-01",
+        "slot": "outfit",
+        "displayName": "Blue outfit",
+        "asset": "parts/outfits/blue-01.svg",
+        "nodes": {
+          "torso": "torso_group"
+        },
+        "editable": ["position", "scale", "color", "layer"],
+        "defaults": {
+          "scale": 1,
+          "color": "#93C5FD",
+          "layer": 0
+        }
+      }
+    },
+    "selections": {
+      "face": {
+        "partId": "face-soft-01"
+      },
+      "hair.back": {
+        "partId": "hair-back-soft-01"
+      },
+      "hair.front": {
+        "partId": "hair-front-soft-01"
+      },
+      "eye": {
+        "partId": "eye-round-01",
+        "transform": {
+          "scale": 1,
+          "spacing": 0
+        }
+      },
+      "brow": {
+        "partId": "brow-soft-01"
+      },
+      "nose": {
+        "partId": "nose-dot-01",
+        "transform": {
+          "scale": 1
+        }
+      },
+      "mouth": {
+        "partId": "mouth-smile-01",
+        "transform": {
+          "scale": 1
+        }
+      },
+      "outfit": {
+        "partId": "outfit-blue-01"
+      }
     }
   },
   "behaviors": [

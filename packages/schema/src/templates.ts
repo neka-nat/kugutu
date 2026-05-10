@@ -12,7 +12,17 @@ export const TEMPLATES = {
   "avatar-lite": {
     description: "Face plus upper torso. Best for app mascots and assistants.",
     requiredSlots: ["head", "eye.l", "eye.r", "mouth", "torso"],
-    optionalSlots: ["pupil.l", "pupil.r", "brow.l", "brow.r", "jaw", "neck"],
+    optionalSlots: [
+      "pupil.l",
+      "pupil.r",
+      "brow.l",
+      "brow.r",
+      "nose",
+      "hair.front",
+      "hair.back",
+      "jaw",
+      "neck",
+    ],
     recommendedBehaviors: ["blink", "look-at", "breathing", "mouth-open"],
   },
   "mascot-upper": {
@@ -30,7 +40,17 @@ export const TEMPLATES = {
       "hand.l",
       "hand.r",
     ],
-    optionalSlots: ["pupil.l", "pupil.r", "brow.l", "brow.r", "jaw", "neck"],
+    optionalSlots: [
+      "pupil.l",
+      "pupil.r",
+      "brow.l",
+      "brow.r",
+      "nose",
+      "hair.front",
+      "hair.back",
+      "jaw",
+      "neck",
+    ],
     recommendedBehaviors: ["blink", "look-at", "breathing", "mouth-open"],
   },
   "vtuber-lite": {
@@ -45,7 +65,7 @@ export const TEMPLATES = {
       "brow.r",
       "mouth",
     ],
-    optionalSlots: ["jaw", "neck", "torso"],
+    optionalSlots: ["nose", "hair.front", "hair.back", "jaw", "neck", "torso"],
     recommendedBehaviors: ["blink", "look-at", "mouth-open"],
   },
 } as const satisfies Record<string, TemplateDefinition>;

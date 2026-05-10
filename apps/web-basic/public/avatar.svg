@@ -29,10 +29,12 @@
   <!-- Head Group -->
   <g id="head_group">
     <!-- Hair Back -->
-    <path
-      d="M80 140C80 90 110 60 160 60C210 60 240 90 240 140V180H80V140Z"
-      fill="#1E293B"
-    />
+    <g id="hair_back">
+      <path
+        d="M80 140C80 90 110 60 160 60C210 60 240 90 240 140V180H80V140Z"
+        fill="#1E293B"
+      />
+    </g>
 
     <!-- Skin -->
     <circle cx="160" cy="140" r="80" fill="#FFF1F2" />
@@ -65,15 +67,22 @@
       </g>
     </g>
 
+    <!-- Nose -->
+    <g id="nose">
+      <path d="M160 150L155 162H164" stroke="#FDA4AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
     <!-- Mouth -->
     <g id="mouth_group">
       <rect x="150" y="175" width="20" height="10" rx="5" fill="#FB7185" />
     </g>
 
     <!-- Hair Bangs (Front) -->
-    <path
-      d="M80 140C80 100 110 80 160 80C210 80 240 100 240 140C240 120 220 100 160 100C100 100 80 120 80 140Z"
-      fill="#1E293B"
-    />
+    <g id="hair_front">
+      <path
+        d="M80 140C80 100 110 80 160 80C210 80 240 100 240 140C240 120 220 100 160 100C100 100 80 120 80 140Z"
+        fill="#1E293B"
+      />
+    </g>
   </g>
 </svg>
