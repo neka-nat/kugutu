@@ -9,6 +9,7 @@ Current surface:
 - transform tuning for selected parts
 - live composed SVG preview
 - runtime controls for blink, look-at, emotion, and mouth open
+- browser export for a single `.charpack` file
 
 From the repo:
 

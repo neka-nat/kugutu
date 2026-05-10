@@ -1,6 +1,7 @@
 import type {
   BehaviorType,
   CharBundle,
+  CharPack,
   CompiledBehavior,
   SlotKey,
 } from "../../schema/src/index.js";
@@ -426,4 +427,28 @@ export function createCharacterPlayer(
       }
     },
   };
+}
+
+export function createCharacterPlayerFromPack(
+  pack: CharPack,
+  container: HTMLElement,
+  options: { autoStart?: boolean } = {}
+): CharacterPlayer {
+  const svgAsset = pack.assets.find((asset) => asset.type === "svg");
+  if (!svgAsset) {
+    throw new Error("CharPack does not contain an SVG asset.");
+  }
+
+  container.innerHTML = svgAsset.content;
+  const svgRoot = container.querySelector<SVGSVGElement>("svg");
+  if (!svgRoot) {
+    throw new Error("SVG root not found in CharPack asset.");
+  }
+
+  const player = createCharacterPlayer(pack.bundle, svgRoot);
+  if (options.autoStart ?? true) {
+    player.start();
+  }
+
+  return player;
 }

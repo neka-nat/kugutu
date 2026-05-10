@@ -1,11 +1,13 @@
 import {
   CHARBUNDLE_API_METHODS,
   CHARBUNDLE_VERSION,
+  CHARPACK_VERSION,
   CHARACTER_SCHEMA_VERSION,
   validateCharacterDefinition,
   type BehaviorType,
   type CharBundle,
   type CharBundleRuntimeApiMethod,
+  type CharPack,
   type CharacterBehavior,
   type CharacterDefinition,
   type CharacterPartCatalogItem,
@@ -336,6 +338,61 @@ function buildPartColorStyle(instructions: PartNodeInstruction[]): string | unde
     return undefined;
   }
 
+  return rules.join("\n");
+}
+
+function buildPartVariantVisibilityStyle(
+  parts: CharacterParts | undefined
+): string | undefined {
+  if (!parts) {
+    return undefined;
+  }
+
+  const rules: string[] = [];
+  const selectedBySlot = new Map<PartSlotKey, string>();
+
+  for (const [slotValue, selection] of Object.entries(parts.selections)) {
+    if (!selection) {
+      continue;
+    }
+
+    selectedBySlot.set(slotValue as PartSlotKey, selection.partId);
+  }
+
+  for (const [slot, selectedPartId] of selectedBySlot.entries()) {
+    const hasVariants = Object.values(parts.catalog).some(
+      (item) => item.slot === slot
+    );
+
+    if (!hasVariants) {
+      continue;
+    }
+
+    const escapedSlot = escapeAttribute(slot);
+    const escapedPartId = escapeAttribute(selectedPartId);
+
+    rules.push(
+      `[data-kugutu-variant-slot="${escapedSlot}"] { display: none; }`
+    );
+    rules.push(
+      `[data-kugutu-variant-slot="${escapedSlot}"][data-kugutu-variant-id="${escapedPartId}"] { display: inline; }`
+    );
+  }
+
+  if (rules.length === 0) {
+    return undefined;
+  }
+
+  return rules.join("\n");
+}
+
+function mergeSvgStyles(styles: (string | undefined)[]): string | undefined {
+  const rules = styles.filter((style): style is string => style !== undefined);
+
+  if (rules.length === 0) {
+    return undefined;
+  }
+
   return `<style id="kugutu-parts-style">\n${rules.join("\n")}\n</style>`;
 }
 
@@ -368,7 +425,13 @@ export function composeCharacterSvg(
   }
 
   const wrappedSvg = wrapPartNodes(svgText, instructions);
-  return insertSvgStyle(wrappedSvg, buildPartColorStyle(instructions));
+  return insertSvgStyle(
+    wrappedSvg,
+    mergeSvgStyles([
+      buildPartVariantVisibilityStyle(document.parts),
+      buildPartColorStyle(instructions),
+    ])
+  );
 }
 
 export function buildCharacterBundle(document: CharacterDefinition): CharBundle {
@@ -408,4 +471,30 @@ export function buildCharacterBundle(document: CharacterDefinition): CharBundle 
   }
 
   return bundle;
+}
+
+export function buildCharacterPack(
+  document: CharacterDefinition,
+  svgText: string,
+  options: { includeSource?: boolean } = {}
+): CharPack {
+  const characterDocument = JSON.parse(JSON.stringify(document)) as CharacterDefinition;
+  const composedSvg = composeCharacterSvg(characterDocument, svgText);
+  const pack: CharPack = {
+    packVersion: CHARPACK_VERSION,
+    bundle: buildCharacterBundle(characterDocument),
+    assets: [
+      {
+        id: "primary-svg",
+        type: "svg",
+        content: composedSvg,
+      },
+    ],
+  };
+
+  if (options.includeSource ?? true) {
+    pack.source = characterDocument;
+  }
+
+  return pack;
 }

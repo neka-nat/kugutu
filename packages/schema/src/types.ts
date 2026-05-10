@@ -83,6 +83,12 @@ export interface CharBundleAsset {
   path: string;
 }
 
+export interface CharPackAsset {
+  id: string;
+  type: CharBundleAssetType;
+  content: string;
+}
+
 export interface CompiledBehavior<T extends BehaviorType = BehaviorType> {
   id: string;
   type: T;
@@ -108,4 +114,12 @@ export interface CharBundle {
   parts?: CharacterParts;
   behaviors: CompiledBehavior[];
   runtime: CharBundleRuntime;
+}
+
+export interface CharPack {
+  $schema?: string;
+  packVersion: string;
+  source?: CharacterDefinition;
+  bundle: CharBundle;
+  assets: CharPackAsset[];
 }

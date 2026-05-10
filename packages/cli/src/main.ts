@@ -5,6 +5,7 @@ import path from "node:path";
 
 import {
   buildCharacterBundle,
+  buildCharacterPack,
   composeCharacterSvg,
 } from "../../compiler/src/index.js";
 import {
@@ -44,6 +45,7 @@ function printUsage(): void {
   kugutu tune-part <source.json> <part-slot> [--x 0] [--y 0] [--scale 1] [--scale-x 1] [--scale-y 1] [--rotation 0] [--spacing 0] [--color #000] [--layer 0]
   kugutu add-behavior <source.json> <type> [--id blink-default] [--targets eye.l,eye.r] [--replace]
   kugutu compose-svg <source.json> <input.svg> --out <output.svg>
+  kugutu pack <source.json> <input.svg> --out <output.charpack> [--no-source]
   kugutu validate <source.json>
   kugutu build <source.json> --out <bundle.json>`);
 }
@@ -831,6 +833,24 @@ async function composeSvgCommand(
   console.log(`composed: ${path.resolve(outPath)}`);
 }
 
+async function packCommand(
+  sourcePath: string,
+  inputSvgPath: string,
+  args: string[]
+): Promise<void> {
+  const outPath = parseOutPath(args);
+  const document = await readCharacterDefinition(sourcePath);
+  const svgText = await readFile(inputSvgPath, "utf8");
+  const pack = buildCharacterPack(document, svgText, {
+    includeSource: !hasFlag(args, "--no-source"),
+  });
+  const serialized = `${JSON.stringify(pack, null, 2)}\n`;
+
+  await mkdir(path.dirname(outPath), { recursive: true });
+  await writeFile(outPath, serialized, "utf8");
+  console.log(`packed: ${path.resolve(outPath)}`);
+}
+
 async function main(argv: string[]): Promise<void> {
   const normalizedArgv = argv[0] === "--" ? argv.slice(1) : argv;
   const [command, ...args] = normalizedArgv;
@@ -864,6 +884,15 @@ async function main(argv: string[]): Promise<void> {
       throw new Error(`Usage: kugutu compose-svg <source.json> <input.svg> --out <output.svg>`);
     }
     await composeSvgCommand(sourcePath, inputSvgPath, rest);
+    return;
+  }
+
+  if (command === "pack") {
+    const [sourcePath, inputSvgPath, ...rest] = args;
+    if (!sourcePath || !inputSvgPath) {
+      throw new Error(`Usage: kugutu pack <source.json> <input.svg> --out <output.charpack>`);
+    }
+    await packCommand(sourcePath, inputSvgPath, rest);
     return;
   }
 

@@ -6,7 +6,7 @@ Current status:
 
 - `schema v0` is defined in [`@kugutu/schema`](./packages/schema)
 - `parts v0` now models Mii-like part catalogs and selections
-- `composeCharacterSvg` can bake selected part transforms into an SVG asset
+- `.charpack` packs the composed SVG and runtime data into one app-ready file
 - a minimal compiler, CLI, React binding, and web runtime are implemented in TypeScript
 - `apps/web-basic` is a browser demo wired to the runtime
 - `apps/react-basic` is a React demo wired through `@kugutu/react`
@@ -49,8 +49,17 @@ pnpm run kugutu -- add-part /tmp/kugutu-parts.character.json eye-wide-01 --slot 
 pnpm run kugutu -- list-parts /tmp/kugutu-parts.character.json --slot eye
 pnpm run kugutu -- set-part /tmp/kugutu-parts.character.json eye eye-wide-01
 pnpm run kugutu -- tune-part /tmp/kugutu-parts.character.json eye --scale 1.1 --spacing 8
-pnpm run kugutu -- compose-svg /tmp/kugutu-parts.character.json apps/web-basic/source/avatar.base.svg --out /tmp/kugutu-parts.avatar.svg
-pnpm run kugutu -- build /tmp/kugutu-parts.character.json --out /tmp/kugutu-parts.charbundle.json
+pnpm run kugutu -- pack /tmp/kugutu-parts.character.json apps/web-basic/source/avatar.base.svg --out /tmp/kugutu-parts.charpack
+```
+
+Runtime embed:
+
+```ts
+const pack = await fetch("/mascot.charpack").then((response) => response.json());
+const player = createCharacterPlayerFromPack(pack, container);
+
+player.lookAt({ x: 0.2, y: -0.1 });
+player.setEmotion("happy", 0.8);
 ```
 
 Web demo:

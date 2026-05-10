@@ -1,6 +1,6 @@
 # `@kugutu/schema`
 
-Schema and validation primitives for Kugutu character source files and compiled bundles.
+Schema and validation primitives for Kugutu character source files, compiled bundles, and charpacks.
 
 Contents:
 

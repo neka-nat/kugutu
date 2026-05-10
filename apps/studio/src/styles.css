@@ -89,6 +89,13 @@ button[aria-pressed="true"] {
   border-color: #2d3436;
 }
 
+.topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .workspace {
   display: grid;
   grid-template-columns: 280px minmax(360px, 1fr) 360px;
@@ -112,7 +119,8 @@ button[aria-pressed="true"] {
 
 .sidebar header,
 .inspector header,
-.runtime-panel header {
+.runtime-panel header,
+.export-panel header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -124,7 +132,8 @@ button[aria-pressed="true"] {
 
 .sidebar header strong,
 .inspector header strong,
-.runtime-panel header strong {
+.runtime-panel header strong,
+.export-panel header strong {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -132,12 +141,32 @@ button[aria-pressed="true"] {
   font-size: 14px;
 }
 
+.recipe-list,
 .slot-list,
 .part-options,
 .control-stack,
 .runtime-panel,
+.export-panel,
 #source-readout {
   padding: 12px;
+}
+
+.recipe-panel {
+  border-bottom: 1px solid var(--line);
+}
+
+.recipe-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.recipe-button {
+  min-width: 0;
+  padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .slot-list {
@@ -253,9 +282,27 @@ button[aria-pressed="true"] {
   border-bottom: 1px solid var(--line);
 }
 
-.runtime-panel header {
+.runtime-panel header,
+.export-panel header {
   margin: -12px -12px 12px;
   border-top: 0;
+}
+
+.export-panel {
+  border-bottom: 1px solid var(--line);
+}
+
+.export-row {
+  display: grid;
+  gap: 8px;
+}
+
+.export-row button {
+  min-width: 0;
+  padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .emotion-row {
