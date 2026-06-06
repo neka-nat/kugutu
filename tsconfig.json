@@ -1,24 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": ["ES2023", "DOM"],
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "useUnknownInCatchVariables": true,
-    "rootDir": ".",
-    "outDir": "dist",
-    "declaration": true,
-    "sourceMap": false,
-    "skipLibCheck": true,
-    "types": ["node"]
-  },
-  "include": [
-    "apps/**/*.d.ts",
-    "apps/**/*.ts",
-    "packages/**/*.ts",
-    "scripts/**/*.ts"
+  "files": [],
+  "references": [
+    { "path": "packages/schema" },
+    { "path": "packages/compiler" },
+    { "path": "packages/runtime-web" },
+    { "path": "packages/react" },
+    { "path": "packages/cli" },
+    { "path": "scripts" }
   ]
 }

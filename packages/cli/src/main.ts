@@ -7,7 +7,8 @@ import {
   buildCharacterBundle,
   buildCharacterPack,
   composeCharacterSvg,
-} from "../../compiler/src/index.js";
+  lintCharacter,
+} from "@kugutu/compiler";
 import {
   BEHAVIOR_SPECS,
   CHARACTER_SCHEMA_VERSION,
@@ -32,7 +33,7 @@ import {
   type SlotBindingMap,
   type SlotKey,
   type TemplateKey,
-} from "../../schema/src/index.js";
+} from "@kugutu/schema";
 
 function printUsage(): void {
   console.log(`Usage:
@@ -47,6 +48,7 @@ function printUsage(): void {
   kugutu compose-svg <source.json> <input.svg> --out <output.svg>
   kugutu pack <source.json> <input.svg> --out <output.charpack> [--no-source]
   kugutu validate <source.json>
+  kugutu lint <source.json> [<input.svg>]
   kugutu build <source.json> --out <bundle.json>`);
 }
 
@@ -62,6 +64,33 @@ async function readCharacterDefinition(filePath: string): Promise<CharacterDefin
 async function writeJson(filePath: string, value: unknown): Promise<void> {
   await mkdir(path.dirname(filePath), { recursive: true });
   await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+/**
+ * Loads on-disk part asset fragments referenced by the catalog, resolved
+ * relative to the source file. Missing asset files are skipped so characters
+ * that rely on baked SVG variant groups keep working unchanged.
+ */
+async function loadPartAssets(
+  document: CharacterDefinition,
+  sourceDir: string
+): Promise<Record<string, string>> {
+  const assets: Record<string, string> = {};
+
+  for (const item of Object.values(document.parts?.catalog ?? {})) {
+    if (!item.asset) {
+      continue;
+    }
+
+    const assetPath = path.resolve(sourceDir, item.asset);
+    try {
+      assets[item.id] = await readFile(assetPath, "utf8");
+    } catch {
+      // No fragment on disk: the part is expected to be a baked variant group.
+    }
+  }
+
+  return assets;
 }
 
 function formatErrors(errors: string[]): string {
@@ -126,6 +155,44 @@ async function validateCommand(sourcePath: string): Promise<void> {
   }
 
   console.log(`valid: ${sourcePath}`);
+}
+
+async function lintCommand(sourcePath: string, args: string[]): Promise<void> {
+  const document = await readCharacterDefinition(sourcePath);
+  const sourceDir = path.dirname(path.resolve(sourcePath));
+  const svgPathArg = args.find((arg) => !arg.startsWith("--"));
+  const resolvedSvgPath = svgPathArg
+    ? path.resolve(svgPathArg)
+    : document.assets?.primary
+      ? path.resolve(sourceDir, document.assets.primary)
+      : undefined;
+
+  let svgText: string | undefined;
+  if (resolvedSvgPath) {
+    try {
+      svgText = await readFile(resolvedSvgPath, "utf8");
+    } catch {
+      svgText = undefined;
+    }
+  }
+
+  const partAssets = await loadPartAssets(document, sourceDir);
+  const result = lintCharacter(document, svgText, partAssets);
+
+  for (const warning of result.warnings) {
+    console.warn(`warning: ${warning}`);
+  }
+
+  if (!result.valid) {
+    console.error(formatErrors(result.errors));
+    process.exitCode = 1;
+    return;
+  }
+
+  const svgNote = svgText ? "" : " (svg not found; ran schema checks only)";
+  console.log(
+    `lint ok: ${sourcePath}${svgNote} [${result.warnings.length} warning(s)]`
+  );
 }
 
 async function fileExists(filePath: string): Promise<boolean> {
@@ -826,7 +893,8 @@ async function composeSvgCommand(
   const outPath = parseOutPath(args);
   const document = await readCharacterDefinition(sourcePath);
   const svgText = await readFile(inputSvgPath, "utf8");
-  const composedSvg = composeCharacterSvg(document, svgText);
+  const partAssets = await loadPartAssets(document, path.dirname(path.resolve(sourcePath)));
+  const composedSvg = composeCharacterSvg(document, svgText, { partAssets });
 
   await mkdir(path.dirname(outPath), { recursive: true });
   await writeFile(outPath, composedSvg, "utf8");
@@ -841,8 +909,10 @@ async function packCommand(
   const outPath = parseOutPath(args);
   const document = await readCharacterDefinition(sourcePath);
   const svgText = await readFile(inputSvgPath, "utf8");
+  const partAssets = await loadPartAssets(document, path.dirname(path.resolve(sourcePath)));
   const pack = buildCharacterPack(document, svgText, {
     includeSource: !hasFlag(args, "--no-source"),
+    partAssets,
   });
   const serialized = `${JSON.stringify(pack, null, 2)}\n`;
 
@@ -866,6 +936,15 @@ async function main(argv: string[]): Promise<void> {
       throw new Error(`Missing source file path`);
     }
     await validateCommand(sourcePath);
+    return;
+  }
+
+  if (command === "lint") {
+    const [sourcePath, ...rest] = args;
+    if (!sourcePath) {
+      throw new Error(`Missing source file path`);
+    }
+    await lintCommand(sourcePath, rest);
     return;
   }
 

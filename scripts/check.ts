@@ -3,13 +3,18 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { buildCharacterBundle } from "../packages/compiler/src/index.js";
 import {
+  buildCharacterBundle,
+  composeCharacterSvg,
+  lintCharacter,
+} from "@kugutu/compiler";
+import {
+  CHARACTER_SCHEMA_VERSION,
   validateCharBundle,
   validateCharacterDefinition,
   type CharBundle,
   type CharacterDefinition,
-} from "../packages/schema/src/index.js";
+} from "@kugutu/schema";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 // Compiled output lives in dist/scripts, so the repository root is two levels up.
@@ -19,6 +24,51 @@ async function readJson<T>(relativePath: string): Promise<T> {
   const fullPath = path.join(repoDir, relativePath);
   const raw = await readFile(fullPath, "utf8");
   return JSON.parse(raw) as T;
+}
+
+interface PartFixture {
+  document: CharacterDefinition;
+  svg: string;
+  partAssets: Record<string, string>;
+}
+
+function buildPartFixture(): PartFixture {
+  const document: CharacterDefinition = {
+    schemaVersion: CHARACTER_SCHEMA_VERSION,
+    character: { id: "lint-fixture", template: "avatar-lite" },
+    assets: { primary: "avatar.svg" },
+    slots: {
+      head: "head",
+      "eye.l": "eye_left",
+      "eye.r": "eye_right",
+      mouth: "mouth",
+      torso: "torso",
+    },
+    parts: {
+      catalog: {
+        "eye-test-01": {
+          id: "eye-test-01",
+          slot: "eye",
+          asset: "parts/eye-test-01.svg",
+          editable: ["scale"],
+        },
+      },
+      selections: {
+        eye: { partId: "eye-test-01" },
+      },
+    },
+    behaviors: [],
+  };
+
+  const svg =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+    '<g data-kugutu-slot-mount="eye"></g></svg>';
+
+  return {
+    document,
+    svg,
+    partAssets: { "eye-test-01": '<circle cx="50" cy="50" r="10" />' },
+  };
 }
 
 async function main(): Promise<void> {
@@ -45,6 +95,32 @@ async function main(): Promise<void> {
         const expected = { ...charbundleExample };
         delete expected.$schema;
         assert.deepEqual(compiled, expected);
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "file-based part asset is injected into its slot mount",
+      validate: () => {
+        const fixture = buildPartFixture();
+        const composed = composeCharacterSvg(fixture.document, fixture.svg, {
+          partAssets: fixture.partAssets,
+        });
+        assert.match(composed, /data-kugutu-variant-id="eye-test-01"/);
+        assert.match(composed, /<circle/);
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "selecting an unrenderable part is reported, not silently dropped",
+      validate: () => {
+        const fixture = buildPartFixture();
+        const result = lintCharacter(fixture.document, fixture.svg, {});
+        assert.equal(result.valid, false);
+        assert.ok(
+          result.errors.some((error) => error.includes("eye-test-01")),
+          "expected lint to flag the unrenderable selected part"
+        );
+        assert.throws(() => composeCharacterSvg(fixture.document, fixture.svg, {}));
         return { valid: true, errors: [] };
       },
     },

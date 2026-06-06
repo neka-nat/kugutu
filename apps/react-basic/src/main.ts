@@ -10,8 +10,8 @@ import { createRoot } from "react-dom/client";
 import {
   KugutuCharacterPack,
   type CharacterPlayer,
-} from "../../../packages/react/src/index.js";
-import type { CharPack } from "../../../packages/schema/src/index.js";
+} from "@kugutu/react";
+import type { CharPack } from "@kugutu/schema";
 
 import "./styles.css";
 

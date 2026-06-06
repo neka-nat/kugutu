@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@kugutu/react": "workspace:*",
+    "@kugutu/schema": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }

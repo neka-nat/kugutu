@@ -1,4 +1,7 @@
 node_modules/
 dist/
+dist-vite/
+packages/*/dist/
 coverage/
 *.log
+*.tsbuildinfo

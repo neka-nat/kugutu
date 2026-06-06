@@ -1,5 +1,28 @@
 {
   "name": "@kugutu/schema",
   "version": "0.1.0",
-  "type": "module"
+  "description": "Character schema, slot taxonomy, behavior specs, and validation for Kugutu.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./character.schema.json": "./character.schema.json",
+    "./charbundle.schema.json": "./charbundle.schema.json"
+  },
+  "files": [
+    "dist",
+    "character.schema.json",
+    "charbundle.schema.json",
+    "examples"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  }
 }

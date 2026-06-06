@@ -4,7 +4,7 @@ import type {
   CharPack,
   CompiledBehavior,
   SlotKey,
-} from "../../schema/src/index.js";
+} from "@kugutu/schema";
 
 export interface LookAtPoint {
   x: number;

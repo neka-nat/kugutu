@@ -1,5 +1,10 @@
 {
   "name": "@kugutu/web-basic",
   "version": "0.1.0",
-  "type": "module"
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@kugutu/runtime-web": "workspace:*",
+    "@kugutu/schema": "workspace:*"
+  }
 }

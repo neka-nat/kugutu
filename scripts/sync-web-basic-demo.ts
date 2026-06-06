@@ -6,8 +6,8 @@ import {
   buildCharacterBundle,
   buildCharacterPack,
   composeCharacterSvg,
-} from "../packages/compiler/src/index.js";
-import type { CharacterDefinition } from "../packages/schema/src/index.js";
+} from "@kugutu/compiler";
+import type { CharacterDefinition } from "@kugutu/schema";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const repoDir = path.resolve(rootDir, "..", "..");

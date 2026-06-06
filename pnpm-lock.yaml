@@ -29,6 +29,9 @@ importers:
       '@kugutu/react':
         specifier: workspace:*
         version: link:../../packages/react
+      '@kugutu/schema':
+        specifier: workspace:*
+        version: link:../../packages/schema
       react:
         specifier: ^19.0.0
         version: 19.2.6
@@ -36,11 +39,41 @@ importers:
         specifier: ^19.0.0
         version: 19.2.6(react@19.2.6)
 
-  apps/web-basic: {}
+  apps/studio:
+    dependencies:
+      '@kugutu/compiler':
+        specifier: workspace:*
+        version: link:../../packages/compiler
+      '@kugutu/runtime-web':
+        specifier: workspace:*
+        version: link:../../packages/runtime-web
+      '@kugutu/schema':
+        specifier: workspace:*
+        version: link:../../packages/schema
 
-  packages/cli: {}
+  apps/web-basic:
+    dependencies:
+      '@kugutu/runtime-web':
+        specifier: workspace:*
+        version: link:../../packages/runtime-web
+      '@kugutu/schema':
+        specifier: workspace:*
+        version: link:../../packages/schema
 
-  packages/compiler: {}
+  packages/cli:
+    dependencies:
+      '@kugutu/compiler':
+        specifier: workspace:*
+        version: link:../compiler
+      '@kugutu/schema':
+        specifier: workspace:*
+        version: link:../schema
+
+  packages/compiler:
+    dependencies:
+      '@kugutu/schema':
+        specifier: workspace:*
+        version: link:../schema
 
   packages/react:
     dependencies:
@@ -54,7 +87,11 @@ importers:
         specifier: ^19.0.0
         version: 19.2.6
 
-  packages/runtime-web: {}
+  packages/runtime-web:
+    dependencies:
+      '@kugutu/schema':
+        specifier: workspace:*
+        version: link:../schema
 
   packages/schema: {}
 

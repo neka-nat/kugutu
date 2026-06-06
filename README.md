@@ -39,7 +39,24 @@ pnpm run kugutu -- add-behavior /tmp/kugutu-demo/character.json look-at
 pnpm run kugutu -- add-behavior /tmp/kugutu-demo/character.json breathing
 pnpm run kugutu -- add-behavior /tmp/kugutu-demo/character.json mouth-open
 pnpm run kugutu -- build /tmp/kugutu-demo/character.json --out /tmp/kugutu-demo/avatar.charbundle.json
+pnpm run kugutu -- lint /tmp/kugutu-demo/character.json
 ```
+
+## Parts rendering model
+
+A selected part renders only if the SVG can represent it. There are two ways:
+
+1. **Baked variant group** — the master SVG already contains
+   `<g data-kugutu-variant-slot="<part-slot>" data-kugutu-variant-id="<part-id>">…</g>`.
+   The compiler toggles visibility per selection.
+2. **File-based part asset** — the catalog item's `asset` points to an SVG
+   fragment on disk and the master SVG has a `<g data-kugutu-slot-mount="<part-slot>">`
+   element. The compiler injects the fragment as a variant group at build time,
+   so CLI/agent-added parts render without hand-editing the master SVG.
+
+If a selected part has neither, the character would render nothing. `kugutu lint`
+(and the compiler) flag this instead of silently producing an invisible
+character.
 
 Parts smoke flow:
 

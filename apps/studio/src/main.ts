@@ -2,8 +2,8 @@ import {
   buildCharacterBundle,
   buildCharacterPack,
   composeCharacterSvg,
-} from "../../../packages/compiler/src/index.js";
-import { createCharacterPlayer, type CharacterPlayer } from "../../../packages/runtime-web/src/index.js";
+} from "@kugutu/compiler";
+import { createCharacterPlayer, type CharacterPlayer } from "@kugutu/runtime-web";
 import type {
   CharPack,
   CharacterDefinition,
@@ -11,7 +11,7 @@ import type {
   CharacterPartSelection,
   PartSlotKey,
   PartTransform,
-} from "../../../packages/schema/src/index.js";
+} from "@kugutu/schema";
 
 import "./styles.css";
 

@@ -1,5 +1,21 @@
 {
   "name": "@kugutu/cli",
   "version": "0.1.0",
-  "type": "module"
+  "description": "Command-line interface for authoring and building Kugutu characters.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "kugutu": "./dist/main.js"
+  },
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "@kugutu/compiler": "workspace:*",
+    "@kugutu/schema": "workspace:*"
+  }
 }

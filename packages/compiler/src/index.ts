@@ -18,7 +18,7 @@ import {
   type SlotBindingMap,
   type SlotKey,
   SLOT_DEFINITIONS,
-} from "../../schema/src/index.js";
+} from "@kugutu/schema";
 
 function slotToChannelId(nodeId: string): string {
   return `transform.${nodeId}`;
@@ -169,10 +169,15 @@ interface SvgElementRange {
   tagName: string;
 }
 
-function findElementRangeById(svgText: string, nodeId: string): SvgElementRange | undefined {
-  const idPattern = escapeRegExp(nodeId);
+function findElementRangeByAttribute(
+  svgText: string,
+  attrName: string,
+  attrValue: string
+): SvgElementRange | undefined {
+  const namePattern = escapeRegExp(attrName);
+  const valuePattern = escapeRegExp(attrValue);
   const openTagPattern = new RegExp(
-    `<([A-Za-z][\\w:.-]*)(?=[^>]*\\bid\\s*=\\s*(["'])${idPattern}\\2)[^>]*>`,
+    `<([A-Za-z][\\w:.-]*)(?=[^>]*\\b${namePattern}\\s*=\\s*(["'])${valuePattern}\\2)[^>]*>`,
     "g"
   );
   const match = openTagPattern.exec(svgText);
@@ -217,6 +222,166 @@ function findElementRangeById(svgText: string, nodeId: string): SvgElementRange 
   }
 
   return undefined;
+}
+
+function findElementRangeById(
+  svgText: string,
+  nodeId: string
+): SvgElementRange | undefined {
+  return findElementRangeByAttribute(svgText, "id", nodeId);
+}
+
+const PART_VARIANT_SLOT_ATTR = "data-kugutu-variant-slot";
+const PART_VARIANT_ID_ATTR = "data-kugutu-variant-id";
+const PART_SLOT_MOUNT_ATTR = "data-kugutu-slot-mount";
+
+export interface ComposeCharacterSvgOptions {
+  /**
+   * Map of catalog part id to the SVG fragment that should be injected for that
+   * part. When a part has no baked `data-kugutu-variant-*` group in the base
+   * SVG, its fragment is mounted into the matching
+   * `data-kugutu-slot-mount` element so file-based parts render without hand
+   * editing the master SVG.
+   */
+  partAssets?: Record<string, string>;
+}
+
+/** Returns true when a renderable variant group for the part exists in the SVG. */
+function hasVariantGroup(svgText: string, partId: string): boolean {
+  return (
+    findElementRangeByAttribute(svgText, PART_VARIANT_ID_ATTR, partId) !==
+    undefined
+  );
+}
+
+function hasSlotMount(svgText: string, partSlot: PartSlotKey): boolean {
+  return (
+    findElementRangeByAttribute(svgText, PART_SLOT_MOUNT_ATTR, partSlot) !==
+    undefined
+  );
+}
+
+/**
+ * Accepts a part asset as either a raw fragment or a full `<svg>` document and
+ * returns the inner markup suitable for nesting inside a variant group.
+ */
+function extractPartFragment(asset: string): string {
+  const match = /<svg\b[^>]*>([\s\S]*)<\/svg\s*>/i.exec(asset);
+  return (match?.[1] ?? asset).trim();
+}
+
+function buildVariantGroup(
+  partSlot: PartSlotKey,
+  partId: string,
+  fragment: string
+): string {
+  return `<g ${PART_VARIANT_SLOT_ATTR}="${escapeAttribute(partSlot)}" ${PART_VARIANT_ID_ATTR}="${escapeAttribute(partId)}">${fragment}</g>`;
+}
+
+interface SvgReplacement {
+  start: number;
+  end: number;
+  text: string;
+}
+
+/**
+ * Injects part asset fragments that are not already present as baked variant
+ * groups into their `data-kugutu-slot-mount` elements.
+ */
+function injectPartAssets(
+  svgText: string,
+  document: CharacterDefinition,
+  partAssets: Record<string, string> | undefined
+): string {
+  if (!document.parts || !partAssets) {
+    return svgText;
+  }
+
+  const groupsBySlot = new Map<PartSlotKey, string[]>();
+
+  for (const [partId, item] of Object.entries(document.parts.catalog)) {
+    const fragment = partAssets[partId];
+    if (fragment === undefined || hasVariantGroup(svgText, partId)) {
+      continue;
+    }
+
+    const groups = groupsBySlot.get(item.slot) ?? [];
+    groups.push(buildVariantGroup(item.slot, partId, extractPartFragment(fragment)));
+    groupsBySlot.set(item.slot, groups);
+  }
+
+  if (groupsBySlot.size === 0) {
+    return svgText;
+  }
+
+  const replacements: SvgReplacement[] = [];
+
+  for (const [partSlot, groups] of groupsBySlot.entries()) {
+    const mount = findElementRangeByAttribute(
+      svgText,
+      PART_SLOT_MOUNT_ATTR,
+      partSlot
+    );
+
+    if (!mount) {
+      throw new Error(
+        `Cannot inject part asset(s) for "${partSlot}": the base SVG has no <${"g"} ${PART_SLOT_MOUNT_ATTR}="${partSlot}"> mount element.`
+      );
+    }
+
+    const element = svgText.slice(mount.start, mount.end);
+    const injected = groups.join("");
+
+    if (/\/\s*>$/.test(element)) {
+      const openOnly = element.replace(/\/\s*>$/, ">");
+      replacements.push({
+        start: mount.start,
+        end: mount.end,
+        text: `${openOnly}${injected}</${mount.tagName}>`,
+      });
+    } else {
+      const closeTag = `</${mount.tagName}>`;
+      const insertAt = svgText.lastIndexOf(closeTag, mount.end);
+      const position = insertAt === -1 ? mount.end : insertAt;
+      replacements.push({ start: position, end: position, text: injected });
+    }
+  }
+
+  replacements.sort((a, b) => b.start - a.start);
+
+  let output = svgText;
+  for (const replacement of replacements) {
+    output = `${output.slice(0, replacement.start)}${replacement.text}${output.slice(replacement.end)}`;
+  }
+
+  return output;
+}
+
+function assertSelectedPartsRenderable(
+  svgText: string,
+  document: CharacterDefinition
+): void {
+  if (!document.parts) {
+    return;
+  }
+
+  const problems: string[] = [];
+
+  for (const [partSlot, selection] of Object.entries(document.parts.selections)) {
+    if (!selection) {
+      continue;
+    }
+
+    if (!hasVariantGroup(svgText, selection.partId)) {
+      problems.push(
+        `parts.selections.${partSlot} selects "${selection.partId}" but no renderable variant exists (expected a <g ${PART_VARIANT_ID_ATTR}="${selection.partId}"> group in the SVG, or a matching part asset to inject).`
+      );
+    }
+  }
+
+  if (problems.length > 0) {
+    throw new Error(`Cannot compose character SVG:\n${formatErrors(problems)}`);
+  }
 }
 
 interface PartNodeInstruction {
@@ -412,19 +577,21 @@ function insertSvgStyle(svgText: string, style: string | undefined): string {
 
 export function composeCharacterSvg(
   document: CharacterDefinition,
-  svgText: string
+  svgText: string,
+  options: ComposeCharacterSvgOptions = {}
 ): string {
   const validation = validateCharacterDefinition(document);
   if (!validation.valid) {
     throw new Error(`Invalid character definition:\n${formatErrors(validation.errors)}`);
   }
 
-  const instructions = collectPartNodeInstructions(document);
-  if (instructions.length === 0) {
-    return svgText;
-  }
+  const injectedSvg = injectPartAssets(svgText, document, options.partAssets);
+  assertSelectedPartsRenderable(injectedSvg, document);
 
-  const wrappedSvg = wrapPartNodes(svgText, instructions);
+  const instructions = collectPartNodeInstructions(document);
+  const wrappedSvg =
+    instructions.length > 0 ? wrapPartNodes(injectedSvg, instructions) : injectedSvg;
+
   return insertSvgStyle(
     wrappedSvg,
     mergeSvgStyles([
@@ -432,6 +599,64 @@ export function composeCharacterSvg(
       buildPartColorStyle(instructions),
     ])
   );
+}
+
+export interface CharacterLintResult {
+  valid: boolean;
+  errors: string[];
+  warnings: string[];
+}
+
+/**
+ * Validates a character definition and, when the SVG is available, checks that
+ * every selected part can actually render. Catches the common trap where a
+ * catalog/CLI-added part is selected but has no SVG representation, which would
+ * otherwise silently produce an invisible character.
+ */
+export function lintCharacter(
+  document: CharacterDefinition,
+  svgText?: string,
+  partAssets?: Record<string, string>
+): CharacterLintResult {
+  const base = validateCharacterDefinition(document);
+  const errors = [...base.errors];
+  const warnings: string[] = [];
+
+  if (svgText !== undefined && base.valid && document.parts) {
+    const renderable = (partId: string, partSlot: PartSlotKey): boolean =>
+      hasVariantGroup(svgText, partId) ||
+      (partAssets?.[partId] !== undefined && hasSlotMount(svgText, partSlot));
+
+    for (const [partSlot, selection] of Object.entries(document.parts.selections)) {
+      if (!selection) {
+        continue;
+      }
+
+      if (!renderable(selection.partId, partSlot as PartSlotKey)) {
+        errors.push(
+          `parts.selections.${partSlot} selects "${selection.partId}" but it has no renderable SVG (no <g ${PART_VARIANT_ID_ATTR}="${selection.partId}"> group and no mountable part asset).`
+        );
+      }
+    }
+
+    for (const [partId, item] of Object.entries(document.parts.catalog)) {
+      if (hasVariantGroup(svgText, partId)) {
+        continue;
+      }
+
+      if (partAssets?.[partId] === undefined) {
+        warnings.push(
+          `parts.catalog.${partId} has no SVG variant group and no part asset on disk; selecting it would render nothing.`
+        );
+      } else if (!hasSlotMount(svgText, item.slot)) {
+        warnings.push(
+          `parts.catalog.${partId} has an asset but the SVG has no <g ${PART_SLOT_MOUNT_ATTR}="${item.slot}"> mount to inject it into.`
+        );
+      }
+    }
+  }
+
+  return { valid: errors.length === 0, errors, warnings };
 }
 
 export function buildCharacterBundle(document: CharacterDefinition): CharBundle {
@@ -476,10 +701,12 @@ export function buildCharacterBundle(document: CharacterDefinition): CharBundle 
 export function buildCharacterPack(
   document: CharacterDefinition,
   svgText: string,
-  options: { includeSource?: boolean } = {}
+  options: { includeSource?: boolean; partAssets?: Record<string, string> } = {}
 ): CharPack {
   const characterDocument = JSON.parse(JSON.stringify(document)) as CharacterDefinition;
-  const composedSvg = composeCharacterSvg(characterDocument, svgText);
+  const composedSvg = composeCharacterSvg(characterDocument, svgText, {
+    ...(options.partAssets ? { partAssets: options.partAssets } : {}),
+  });
   const pack: CharPack = {
     packVersion: CHARPACK_VERSION,
     bundle: buildCharacterBundle(characterDocument),

@@ -1,5 +1,5 @@
-import { createCharacterPlayer } from "../../../packages/runtime-web/src/index.js";
-import type { CharBundle } from "../../../packages/schema/src/index.js";
+import { createCharacterPlayer } from "@kugutu/runtime-web";
+import type { CharBundle } from "@kugutu/schema";
 
 async function fetchText(url: string): Promise<string> {
   const response = await fetch(url);

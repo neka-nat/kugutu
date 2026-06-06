@@ -1,5 +1,11 @@
 {
   "name": "@kugutu/studio",
   "version": "0.1.0",
-  "type": "module"
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@kugutu/compiler": "workspace:*",
+    "@kugutu/runtime-web": "workspace:*",
+    "@kugutu/schema": "workspace:*"
+  }
 }

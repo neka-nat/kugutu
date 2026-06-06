@@ -11,10 +11,10 @@ import {
   createCharacterPlayer,
   createCharacterPlayerFromPack,
   type CharacterPlayer,
-} from "../../runtime-web/src/index.js";
-import type { CharBundle, CharPack } from "../../schema/src/index.js";
+} from "@kugutu/runtime-web";
+import type { CharBundle, CharPack } from "@kugutu/schema";
 
-export type { CharacterPlayer, LookAtPoint } from "../../runtime-web/src/index.js";
+export type { CharacterPlayer, LookAtPoint } from "@kugutu/runtime-web";
 
 export interface KugutuCharacterProps {
   bundle: CharBundle;
