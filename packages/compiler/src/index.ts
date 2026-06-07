@@ -3,6 +3,13 @@ import {
   CHARBUNDLE_VERSION,
   CHARPACK_VERSION,
   CHARACTER_SCHEMA_VERSION,
+  DEFAULT_EXPRESSIONS,
+  DEFAULT_GESTURES,
+  DEFAULT_VISEMES,
+  PART_SLOT_DEFINITIONS,
+  composeAnchorPartTransform,
+  composePartNodeTransform,
+  resolvePartTransform,
   validateCharacterDefinition,
   type BehaviorType,
   type CharBundle,
@@ -10,6 +17,8 @@ import {
   type CharPack,
   type CharacterBehavior,
   type CharacterDefinition,
+  type CharacterExpression,
+  type CharacterGesture,
   type CharacterPartCatalogItem,
   type CharacterParts,
   type CompiledBehavior,
@@ -17,6 +26,7 @@ import {
   type PartTransform,
   type SlotBindingMap,
   type SlotKey,
+  type VisemeMap,
   SLOT_DEFINITIONS,
 } from "@kugutu/schema";
 
@@ -79,7 +89,8 @@ function compileBehavior(
 }
 
 function deriveRuntimeApi(
-  behaviors: CharacterBehavior[]
+  behaviors: CharacterBehavior[],
+  options: { hasParts: boolean; hasGestures: boolean; hasMouth: boolean }
 ): CharBundleRuntimeApiMethod[] {
   const api = new Set<CharBundleRuntimeApiMethod>(["playBehavior", "setEmotion"]);
 
@@ -93,7 +104,80 @@ function deriveRuntimeApi(
     }
   }
 
+  if (options.hasParts) {
+    api.add("setPart");
+    api.add("setVariant");
+    api.add("tunePart");
+  }
+
+  if (options.hasGestures) {
+    api.add("playGesture");
+  }
+
+  if (options.hasMouth) {
+    api.add("speak");
+  }
+
   return CHARBUNDLE_API_METHODS.filter((method) => api.has(method));
+}
+
+/** Bakes the effective viseme library (defaults overridden by author entries). */
+function compileVisemes(document: CharacterDefinition): VisemeMap {
+  const merged: VisemeMap = { ...DEFAULT_VISEMES, ...(document.visemes ?? {}) };
+  return JSON.parse(JSON.stringify(merged)) as VisemeMap;
+}
+
+function mergeById<T extends { id: string }>(
+  defaults: readonly T[],
+  overrides: readonly T[] | undefined
+): T[] {
+  const byId = new Map<string, T>();
+  for (const item of defaults) {
+    byId.set(item.id, item);
+  }
+  for (const item of overrides ?? []) {
+    byId.set(item.id, item);
+  }
+  return [...byId.values()];
+}
+
+/**
+ * Bakes the effective expression library into the bundle: built-in defaults
+ * overridden/extended by author entries, with poses pruned to slots the
+ * character actually binds so the runtime never references a missing slot.
+ */
+function compileExpressions(document: CharacterDefinition): CharacterExpression[] {
+  const slots = document.slots ?? {};
+  const result: CharacterExpression[] = [];
+
+  for (const expression of mergeById(DEFAULT_EXPRESSIONS, document.expressions)) {
+    const poses = expression.poses.filter((pose) => Boolean(slots[pose.slot]));
+    if (poses.length > 0) {
+      result.push({ id: expression.id, poses });
+    }
+  }
+
+  return JSON.parse(JSON.stringify(result)) as CharacterExpression[];
+}
+
+/** Same as {@link compileExpressions} but for time-based gestures. */
+function compileGestures(document: CharacterDefinition): CharacterGesture[] {
+  const slots = document.slots ?? {};
+  const result: CharacterGesture[] = [];
+
+  for (const gesture of mergeById(DEFAULT_GESTURES, document.gestures)) {
+    const tracks = gesture.tracks.filter((track) => Boolean(slots[track.slot]));
+    if (tracks.length > 0) {
+      result.push({
+        id: gesture.id,
+        durationMs: gesture.durationMs,
+        ...(gesture.loop !== undefined ? { loop: gesture.loop } : {}),
+        tracks,
+      });
+    }
+  }
+
+  return JSON.parse(JSON.stringify(result)) as CharacterGesture[];
 }
 
 function cloneParts(parts: CharacterParts | undefined): CharacterParts | undefined {
@@ -118,49 +202,6 @@ function escapeAttribute(value: string): string {
     .replace(/"/g, "&quot;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
-}
-
-function formatSvgNumber(value: number): string {
-  const rounded = Math.round(value * 1000) / 1000;
-  return Object.is(rounded, -0) ? "0" : String(rounded);
-}
-
-function mergePartTransform(
-  catalogItem: CharacterPartCatalogItem,
-  selectionTransform: PartTransform | undefined
-): PartTransform {
-  return {
-    ...(catalogItem.defaults ?? {}),
-    ...(selectionTransform ?? {}),
-  };
-}
-
-function buildNodeTransform(slotKey: SlotKey, transform: PartTransform): string | undefined {
-  const spacing = transform.spacing ?? 0;
-  const side = SLOT_DEFINITIONS[slotKey].side;
-  const spacingOffset =
-    side === "left" ? -spacing / 2 : side === "right" ? spacing / 2 : 0;
-  const x = (transform.x ?? 0) + spacingOffset;
-  const y = transform.y ?? 0;
-  const rotation = transform.rotation ?? 0;
-  const baseScale = transform.scale ?? 1;
-  const scaleX = baseScale * (transform.scaleX ?? 1);
-  const scaleY = baseScale * (transform.scaleY ?? 1);
-  const operations: string[] = [];
-
-  if (x !== 0 || y !== 0) {
-    operations.push(`translate(${formatSvgNumber(x)} ${formatSvgNumber(y)})`);
-  }
-
-  if (rotation !== 0) {
-    operations.push(`rotate(${formatSvgNumber(rotation)})`);
-  }
-
-  if (scaleX !== 1 || scaleY !== 1) {
-    operations.push(`scale(${formatSvgNumber(scaleX)} ${formatSvgNumber(scaleY)})`);
-  }
-
-  return operations.length > 0 ? operations.join(" ") : undefined;
 }
 
 interface SvgElementRange {
@@ -231,6 +272,36 @@ function findElementRangeById(
   return findElementRangeByAttribute(svgText, "id", nodeId);
 }
 
+/** Finds every element whose attribute equals the value (e.g. paired mounts). */
+function findAllElementRangesByAttribute(
+  svgText: string,
+  attrName: string,
+  attrValue: string
+): SvgElementRange[] {
+  const ranges: SvgElementRange[] = [];
+  let offset = 0;
+
+  while (offset < svgText.length) {
+    const range = findElementRangeByAttribute(
+      svgText.slice(offset),
+      attrName,
+      attrValue
+    );
+    if (!range) {
+      break;
+    }
+
+    ranges.push({
+      start: range.start + offset,
+      end: range.end + offset,
+      tagName: range.tagName,
+    });
+    offset += range.end;
+  }
+
+  return ranges;
+}
+
 const PART_VARIANT_SLOT_ATTR = "data-kugutu-variant-slot";
 const PART_VARIANT_ID_ATTR = "data-kugutu-variant-id";
 const PART_SLOT_MOUNT_ATTR = "data-kugutu-slot-mount";
@@ -270,12 +341,88 @@ function extractPartFragment(asset: string): string {
   return (match?.[1] ?? asset).trim();
 }
 
+/** The baked transform/color of a selected anchor part (no `nodes`). */
+interface AnchorSelection {
+  partSlot: PartSlotKey;
+  partId: string;
+  transform: string | undefined;
+  color: string | undefined;
+}
+
+/**
+ * Resolves transform/color for selected anchor parts (catalog items with no
+ * `nodes`, placed at slot mounts). Keyed by part id since that is how injected
+ * variant groups are identified.
+ */
+function collectAnchorSelections(
+  document: CharacterDefinition
+): Map<string, AnchorSelection> {
+  const byPartId = new Map<string, AnchorSelection>();
+  if (!document.parts) {
+    return byPartId;
+  }
+
+  for (const [partSlotValue, selection] of Object.entries(document.parts.selections)) {
+    if (!selection) {
+      continue;
+    }
+
+    const partSlot = partSlotValue as PartSlotKey;
+    const item = document.parts.catalog[selection.partId];
+    if (!item || item.nodes) {
+      continue;
+    }
+
+    const paired = PART_SLOT_DEFINITIONS[partSlot]?.paired ?? false;
+    const resolved = resolvePartTransform(item.defaults, selection.transform);
+    byPartId.set(selection.partId, {
+      partSlot,
+      partId: selection.partId,
+      transform: composeAnchorPartTransform(paired, resolved),
+      color: selection.transform?.color,
+    });
+  }
+
+  return byPartId;
+}
+
 function buildVariantGroup(
   partSlot: PartSlotKey,
   partId: string,
-  fragment: string
+  fragment: string,
+  anchor: AnchorSelection | undefined
 ): string {
-  return `<g ${PART_VARIANT_SLOT_ATTR}="${escapeAttribute(partSlot)}" ${PART_VARIANT_ID_ATTR}="${escapeAttribute(partId)}">${fragment}</g>`;
+  const attributes = [
+    `${PART_VARIANT_SLOT_ATTR}="${escapeAttribute(partSlot)}"`,
+    `${PART_VARIANT_ID_ATTR}="${escapeAttribute(partId)}"`,
+  ];
+
+  if (anchor?.color) {
+    attributes.push(`data-kugutu-part-color="${escapeAttribute(partId)}"`);
+  }
+  if (anchor?.transform) {
+    attributes.push(`transform="${escapeAttribute(anchor.transform)}"`);
+  }
+
+  return `<g ${attributes.join(" ")}>${fragment}</g>`;
+}
+
+function buildAnchorColorStyle(
+  anchors: Map<string, AnchorSelection>
+): string | undefined {
+  const rules: string[] = [];
+
+  for (const selection of anchors.values()) {
+    if (!selection.color) {
+      continue;
+    }
+
+    const selector = `[data-kugutu-part-color="${escapeAttribute(selection.partId)}"]`;
+    rules.push(`${selector} [fill]:not([fill="none"]) { fill: ${selection.color}; }`);
+    rules.push(`${selector} [stroke]:not([stroke="none"]) { stroke: ${selection.color}; }`);
+  }
+
+  return rules.length > 0 ? rules.join("\n") : undefined;
 }
 
 interface SvgReplacement {
@@ -285,8 +432,10 @@ interface SvgReplacement {
 }
 
 /**
- * Injects part asset fragments that are not already present as baked variant
- * groups into their `data-kugutu-slot-mount` elements.
+ * Injects part asset fragments (that have no baked variant group) into every
+ * matching `data-kugutu-slot-mount` element — paired slots like `eye`/`brow`
+ * have two mounts (the right one mirrored), so a single part fragment is placed
+ * on both sides. The selected part's transform/color is baked onto its group.
  */
 function injectPartAssets(
   svgText: string,
@@ -297,6 +446,7 @@ function injectPartAssets(
     return svgText;
   }
 
+  const anchors = collectAnchorSelections(document);
   const groupsBySlot = new Map<PartSlotKey, string[]>();
 
   for (const [partId, item] of Object.entries(document.parts.catalog)) {
@@ -306,7 +456,14 @@ function injectPartAssets(
     }
 
     const groups = groupsBySlot.get(item.slot) ?? [];
-    groups.push(buildVariantGroup(item.slot, partId, extractPartFragment(fragment)));
+    groups.push(
+      buildVariantGroup(
+        item.slot,
+        partId,
+        extractPartFragment(fragment),
+        anchors.get(partId)
+      )
+    );
     groupsBySlot.set(item.slot, groups);
   }
 
@@ -317,33 +474,36 @@ function injectPartAssets(
   const replacements: SvgReplacement[] = [];
 
   for (const [partSlot, groups] of groupsBySlot.entries()) {
-    const mount = findElementRangeByAttribute(
+    const mounts = findAllElementRangesByAttribute(
       svgText,
       PART_SLOT_MOUNT_ATTR,
       partSlot
     );
 
-    if (!mount) {
+    if (mounts.length === 0) {
       throw new Error(
         `Cannot inject part asset(s) for "${partSlot}": the base SVG has no <${"g"} ${PART_SLOT_MOUNT_ATTR}="${partSlot}"> mount element.`
       );
     }
 
-    const element = svgText.slice(mount.start, mount.end);
     const injected = groups.join("");
 
-    if (/\/\s*>$/.test(element)) {
-      const openOnly = element.replace(/\/\s*>$/, ">");
-      replacements.push({
-        start: mount.start,
-        end: mount.end,
-        text: `${openOnly}${injected}</${mount.tagName}>`,
-      });
-    } else {
-      const closeTag = `</${mount.tagName}>`;
-      const insertAt = svgText.lastIndexOf(closeTag, mount.end);
-      const position = insertAt === -1 ? mount.end : insertAt;
-      replacements.push({ start: position, end: position, text: injected });
+    for (const mount of mounts) {
+      const element = svgText.slice(mount.start, mount.end);
+
+      if (/\/\s*>$/.test(element)) {
+        const openOnly = element.replace(/\/\s*>$/, ">");
+        replacements.push({
+          start: mount.start,
+          end: mount.end,
+          text: `${openOnly}${injected}</${mount.tagName}>`,
+        });
+      } else {
+        const closeTag = `</${mount.tagName}>`;
+        const insertAt = svgText.lastIndexOf(closeTag, mount.end);
+        const position = insertAt === -1 ? mount.end : insertAt;
+        replacements.push({ start: position, end: position, text: injected });
+      }
     }
   }
 
@@ -413,7 +573,7 @@ function collectPartNodeInstructions(
       continue;
     }
 
-    const transform = mergePartTransform(catalogItem, selection.transform);
+    const transform = resolvePartTransform(catalogItem.defaults, selection.transform);
 
     for (const [slotKeyValue, nodeId] of Object.entries(catalogItem.nodes)) {
       if (!nodeId) {
@@ -426,7 +586,7 @@ function collectPartNodeInstructions(
         partId: selection.partId,
         slotKey,
         nodeId,
-        transform: buildNodeTransform(slotKey, transform),
+        transform: composePartNodeTransform(slotKey, transform),
         color: selection.transform?.color,
       });
     }
@@ -597,6 +757,7 @@ export function composeCharacterSvg(
     mergeSvgStyles([
       buildPartVariantVisibilityStyle(document.parts),
       buildPartColorStyle(instructions),
+      buildAnchorColorStyle(collectAnchorSelections(document)),
     ])
   );
 }
@@ -665,6 +826,12 @@ export function buildCharacterBundle(document: CharacterDefinition): CharBundle 
     throw new Error(`Invalid character definition:\n${formatErrors(validation.errors)}`);
   }
 
+  const expressions = compileExpressions(document);
+  const gestures = compileGestures(document);
+  const visemes = compileVisemes(document);
+  const hasParts = Object.keys(document.parts?.catalog ?? {}).length > 0;
+  const hasMouth = Boolean(document.slots?.mouth);
+
   const bundle: CharBundle = {
     bundleVersion: CHARBUNDLE_VERSION,
     sourceSchemaVersion: CHARACTER_SCHEMA_VERSION,
@@ -685,8 +852,15 @@ export function buildCharacterBundle(document: CharacterDefinition): CharBundle 
     behaviors: document.behaviors.map((behavior) =>
       compileBehavior(behavior, document.slots)
     ),
+    expressions,
+    gestures,
+    visemes,
     runtime: {
-      api: deriveRuntimeApi(document.behaviors),
+      api: deriveRuntimeApi(document.behaviors, {
+        hasParts,
+        hasGestures: gestures.length > 0,
+        hasMouth,
+      }),
     },
   };
 
@@ -726,6 +900,10 @@ export function buildCharacterPack(
 
   if (options.includeSource ?? true) {
     pack.source = characterDocument;
+  }
+
+  if (options.partAssets && Object.keys(options.partAssets).length > 0) {
+    pack.partAssets = { ...options.partAssets };
   }
 
   return pack;

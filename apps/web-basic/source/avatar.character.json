@@ -1,0 +1,202 @@
+{
+  "$schema": "../../../packages/schema/character.schema.json",
+  "schemaVersion": "0.1.0",
+  "character": {
+    "id": "kugutu-mascot",
+    "displayName": "Kugutu Mascot",
+    "template": "avatar-lite"
+  },
+  "assets": {
+    "primary": "../public/avatar.svg"
+  },
+  "slots": {
+    "head": "head_group",
+    "eye.l": "eye_left",
+    "eye.r": "eye_right",
+    "brow.l": "brow_left",
+    "brow.r": "brow_right",
+    "nose": "nose_node",
+    "mouth": "mouth_group",
+    "hair.front": "hair_front",
+    "hair.back": "hair_back",
+    "neck": "neck_group",
+    "torso": "torso_group"
+  },
+  "parts": {
+    "catalog": {
+      "face-round": {
+        "id": "face-round", "slot": "face", "displayName": "Round face",
+        "asset": "parts/face/face-round.svg",
+        "editable": ["scale", "color"], "defaults": { "scale": 1 }
+      },
+      "face-oval": {
+        "id": "face-oval", "slot": "face", "displayName": "Oval face",
+        "asset": "parts/face/face-oval.svg",
+        "editable": ["scale", "color"], "defaults": { "scale": 1 }
+      },
+      "eye-round": {
+        "id": "eye-round", "slot": "eye", "displayName": "Round eyes",
+        "asset": "parts/eye/eye-round.svg",
+        "editable": ["scale", "spacing", "rotation", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "eye-wide": {
+        "id": "eye-wide", "slot": "eye", "displayName": "Wide eyes",
+        "asset": "parts/eye/eye-wide.svg",
+        "editable": ["scale", "spacing", "rotation", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "eye-sleepy": {
+        "id": "eye-sleepy", "slot": "eye", "displayName": "Sleepy eyes",
+        "asset": "parts/eye/eye-sleepy.svg",
+        "editable": ["scale", "spacing", "rotation", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "eye-sharp": {
+        "id": "eye-sharp", "slot": "eye", "displayName": "Sharp eyes",
+        "asset": "parts/eye/eye-sharp.svg",
+        "editable": ["scale", "spacing", "rotation", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "eye-happy": {
+        "id": "eye-happy", "slot": "eye", "displayName": "Happy eyes",
+        "asset": "parts/eye/eye-happy.svg",
+        "editable": ["scale", "spacing", "rotation", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "brow-soft": {
+        "id": "brow-soft", "slot": "brow", "displayName": "Soft brows",
+        "asset": "parts/brow/brow-soft.svg",
+        "editable": ["scale", "rotation", "spacing", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "brow-raised": {
+        "id": "brow-raised", "slot": "brow", "displayName": "Raised brows",
+        "asset": "parts/brow/brow-raised.svg",
+        "editable": ["scale", "rotation", "spacing", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "brow-flat": {
+        "id": "brow-flat", "slot": "brow", "displayName": "Flat brows",
+        "asset": "parts/brow/brow-flat.svg",
+        "editable": ["scale", "rotation", "spacing", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "brow-angry": {
+        "id": "brow-angry", "slot": "brow", "displayName": "Angry brows",
+        "asset": "parts/brow/brow-angry.svg",
+        "editable": ["scale", "rotation", "spacing", "color"], "defaults": { "scale": 1, "spacing": 0 }
+      },
+      "nose-dot": {
+        "id": "nose-dot", "slot": "nose", "displayName": "Dot nose",
+        "asset": "parts/nose/nose-dot.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "nose-button": {
+        "id": "nose-button", "slot": "nose", "displayName": "Button nose",
+        "asset": "parts/nose/nose-button.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "nose-line": {
+        "id": "nose-line", "slot": "nose", "displayName": "Line nose",
+        "asset": "parts/nose/nose-line.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "mouth-smile": {
+        "id": "mouth-smile", "slot": "mouth", "displayName": "Smile",
+        "asset": "parts/mouth/mouth-smile.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "mouth-grin": {
+        "id": "mouth-grin", "slot": "mouth", "displayName": "Grin",
+        "asset": "parts/mouth/mouth-grin.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "mouth-open": {
+        "id": "mouth-open", "slot": "mouth", "displayName": "Open",
+        "asset": "parts/mouth/mouth-open.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "mouth-neutral": {
+        "id": "mouth-neutral", "slot": "mouth", "displayName": "Neutral",
+        "asset": "parts/mouth/mouth-neutral.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "mouth-frown": {
+        "id": "mouth-frown", "slot": "mouth", "displayName": "Frown",
+        "asset": "parts/mouth/mouth-frown.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-front-bangs": {
+        "id": "hair-front-bangs", "slot": "hair.front", "displayName": "Bangs",
+        "asset": "parts/hair.front/hair-front-bangs.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-front-side": {
+        "id": "hair-front-side", "slot": "hair.front", "displayName": "Side swept",
+        "asset": "parts/hair.front/hair-front-side.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-front-spiky": {
+        "id": "hair-front-spiky", "slot": "hair.front", "displayName": "Spiky",
+        "asset": "parts/hair.front/hair-front-spiky.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-front-none": {
+        "id": "hair-front-none", "slot": "hair.front", "displayName": "None",
+        "asset": "parts/hair.front/hair-front-none.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-back-bob": {
+        "id": "hair-back-bob", "slot": "hair.back", "displayName": "Bob",
+        "asset": "parts/hair.back/hair-back-bob.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-back-long": {
+        "id": "hair-back-long", "slot": "hair.back", "displayName": "Long",
+        "asset": "parts/hair.back/hair-back-long.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-back-none": {
+        "id": "hair-back-none", "slot": "hair.back", "displayName": "None",
+        "asset": "parts/hair.back/hair-back-none.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "outfit-tee": {
+        "id": "outfit-tee", "slot": "outfit", "displayName": "Tee",
+        "asset": "parts/outfit/outfit-tee.svg",
+        "editable": ["position", "scale", "color"], "defaults": { "scale": 1 }
+      },
+      "outfit-collar": {
+        "id": "outfit-collar", "slot": "outfit", "displayName": "Collar tee",
+        "asset": "parts/outfit/outfit-collar.svg",
+        "editable": ["position", "scale", "color"], "defaults": { "scale": 1 }
+      },
+      "outfit-hoodie": {
+        "id": "outfit-hoodie", "slot": "outfit", "displayName": "Hoodie",
+        "asset": "parts/outfit/outfit-hoodie.svg",
+        "editable": ["position", "scale", "color"], "defaults": { "scale": 1 }
+      }
+    },
+    "selections": {
+      "face": { "partId": "face-round" },
+      "hair.back": { "partId": "hair-back-bob" },
+      "hair.front": { "partId": "hair-front-bangs" },
+      "eye": { "partId": "eye-round" },
+      "brow": { "partId": "brow-soft" },
+      "nose": { "partId": "nose-dot" },
+      "mouth": { "partId": "mouth-smile" },
+      "outfit": { "partId": "outfit-tee" }
+    }
+  },
+  "behaviors": [
+    {
+      "id": "blink-default", "type": "blink", "targets": ["eye.l", "eye.r"],
+      "params": { "closeMs": 110, "openMs": 130, "minIntervalMs": 2600, "maxIntervalMs": 4800 }
+    },
+    {
+      "id": "look-at-default", "type": "look-at", "targets": ["eye.l", "eye.r", "head", "neck"],
+      "params": { "radiusX": 0.16, "radiusY": 0.1, "headFollow": 0.3, "smoothing": 0.2 }
+    },
+    {
+      "id": "breathing-default", "type": "breathing", "targets": ["torso", "neck", "head"],
+      "params": { "cycleMs": 3400, "amplitudeY": 0.05, "torsoTiltDeg": 1.2 }
+    },
+    {
+      "id": "mouth-open-default", "type": "mouth-open", "targets": ["mouth"],
+      "params": { "maxOpen": 0.9, "smoothing": 0.25 }
+    }
+  ]
+}

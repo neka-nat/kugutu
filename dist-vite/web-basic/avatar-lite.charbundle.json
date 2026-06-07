@@ -2,7 +2,7 @@
   "bundleVersion": "0.1.0",
   "sourceSchemaVersion": "0.1.0",
   "character": {
-    "id": "web-basic-mascot",
+    "id": "kugutu-mascot",
     "template": "avatar-lite"
   },
   "assets": [
@@ -17,11 +17,9 @@
       "head": "transform.head_group",
       "eye.l": "transform.eye_left",
       "eye.r": "transform.eye_right",
-      "pupil.l": "transform.pupil_left",
-      "pupil.r": "transform.pupil_right",
       "brow.l": "transform.brow_left",
       "brow.r": "transform.brow_right",
-      "nose": "transform.nose",
+      "nose": "transform.nose_node",
       "mouth": "transform.mouth_group",
       "hair.front": "transform.hair_front",
       "hair.back": "transform.hair_back",
@@ -38,10 +36,10 @@
         "transform.eye_right.scaleY"
       ],
       "params": {
-        "closeMs": 120,
-        "openMs": 140,
-        "minIntervalMs": 2500,
-        "maxIntervalMs": 4500
+        "closeMs": 110,
+        "openMs": 130,
+        "minIntervalMs": 2600,
+        "maxIntervalMs": 4800
       }
     },
     {
@@ -50,15 +48,13 @@
       "channels": [
         "transform.eye_left.translate",
         "transform.eye_right.translate",
-        "transform.pupil_left.translate",
-        "transform.pupil_right.translate",
         "transform.head_group.rotate",
         "transform.neck_group.rotate"
       ],
       "params": {
-        "radiusX": 0.18,
-        "radiusY": 0.12,
-        "headFollow": 0.35,
+        "radiusX": 0.16,
+        "radiusY": 0.1,
+        "headFollow": 0.3,
         "smoothing": 0.2
       }
     },
@@ -71,9 +67,9 @@
         "transform.head_group.rotate"
       ],
       "params": {
-        "cycleMs": 3200,
-        "amplitudeY": 0.06,
-        "torsoTiltDeg": 1.5
+        "cycleMs": 3400,
+        "amplitudeY": 0.05,
+        "torsoTiltDeg": 1.2
       }
     },
     {
@@ -84,586 +80,360 @@
       ],
       "params": {
         "maxOpen": 0.9,
-        "smoothing": 0.2
+        "smoothing": 0.25
       }
     }
   ],
+  "expressions": [
+    {
+      "id": "happy",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "rotate": -8
+        },
+        {
+          "slot": "brow.r",
+          "rotate": 8
+        },
+        {
+          "slot": "mouth",
+          "scaleY": 0.12
+        }
+      ]
+    },
+    {
+      "id": "sad",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "rotate": 6
+        },
+        {
+          "slot": "brow.r",
+          "rotate": -6
+        }
+      ]
+    },
+    {
+      "id": "angry",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "rotate": 10
+        },
+        {
+          "slot": "brow.r",
+          "rotate": -10
+        }
+      ]
+    },
+    {
+      "id": "surprised",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "translateY": -6
+        },
+        {
+          "slot": "brow.r",
+          "translateY": -6
+        },
+        {
+          "slot": "mouth",
+          "scaleY": 0.25
+        }
+      ]
+    }
+  ],
+  "gestures": [
+    {
+      "id": "nod",
+      "durationMs": 620,
+      "tracks": [
+        {
+          "slot": "head",
+          "keyframes": [
+            {
+              "t": 0,
+              "translateY": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "translateY": 8,
+              "rotate": 3
+            },
+            {
+              "t": 1,
+              "translateY": 0,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shake",
+      "durationMs": 640,
+      "tracks": [
+        {
+          "slot": "head",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.25,
+              "rotate": -7
+            },
+            {
+              "t": 0.5,
+              "rotate": 7
+            },
+            {
+              "t": 0.75,
+              "rotate": -5
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bounce",
+      "durationMs": 560,
+      "tracks": [
+        {
+          "slot": "torso",
+          "keyframes": [
+            {
+              "t": 0,
+              "translateY": 0
+            },
+            {
+              "t": 0.45,
+              "translateY": -9
+            },
+            {
+              "t": 1,
+              "translateY": 0
+            }
+          ]
+        },
+        {
+          "slot": "head",
+          "keyframes": [
+            {
+              "t": 0,
+              "translateY": 0
+            },
+            {
+              "t": 0.45,
+              "translateY": -9
+            },
+            {
+              "t": 1,
+              "translateY": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "visemes": {
+    "sil": {
+      "open": 0,
+      "width": 1
+    },
+    "PP": {
+      "open": 0,
+      "width": 0.95
+    },
+    "FF": {
+      "open": 0.15,
+      "width": 1
+    },
+    "TH": {
+      "open": 0.25,
+      "width": 1
+    },
+    "DD": {
+      "open": 0.3,
+      "width": 1
+    },
+    "kk": {
+      "open": 0.3,
+      "width": 1
+    },
+    "CH": {
+      "open": 0.25,
+      "width": 0.9
+    },
+    "SS": {
+      "open": 0.15,
+      "width": 1.05
+    },
+    "nn": {
+      "open": 0.2,
+      "width": 1
+    },
+    "RR": {
+      "open": 0.3,
+      "width": 0.9
+    },
+    "aa": {
+      "open": 0.9,
+      "width": 1.1
+    },
+    "E": {
+      "open": 0.5,
+      "width": 1.15
+    },
+    "I": {
+      "open": 0.35,
+      "width": 1.1
+    },
+    "O": {
+      "open": 0.6,
+      "width": 0.8
+    },
+    "U": {
+      "open": 0.4,
+      "width": 0.7
+    }
+  },
   "runtime": {
     "api": [
       "lookAt",
       "playBehavior",
+      "playGesture",
       "setEmotion",
-      "setMouthOpen"
+      "setMouthOpen",
+      "setPart",
+      "setVariant",
+      "speak",
+      "tunePart"
     ]
   },
   "parts": {
     "catalog": {
-      "face-soft-01": {
-        "id": "face-soft-01",
+      "face-round": {
+        "id": "face-round",
         "slot": "face",
-        "displayName": "Soft face",
-        "asset": "parts/inline/face-soft-01.svg",
-        "nodes": {
-          "head": "face_shape"
-        },
+        "displayName": "Round face",
+        "asset": "parts/face/face-round.svg",
         "editable": [
           "scale",
-          "color",
-          "layer"
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#FFF1F2",
-          "layer": 0
+          "scale": 1
         }
       },
-      "face-warm-01": {
-        "id": "face-warm-01",
+      "face-oval": {
+        "id": "face-oval",
         "slot": "face",
-        "displayName": "Puppet guide face",
-        "asset": "parts/inline/face-warm-01.svg",
-        "nodes": {
-          "head": "face_shape"
-        },
+        "displayName": "Oval face",
+        "asset": "parts/face/face-oval.svg",
         "editable": [
           "scale",
-          "color",
-          "layer"
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#F6BE66",
-          "layer": 0
+          "scale": 1
         }
       },
-      "face-display-01": {
-        "id": "face-display-01",
-        "slot": "face",
-        "displayName": "Robot display face",
-        "asset": "parts/inline/face-display-01.svg",
-        "nodes": {
-          "head": "face_shape"
-        },
-        "editable": [
-          "scale",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#F4E8C6",
-          "layer": 0
-        }
-      },
-      "face-paper-01": {
-        "id": "face-paper-01",
-        "slot": "face",
-        "displayName": "Paper doll face",
-        "asset": "parts/inline/face-paper-01.svg",
-        "nodes": {
-          "head": "face_shape"
-        },
-        "editable": [
-          "scale",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#EBD6AA",
-          "layer": 0
-        }
-      },
-      "face-stage-01": {
-        "id": "face-stage-01",
-        "slot": "face",
-        "displayName": "Stage performer face",
-        "asset": "parts/inline/face-stage-01.svg",
-        "nodes": {
-          "head": "face_shape"
-        },
-        "editable": [
-          "scale",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#FFE0C2",
-          "layer": 0
-        }
-      },
-      "face-dev-01": {
-        "id": "face-dev-01",
-        "slot": "face",
-        "displayName": "Developer face",
-        "asset": "parts/inline/face-dev-01.svg",
-        "nodes": {
-          "head": "face_shape"
-        },
-        "editable": [
-          "scale",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#F2B767",
-          "layer": 0
-        }
-      },
-      "hair-back-none-01": {
-        "id": "hair-back-none-01",
-        "slot": "hair.back",
-        "displayName": "No back hair",
-        "asset": "parts/inline/hair-back-none-01.svg",
-        "nodes": {
-          "hair.back": "hair_back"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#1E293B",
-          "layer": -10
-        }
-      },
-      "hair-back-soft-01": {
-        "id": "hair-back-soft-01",
-        "slot": "hair.back",
-        "displayName": "Soft back hair",
-        "asset": "parts/inline/hair-back-soft-01.svg",
-        "nodes": {
-          "hair.back": "hair_back"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#1E293B",
-          "layer": -10
-        }
-      },
-      "hair-back-puppet-01": {
-        "id": "hair-back-puppet-01",
-        "slot": "hair.back",
-        "displayName": "Puppet back hair",
-        "asset": "parts/inline/hair-back-puppet-01.svg",
-        "nodes": {
-          "hair.back": "hair_back"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#4C1D95",
-          "layer": -10
-        }
-      },
-      "hair-back-bob-01": {
-        "id": "hair-back-bob-01",
-        "slot": "hair.back",
-        "displayName": "Assistant bob back",
-        "asset": "parts/inline/hair-back-bob-01.svg",
-        "nodes": {
-          "hair.back": "hair_back"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#1D4E89",
-          "layer": -10
-        }
-      },
-      "hair-back-paper-01": {
-        "id": "hair-back-paper-01",
-        "slot": "hair.back",
-        "displayName": "Paper doll back hair",
-        "asset": "parts/inline/hair-back-paper-01.svg",
-        "nodes": {
-          "hair.back": "hair_back"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#5A4634",
-          "layer": -10
-        }
-      },
-      "hair-back-stage-01": {
-        "id": "hair-back-stage-01",
-        "slot": "hair.back",
-        "displayName": "Stage back hair",
-        "asset": "parts/inline/hair-back-stage-01.svg",
-        "nodes": {
-          "hair.back": "hair_back"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#111827",
-          "layer": -10
-        }
-      },
-      "hair-back-dev-01": {
-        "id": "hair-back-dev-01",
-        "slot": "hair.back",
-        "displayName": "Developer back hair",
-        "asset": "parts/inline/hair-back-dev-01.svg",
-        "nodes": {
-          "hair.back": "hair_back"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#0F766E",
-          "layer": -10
-        }
-      },
-      "hair-front-none-01": {
-        "id": "hair-front-none-01",
-        "slot": "hair.front",
-        "displayName": "No front hair",
-        "asset": "parts/inline/hair-front-none-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#1E293B",
-          "layer": 10
-        }
-      },
-      "hair-front-soft-01": {
-        "id": "hair-front-soft-01",
-        "slot": "hair.front",
-        "displayName": "Soft bangs",
-        "asset": "parts/inline/hair-front-soft-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#1E293B",
-          "layer": 10
-        }
-      },
-      "hair-front-puppet-01": {
-        "id": "hair-front-puppet-01",
-        "slot": "hair.front",
-        "displayName": "Puppet spikes",
-        "asset": "parts/inline/hair-front-puppet-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#6D28D9",
-          "layer": 10
-        }
-      },
-      "hair-front-leaf-01": {
-        "id": "hair-front-leaf-01",
-        "slot": "hair.front",
-        "displayName": "Robot leaf tuft",
-        "asset": "parts/inline/hair-front-leaf-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#5AC7A6",
-          "layer": 10
-        }
-      },
-      "hair-front-bob-01": {
-        "id": "hair-front-bob-01",
-        "slot": "hair.front",
-        "displayName": "Assistant bob fringe",
-        "asset": "parts/inline/hair-front-bob-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#1D4E89",
-          "layer": 10
-        }
-      },
-      "hair-front-paper-01": {
-        "id": "hair-front-paper-01",
-        "slot": "hair.front",
-        "displayName": "Paper doll fringe",
-        "asset": "parts/inline/hair-front-paper-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#4A3729",
-          "layer": 10
-        }
-      },
-      "hair-front-stage-01": {
-        "id": "hair-front-stage-01",
-        "slot": "hair.front",
-        "displayName": "Stage swoop",
-        "asset": "parts/inline/hair-front-stage-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#111827",
-          "layer": 10
-        }
-      },
-      "hair-front-dev-01": {
-        "id": "hair-front-dev-01",
-        "slot": "hair.front",
-        "displayName": "Developer teal spikes",
-        "asset": "parts/inline/hair-front-dev-01.svg",
-        "nodes": {
-          "hair.front": "hair_front"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color",
-          "layer"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#0F766E",
-          "layer": 10
-        }
-      },
-      "eye-round-01": {
-        "id": "eye-round-01",
+      "eye-round": {
+        "id": "eye-round",
         "slot": "eye",
         "displayName": "Round eyes",
-        "asset": "parts/inline/eye-round-01.svg",
-        "nodes": {
-          "eye.l": "eye_left",
-          "eye.r": "eye_right"
-        },
+        "asset": "parts/eye/eye-round.svg",
         "editable": [
-          "position",
           "scale",
           "spacing",
+          "rotation",
           "color"
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#1E293B"
+          "spacing": 0
         }
       },
-      "eye-puppet-01": {
-        "id": "eye-puppet-01",
+      "eye-wide": {
+        "id": "eye-wide",
         "slot": "eye",
-        "displayName": "Puppet eyes",
-        "asset": "parts/inline/eye-puppet-01.svg",
-        "nodes": {
-          "eye.l": "eye_left",
-          "eye.r": "eye_right"
-        },
+        "displayName": "Wide eyes",
+        "asset": "parts/eye/eye-wide.svg",
         "editable": [
-          "position",
           "scale",
           "spacing",
+          "rotation",
           "color"
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#3A2513"
+          "spacing": 0
         }
       },
-      "eye-screen-01": {
-        "id": "eye-screen-01",
+      "eye-sleepy": {
+        "id": "eye-sleepy",
         "slot": "eye",
-        "displayName": "Screen eyes",
-        "asset": "parts/inline/eye-screen-01.svg",
-        "nodes": {
-          "eye.l": "eye_left",
-          "eye.r": "eye_right"
-        },
+        "displayName": "Sleepy eyes",
+        "asset": "parts/eye/eye-sleepy.svg",
         "editable": [
-          "position",
           "scale",
           "spacing",
+          "rotation",
           "color"
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#A7F3D0"
+          "spacing": 0
         }
       },
-      "eye-paper-01": {
-        "id": "eye-paper-01",
+      "eye-sharp": {
+        "id": "eye-sharp",
         "slot": "eye",
-        "displayName": "Paper doll eyes",
-        "asset": "parts/inline/eye-paper-01.svg",
-        "nodes": {
-          "eye.l": "eye_left",
-          "eye.r": "eye_right"
-        },
+        "displayName": "Sharp eyes",
+        "asset": "parts/eye/eye-sharp.svg",
         "editable": [
-          "position",
           "scale",
           "spacing",
+          "rotation",
           "color"
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#4B3828"
+          "spacing": 0
         }
       },
-      "eye-stage-01": {
-        "id": "eye-stage-01",
+      "eye-happy": {
+        "id": "eye-happy",
         "slot": "eye",
-        "displayName": "Stage eyes",
-        "asset": "parts/inline/eye-stage-01.svg",
-        "nodes": {
-          "eye.l": "eye_left",
-          "eye.r": "eye_right"
-        },
+        "displayName": "Happy eyes",
+        "asset": "parts/eye/eye-happy.svg",
         "editable": [
-          "position",
           "scale",
           "spacing",
+          "rotation",
           "color"
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#4338CA"
+          "spacing": 0
         }
       },
-      "eye-glasses-01": {
-        "id": "eye-glasses-01",
-        "slot": "eye",
-        "displayName": "Developer glasses",
-        "asset": "parts/inline/eye-glasses-01.svg",
-        "nodes": {
-          "eye.l": "eye_left",
-          "eye.r": "eye_right"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "spacing",
-          "color"
-        ],
-        "defaults": {
-          "scale": 1,
-          "spacing": 0,
-          "color": "#0F766E"
-        }
-      },
-      "brow-soft-01": {
-        "id": "brow-soft-01",
+      "brow-soft": {
+        "id": "brow-soft",
         "slot": "brow",
         "displayName": "Soft brows",
-        "asset": "parts/inline/brow-soft-01.svg",
-        "nodes": {
-          "brow.l": "brow_left",
-          "brow.r": "brow_right"
-        },
+        "asset": "parts/brow/brow-soft.svg",
         "editable": [
-          "position",
           "scale",
           "rotation",
           "spacing",
@@ -671,21 +441,15 @@
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#334155"
+          "spacing": 0
         }
       },
-      "brow-rounded-01": {
-        "id": "brow-rounded-01",
+      "brow-raised": {
+        "id": "brow-raised",
         "slot": "brow",
-        "displayName": "Rounded puppet brows",
-        "asset": "parts/inline/brow-rounded-01.svg",
-        "nodes": {
-          "brow.l": "brow_left",
-          "brow.r": "brow_right"
-        },
+        "displayName": "Raised brows",
+        "asset": "parts/brow/brow-raised.svg",
         "editable": [
-          "position",
           "scale",
           "rotation",
           "spacing",
@@ -693,21 +457,15 @@
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#3A2513"
+          "spacing": 0
         }
       },
-      "brow-screen-01": {
-        "id": "brow-screen-01",
+      "brow-flat": {
+        "id": "brow-flat",
         "slot": "brow",
-        "displayName": "Screen brows",
-        "asset": "parts/inline/brow-screen-01.svg",
-        "nodes": {
-          "brow.l": "brow_left",
-          "brow.r": "brow_right"
-        },
+        "displayName": "Flat brows",
+        "asset": "parts/brow/brow-flat.svg",
         "editable": [
-          "position",
           "scale",
           "rotation",
           "spacing",
@@ -715,21 +473,15 @@
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#A7F3D0"
+          "spacing": 0
         }
       },
-      "brow-paper-01": {
-        "id": "brow-paper-01",
+      "brow-angry": {
+        "id": "brow-angry",
         "slot": "brow",
-        "displayName": "Paper doll brows",
-        "asset": "parts/inline/brow-paper-01.svg",
-        "nodes": {
-          "brow.l": "brow_left",
-          "brow.r": "brow_right"
-        },
+        "displayName": "Angry brows",
+        "asset": "parts/brow/brow-angry.svg",
         "editable": [
-          "position",
           "scale",
           "rotation",
           "spacing",
@@ -737,62 +489,14 @@
         ],
         "defaults": {
           "scale": 1,
-          "spacing": 0,
-          "color": "#4B3828"
+          "spacing": 0
         }
       },
-      "brow-stage-01": {
-        "id": "brow-stage-01",
-        "slot": "brow",
-        "displayName": "Stage brows",
-        "asset": "parts/inline/brow-stage-01.svg",
-        "nodes": {
-          "brow.l": "brow_left",
-          "brow.r": "brow_right"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "spacing",
-          "color"
-        ],
-        "defaults": {
-          "scale": 1,
-          "spacing": 0,
-          "color": "#111827"
-        }
-      },
-      "brow-dev-01": {
-        "id": "brow-dev-01",
-        "slot": "brow",
-        "displayName": "Developer brows",
-        "asset": "parts/inline/brow-dev-01.svg",
-        "nodes": {
-          "brow.l": "brow_left",
-          "brow.r": "brow_right"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "spacing",
-          "color"
-        ],
-        "defaults": {
-          "scale": 1,
-          "spacing": 0,
-          "color": "#0F766E"
-        }
-      },
-      "nose-dot-01": {
-        "id": "nose-dot-01",
+      "nose-dot": {
+        "id": "nose-dot",
         "slot": "nose",
-        "displayName": "Subtle nose",
-        "asset": "parts/inline/nose-dot-01.svg",
-        "nodes": {
-          "nose": "nose"
-        },
+        "displayName": "Dot nose",
+        "asset": "parts/nose/nose-dot.svg",
         "editable": [
           "position",
           "scale",
@@ -800,18 +504,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#FDA4AF"
+          "scale": 1
         }
       },
-      "nose-round-01": {
-        "id": "nose-round-01",
+      "nose-button": {
+        "id": "nose-button",
         "slot": "nose",
-        "displayName": "Round puppet nose",
-        "asset": "parts/inline/nose-round-01.svg",
-        "nodes": {
-          "nose": "nose"
-        },
+        "displayName": "Button nose",
+        "asset": "parts/nose/nose-button.svg",
         "editable": [
           "position",
           "scale",
@@ -819,18 +519,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#D97706"
+          "scale": 1
         }
       },
-      "nose-triangle-01": {
-        "id": "nose-triangle-01",
+      "nose-line": {
+        "id": "nose-line",
         "slot": "nose",
-        "displayName": "Paper triangle nose",
-        "asset": "parts/inline/nose-triangle-01.svg",
-        "nodes": {
-          "nose": "nose"
-        },
+        "displayName": "Line nose",
+        "asset": "parts/nose/nose-line.svg",
         "editable": [
           "position",
           "scale",
@@ -838,56 +534,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#D97706"
+          "scale": 1
         }
       },
-      "nose-button-01": {
-        "id": "nose-button-01",
-        "slot": "nose",
-        "displayName": "Stage button nose",
-        "asset": "parts/inline/nose-button-01.svg",
-        "nodes": {
-          "nose": "nose"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#D33B2F"
-        }
-      },
-      "nose-soft-01": {
-        "id": "nose-soft-01",
-        "slot": "nose",
-        "displayName": "Developer nose",
-        "asset": "parts/inline/nose-soft-01.svg",
-        "nodes": {
-          "nose": "nose"
-        },
-        "editable": [
-          "position",
-          "scale",
-          "rotation",
-          "color"
-        ],
-        "defaults": {
-          "scale": 1,
-          "color": "#B96C37"
-        }
-      },
-      "mouth-smile-01": {
-        "id": "mouth-smile-01",
+      "mouth-smile": {
+        "id": "mouth-smile",
         "slot": "mouth",
-        "displayName": "Small smile",
-        "asset": "parts/inline/mouth-smile-01.svg",
-        "nodes": {
-          "mouth": "mouth_group"
-        },
+        "displayName": "Smile",
+        "asset": "parts/mouth/mouth-smile.svg",
         "editable": [
           "position",
           "scale",
@@ -895,18 +549,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#FB7185"
+          "scale": 1
         }
       },
-      "mouth-open-01": {
-        "id": "mouth-open-01",
+      "mouth-grin": {
+        "id": "mouth-grin",
         "slot": "mouth",
-        "displayName": "Open puppet smile",
-        "asset": "parts/inline/mouth-open-01.svg",
-        "nodes": {
-          "mouth": "mouth_group"
-        },
+        "displayName": "Grin",
+        "asset": "parts/mouth/mouth-grin.svg",
         "editable": [
           "position",
           "scale",
@@ -914,18 +564,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#3A0B0B"
+          "scale": 1
         }
       },
-      "mouth-screen-01": {
-        "id": "mouth-screen-01",
+      "mouth-open": {
+        "id": "mouth-open",
         "slot": "mouth",
-        "displayName": "Screen smile",
-        "asset": "parts/inline/mouth-screen-01.svg",
-        "nodes": {
-          "mouth": "mouth_group"
-        },
+        "displayName": "Open",
+        "asset": "parts/mouth/mouth-open.svg",
         "editable": [
           "position",
           "scale",
@@ -933,18 +579,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#A7F3D0"
+          "scale": 1
         }
       },
-      "mouth-paper-01": {
-        "id": "mouth-paper-01",
+      "mouth-neutral": {
+        "id": "mouth-neutral",
         "slot": "mouth",
-        "displayName": "Paper doll smile",
-        "asset": "parts/inline/mouth-paper-01.svg",
-        "nodes": {
-          "mouth": "mouth_group"
-        },
+        "displayName": "Neutral",
+        "asset": "parts/mouth/mouth-neutral.svg",
         "editable": [
           "position",
           "scale",
@@ -952,18 +594,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#4B3828"
+          "scale": 1
         }
       },
-      "mouth-stage-01": {
-        "id": "mouth-stage-01",
+      "mouth-frown": {
+        "id": "mouth-frown",
         "slot": "mouth",
-        "displayName": "Stage smile",
-        "asset": "parts/inline/mouth-stage-01.svg",
-        "nodes": {
-          "mouth": "mouth_group"
-        },
+        "displayName": "Frown",
+        "asset": "parts/mouth/mouth-frown.svg",
         "editable": [
           "position",
           "scale",
@@ -971,18 +609,14 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#411313"
+          "scale": 1
         }
       },
-      "mouth-smirk-01": {
-        "id": "mouth-smirk-01",
-        "slot": "mouth",
-        "displayName": "Developer smirk",
-        "asset": "parts/inline/mouth-smirk-01.svg",
-        "nodes": {
-          "mouth": "mouth_group"
-        },
+      "hair-front-bangs": {
+        "id": "hair-front-bangs",
+        "slot": "hair.front",
+        "displayName": "Bangs",
+        "asset": "parts/hair.front/hair-front-bangs.svg",
         "editable": [
           "position",
           "scale",
@@ -990,165 +624,166 @@
           "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#7C3F1D"
+          "scale": 1
         }
       },
-      "outfit-blue-01": {
-        "id": "outfit-blue-01",
-        "slot": "outfit",
-        "displayName": "Blue outfit",
-        "asset": "parts/inline/outfit-blue-01.svg",
-        "nodes": {
-          "torso": "torso_group"
-        },
+      "hair-front-side": {
+        "id": "hair-front-side",
+        "slot": "hair.front",
+        "displayName": "Side swept",
+        "asset": "parts/hair.front/hair-front-side.svg",
         "editable": [
           "position",
           "scale",
-          "color",
-          "layer"
+          "rotation",
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#93C5FD",
-          "layer": 0
+          "scale": 1
         }
       },
-      "outfit-hoodie-01": {
-        "id": "outfit-hoodie-01",
-        "slot": "outfit",
-        "displayName": "Puppet hoodie",
-        "asset": "parts/inline/outfit-hoodie-01.svg",
-        "nodes": {
-          "torso": "torso_group"
-        },
+      "hair-front-spiky": {
+        "id": "hair-front-spiky",
+        "slot": "hair.front",
+        "displayName": "Spiky",
+        "asset": "parts/hair.front/hair-front-spiky.svg",
         "editable": [
           "position",
           "scale",
-          "color",
-          "layer"
+          "rotation",
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#6D28D9",
-          "layer": 0
+          "scale": 1
         }
       },
-      "outfit-robot-01": {
-        "id": "outfit-robot-01",
-        "slot": "outfit",
-        "displayName": "Robot shell",
-        "asset": "parts/inline/outfit-robot-01.svg",
-        "nodes": {
-          "torso": "torso_group"
-        },
+      "hair-front-none": {
+        "id": "hair-front-none",
+        "slot": "hair.front",
+        "displayName": "None",
+        "asset": "parts/hair.front/hair-front-none.svg",
         "editable": [
           "position",
           "scale",
-          "color",
-          "layer"
+          "rotation",
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#F4E8C6",
-          "layer": 0
+          "scale": 1
         }
       },
-      "outfit-overalls-01": {
-        "id": "outfit-overalls-01",
-        "slot": "outfit",
-        "displayName": "Paper overalls",
-        "asset": "parts/inline/outfit-overalls-01.svg",
-        "nodes": {
-          "torso": "torso_group"
-        },
+      "hair-back-bob": {
+        "id": "hair-back-bob",
+        "slot": "hair.back",
+        "displayName": "Bob",
+        "asset": "parts/hair.back/hair-back-bob.svg",
         "editable": [
           "position",
           "scale",
-          "color",
-          "layer"
+          "rotation",
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#1F9A8A",
-          "layer": 0
+          "scale": 1
         }
       },
-      "outfit-stage-01": {
-        "id": "outfit-stage-01",
-        "slot": "outfit",
-        "displayName": "Stage costume",
-        "asset": "parts/inline/outfit-stage-01.svg",
-        "nodes": {
-          "torso": "torso_group"
-        },
+      "hair-back-long": {
+        "id": "hair-back-long",
+        "slot": "hair.back",
+        "displayName": "Long",
+        "asset": "parts/hair.back/hair-back-long.svg",
         "editable": [
           "position",
           "scale",
-          "color",
-          "layer"
+          "rotation",
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#B91C1C",
-          "layer": 0
+          "scale": 1
         }
       },
-      "outfit-dev-01": {
-        "id": "outfit-dev-01",
-        "slot": "outfit",
-        "displayName": "Developer hoodie",
-        "asset": "parts/inline/outfit-dev-01.svg",
-        "nodes": {
-          "torso": "torso_group"
-        },
+      "hair-back-none": {
+        "id": "hair-back-none",
+        "slot": "hair.back",
+        "displayName": "None",
+        "asset": "parts/hair.back/hair-back-none.svg",
         "editable": [
           "position",
           "scale",
-          "color",
-          "layer"
+          "rotation",
+          "color"
         ],
         "defaults": {
-          "scale": 1,
-          "color": "#18212F",
-          "layer": 0
+          "scale": 1
+        }
+      },
+      "outfit-tee": {
+        "id": "outfit-tee",
+        "slot": "outfit",
+        "displayName": "Tee",
+        "asset": "parts/outfit/outfit-tee.svg",
+        "editable": [
+          "position",
+          "scale",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
+        }
+      },
+      "outfit-collar": {
+        "id": "outfit-collar",
+        "slot": "outfit",
+        "displayName": "Collar tee",
+        "asset": "parts/outfit/outfit-collar.svg",
+        "editable": [
+          "position",
+          "scale",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
+        }
+      },
+      "outfit-hoodie": {
+        "id": "outfit-hoodie",
+        "slot": "outfit",
+        "displayName": "Hoodie",
+        "asset": "parts/outfit/outfit-hoodie.svg",
+        "editable": [
+          "position",
+          "scale",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
         }
       }
     },
     "selections": {
       "face": {
-        "partId": "face-dev-01"
+        "partId": "face-round"
       },
       "hair.back": {
-        "partId": "hair-back-dev-01"
+        "partId": "hair-back-bob"
       },
       "hair.front": {
-        "partId": "hair-front-dev-01"
+        "partId": "hair-front-bangs"
       },
       "eye": {
-        "partId": "eye-glasses-01",
-        "transform": {
-          "scale": 1,
-          "spacing": 0
-        }
+        "partId": "eye-round"
       },
       "brow": {
-        "partId": "brow-dev-01"
+        "partId": "brow-soft"
       },
       "nose": {
-        "partId": "nose-soft-01",
-        "transform": {
-          "scale": 1
-        }
+        "partId": "nose-dot"
       },
       "mouth": {
-        "partId": "mouth-smirk-01",
-        "transform": {
-          "scale": 1
-        }
+        "partId": "mouth-smile"
       },
       "outfit": {
-        "partId": "outfit-dev-01"
+        "partId": "outfit-tee"
       }
     }
   }

@@ -141,7 +141,6 @@ button[aria-pressed="true"] {
   font-size: 14px;
 }
 
-.recipe-list,
 .slot-list,
 .part-options,
 .control-stack,
@@ -149,24 +148,6 @@ button[aria-pressed="true"] {
 .export-panel,
 #source-readout {
   padding: 12px;
-}
-
-.recipe-panel {
-  border-bottom: 1px solid var(--line);
-}
-
-.recipe-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.recipe-button {
-  min-width: 0;
-  padding: 0 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .slot-list {
@@ -235,8 +216,41 @@ button[aria-pressed="true"] {
 
 .part-options {
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
   border-bottom: 1px solid var(--line);
+}
+
+.part-option {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  min-height: 0;
+  padding: 8px;
+  text-align: center;
+}
+
+.part-option span {
+  max-width: 100%;
+  text-align: center;
+}
+
+.part-thumb {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 56px;
+  border-radius: 10px;
+  background: #fff7ef;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  overflow: hidden;
+}
+
+.part-option[aria-pressed="true"] .part-thumb {
+  border-color: var(--accent, #ff8360);
+  background: #fff;
 }
 
 .control-stack {

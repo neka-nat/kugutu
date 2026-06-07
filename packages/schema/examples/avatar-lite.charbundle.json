@@ -16,12 +16,12 @@
   "bindings": {
     "slots": {
       "head": "transform.head_group",
-      "brow.l": "transform.brow_left",
-      "brow.r": "transform.brow_right",
       "eye.l": "transform.eye_left",
       "eye.r": "transform.eye_right",
       "pupil.l": "transform.pupil_left",
       "pupil.r": "transform.pupil_right",
+      "brow.l": "transform.brow_left",
+      "brow.r": "transform.brow_right",
       "nose": "transform.nose",
       "mouth": "transform.mouth_group",
       "hair.front": "transform.hair_front",
@@ -29,6 +29,301 @@
       "neck": "transform.neck_group",
       "torso": "transform.torso_group"
     }
+  },
+  "behaviors": [
+    {
+      "id": "blink-default",
+      "type": "blink",
+      "channels": [
+        "transform.eye_left.scaleY",
+        "transform.eye_right.scaleY"
+      ],
+      "params": {
+        "closeMs": 120,
+        "openMs": 140,
+        "minIntervalMs": 2500,
+        "maxIntervalMs": 4500
+      }
+    },
+    {
+      "id": "look-at-default",
+      "type": "look-at",
+      "channels": [
+        "transform.eye_left.translate",
+        "transform.eye_right.translate",
+        "transform.pupil_left.translate",
+        "transform.pupil_right.translate",
+        "transform.head_group.rotate",
+        "transform.neck_group.rotate"
+      ],
+      "params": {
+        "radiusX": 0.18,
+        "radiusY": 0.12,
+        "headFollow": 0.35,
+        "smoothing": 0.2
+      }
+    },
+    {
+      "id": "breathing-default",
+      "type": "breathing",
+      "channels": [
+        "transform.torso_group.translateY",
+        "transform.neck_group.translateY",
+        "transform.head_group.rotate"
+      ],
+      "params": {
+        "cycleMs": 3200,
+        "amplitudeY": 0.06,
+        "torsoTiltDeg": 1.5
+      }
+    },
+    {
+      "id": "mouth-open-default",
+      "type": "mouth-open",
+      "channels": [
+        "transform.mouth_group.scaleY"
+      ],
+      "params": {
+        "maxOpen": 0.9,
+        "smoothing": 0.2
+      }
+    }
+  ],
+  "expressions": [
+    {
+      "id": "happy",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "rotate": -8
+        },
+        {
+          "slot": "brow.r",
+          "rotate": 8
+        },
+        {
+          "slot": "mouth",
+          "scaleY": 0.12
+        }
+      ]
+    },
+    {
+      "id": "sad",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "rotate": 6
+        },
+        {
+          "slot": "brow.r",
+          "rotate": -6
+        }
+      ]
+    },
+    {
+      "id": "angry",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "rotate": 10
+        },
+        {
+          "slot": "brow.r",
+          "rotate": -10
+        }
+      ]
+    },
+    {
+      "id": "surprised",
+      "poses": [
+        {
+          "slot": "brow.l",
+          "translateY": -6
+        },
+        {
+          "slot": "brow.r",
+          "translateY": -6
+        },
+        {
+          "slot": "mouth",
+          "scaleY": 0.25
+        }
+      ]
+    }
+  ],
+  "gestures": [
+    {
+      "id": "nod",
+      "durationMs": 620,
+      "tracks": [
+        {
+          "slot": "head",
+          "keyframes": [
+            {
+              "t": 0,
+              "translateY": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "translateY": 8,
+              "rotate": 3
+            },
+            {
+              "t": 1,
+              "translateY": 0,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shake",
+      "durationMs": 640,
+      "tracks": [
+        {
+          "slot": "head",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.25,
+              "rotate": -7
+            },
+            {
+              "t": 0.5,
+              "rotate": 7
+            },
+            {
+              "t": 0.75,
+              "rotate": -5
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bounce",
+      "durationMs": 560,
+      "tracks": [
+        {
+          "slot": "torso",
+          "keyframes": [
+            {
+              "t": 0,
+              "translateY": 0
+            },
+            {
+              "t": 0.45,
+              "translateY": -9
+            },
+            {
+              "t": 1,
+              "translateY": 0
+            }
+          ]
+        },
+        {
+          "slot": "head",
+          "keyframes": [
+            {
+              "t": 0,
+              "translateY": 0
+            },
+            {
+              "t": 0.45,
+              "translateY": -9
+            },
+            {
+              "t": 1,
+              "translateY": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "visemes": {
+    "sil": {
+      "open": 0,
+      "width": 1
+    },
+    "PP": {
+      "open": 0,
+      "width": 0.95
+    },
+    "FF": {
+      "open": 0.15,
+      "width": 1
+    },
+    "TH": {
+      "open": 0.25,
+      "width": 1
+    },
+    "DD": {
+      "open": 0.3,
+      "width": 1
+    },
+    "kk": {
+      "open": 0.3,
+      "width": 1
+    },
+    "CH": {
+      "open": 0.25,
+      "width": 0.9
+    },
+    "SS": {
+      "open": 0.15,
+      "width": 1.05
+    },
+    "nn": {
+      "open": 0.2,
+      "width": 1
+    },
+    "RR": {
+      "open": 0.3,
+      "width": 0.9
+    },
+    "aa": {
+      "open": 0.9,
+      "width": 1.1
+    },
+    "E": {
+      "open": 0.5,
+      "width": 1.15
+    },
+    "I": {
+      "open": 0.35,
+      "width": 1.1
+    },
+    "O": {
+      "open": 0.6,
+      "width": 0.8
+    },
+    "U": {
+      "open": 0.4,
+      "width": 0.7
+    }
+  },
+  "runtime": {
+    "api": [
+      "lookAt",
+      "playBehavior",
+      "playGesture",
+      "setEmotion",
+      "setMouthOpen",
+      "setPart",
+      "setVariant",
+      "speak",
+      "tunePart"
+    ]
   },
   "parts": {
     "catalog": {
@@ -40,7 +335,11 @@
         "nodes": {
           "head": "head_group"
         },
-        "editable": ["scale", "color", "layer"],
+        "editable": [
+          "scale",
+          "color",
+          "layer"
+        ],
         "defaults": {
           "scale": 1,
           "color": "#FFF1F2",
@@ -55,7 +354,13 @@
         "nodes": {
           "hair.back": "hair_back"
         },
-        "editable": ["position", "scale", "rotation", "color", "layer"],
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color",
+          "layer"
+        ],
         "defaults": {
           "scale": 1,
           "color": "#1E293B",
@@ -70,7 +375,13 @@
         "nodes": {
           "hair.front": "hair_front"
         },
-        "editable": ["position", "scale", "rotation", "color", "layer"],
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color",
+          "layer"
+        ],
         "defaults": {
           "scale": 1,
           "color": "#1E293B",
@@ -86,7 +397,12 @@
           "eye.l": "eye_left",
           "eye.r": "eye_right"
         },
-        "editable": ["position", "scale", "spacing", "color"],
+        "editable": [
+          "position",
+          "scale",
+          "spacing",
+          "color"
+        ],
         "defaults": {
           "scale": 1,
           "spacing": 0,
@@ -102,7 +418,13 @@
           "brow.l": "brow_left",
           "brow.r": "brow_right"
         },
-        "editable": ["position", "scale", "rotation", "spacing", "color"],
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "spacing",
+          "color"
+        ],
         "defaults": {
           "scale": 1,
           "spacing": 0,
@@ -117,7 +439,12 @@
         "nodes": {
           "nose": "nose"
         },
-        "editable": ["position", "scale", "rotation", "color"],
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color"
+        ],
         "defaults": {
           "scale": 1,
           "color": "#FDA4AF"
@@ -131,7 +458,12 @@
         "nodes": {
           "mouth": "mouth_group"
         },
-        "editable": ["position", "scale", "rotation", "color"],
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color"
+        ],
         "defaults": {
           "scale": 1,
           "color": "#FB7185"
@@ -145,7 +477,12 @@
         "nodes": {
           "torso": "torso_group"
         },
-        "editable": ["position", "scale", "color", "layer"],
+        "editable": [
+          "position",
+          "scale",
+          "color",
+          "layer"
+        ],
         "defaults": {
           "scale": 1,
           "color": "#93C5FD",
@@ -189,62 +526,5 @@
         "partId": "outfit-blue-01"
       }
     }
-  },
-  "behaviors": [
-    {
-      "id": "blink-default",
-      "type": "blink",
-      "channels": ["transform.eye_left.scaleY", "transform.eye_right.scaleY"],
-      "params": {
-        "closeMs": 120,
-        "openMs": 140,
-        "minIntervalMs": 2500,
-        "maxIntervalMs": 4500
-      }
-    },
-    {
-      "id": "look-at-default",
-      "type": "look-at",
-      "channels": [
-        "transform.eye_left.translate",
-        "transform.eye_right.translate",
-        "transform.pupil_left.translate",
-        "transform.pupil_right.translate",
-        "transform.head_group.rotate",
-        "transform.neck_group.rotate"
-      ],
-      "params": {
-        "radiusX": 0.18,
-        "radiusY": 0.12,
-        "headFollow": 0.35,
-        "smoothing": 0.2
-      }
-    },
-    {
-      "id": "breathing-default",
-      "type": "breathing",
-      "channels": [
-        "transform.torso_group.translateY",
-        "transform.neck_group.translateY",
-        "transform.head_group.rotate"
-      ],
-      "params": {
-        "cycleMs": 3200,
-        "amplitudeY": 0.06,
-        "torsoTiltDeg": 1.5
-      }
-    },
-    {
-      "id": "mouth-open-default",
-      "type": "mouth-open",
-      "channels": ["transform.mouth_group.scaleY"],
-      "params": {
-        "maxOpen": 0.9,
-        "smoothing": 0.2
-      }
-    }
-  ],
-  "runtime": {
-    "api": ["lookAt", "playBehavior", "setEmotion", "setMouthOpen"]
   }
 }

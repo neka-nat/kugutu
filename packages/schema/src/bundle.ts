@@ -5,8 +5,13 @@ export const CHARPACK_VERSION = "0.1.0" as const;
 export const CHARBUNDLE_API_METHODS = [
   "lookAt",
   "playBehavior",
+  "playGesture",
   "setEmotion",
   "setMouthOpen",
+  "setPart",
+  "setVariant",
+  "speak",
+  "tunePart",
 ] as const;
 
 export type CharBundleRuntimeApiMethod =

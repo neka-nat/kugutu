@@ -124,6 +124,143 @@ async function main(): Promise<void> {
         return { valid: true, errors: [] };
       },
     },
+    {
+      label: "anchor parts inject into paired mounts with baked transform/color",
+      validate: () => {
+        const document: CharacterDefinition = {
+          schemaVersion: CHARACTER_SCHEMA_VERSION,
+          character: { id: "anchor-fixture", template: "avatar-lite" },
+          assets: { primary: "rig.svg" },
+          slots: {
+            head: "head_group",
+            "eye.l": "eye_left",
+            "eye.r": "eye_right",
+            mouth: "mouth_group",
+            torso: "torso_group",
+          },
+          parts: {
+            catalog: {
+              "eye-dot-01": {
+                id: "eye-dot-01",
+                slot: "eye",
+                asset: "parts/eye/dot-01.svg",
+                editable: ["scale", "spacing", "color"],
+              },
+            },
+            selections: {
+              eye: { partId: "eye-dot-01", transform: { scale: 1.2, color: "#123456" } },
+            },
+          },
+          behaviors: [],
+        };
+        const rig =
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320">' +
+          '<g id="torso_group"></g><g id="head_group">' +
+          '<g transform="translate(132 134)"><g id="eye_left"><g data-kugutu-slot-mount="eye"></g></g></g>' +
+          '<g transform="translate(188 134)"><g id="eye_right"><g data-kugutu-slot-mount="eye" transform="scale(-1 1)"></g></g></g>' +
+          '<g id="mouth_group"></g></g></svg>';
+        const composed = composeCharacterSvg(document, rig, {
+          partAssets: { "eye-dot-01": '<circle r="6" />' },
+        });
+
+        const injected = (
+          composed.match(/variant-slot="eye" data-kugutu-variant-id="eye-dot-01"/g) ?? []
+        ).length;
+        assert.equal(injected, 2, "fragment placed into both paired mounts");
+        assert.match(
+          composed,
+          /data-kugutu-variant-id="eye-dot-01"[^>]*transform="scale\(1\.2 1\.2\)"/,
+          "selected part transform is baked onto the variant group"
+        );
+        assert.match(composed, /data-kugutu-part-color="eye-dot-01"/, "color marker baked");
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "default expressions/gestures are baked into the bundle",
+      validate: () => {
+        const bundle = buildCharacterBundle(characterExample);
+        assert.deepEqual(
+          [...bundle.expressions.map((expression) => expression.id)].sort(),
+          ["angry", "happy", "sad", "surprised"]
+        );
+        const gestureIds = bundle.gestures.map((gesture) => gesture.id);
+        assert.ok(
+          gestureIds.includes("nod") && gestureIds.includes("shake"),
+          "head gestures are included"
+        );
+        assert.ok(
+          !gestureIds.includes("wave"),
+          "wave is pruned without arm slots"
+        );
+        for (const method of ["playGesture", "setPart", "setVariant", "tunePart"]) {
+          assert.ok(
+            bundle.runtime.api.includes(method as never),
+            `runtime.api includes ${method}`
+          );
+        }
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "default visemes are baked in and speak is exposed for mouthed characters",
+      validate: () => {
+        const bundle = buildCharacterBundle(characterExample);
+        assert.ok(bundle.visemes.sil && bundle.visemes.aa, "default visemes present");
+        assert.ok(
+          bundle.runtime.api.includes("speak"),
+          "speak exposed when a mouth slot is bound"
+        );
+
+        const fixture = buildPartFixture(); // avatar-lite -> has a mouth slot
+        fixture.document.visemes = { aa: { open: 0.5, width: 1.3 } };
+        const overridden = buildCharacterBundle(fixture.document);
+        assert.equal(overridden.visemes.aa?.open, 0.5, "author viseme overrides default");
+        assert.equal(overridden.visemes.aa?.width, 1.3, "author viseme width applied");
+        assert.ok(overridden.visemes.sil, "default visemes retained alongside overrides");
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "author expressions/gestures override defaults and prune missing slots",
+      validate: () => {
+        const fixture = buildPartFixture(); // slots: head, eye.l/r, mouth, torso
+        fixture.document.expressions = [
+          { id: "happy", poses: [{ slot: "mouth", scaleY: 0.5 }] },
+          { id: "wink", poses: [{ slot: "eye.l", scaleY: -0.4 }] },
+        ];
+        fixture.document.gestures = [
+          {
+            id: "nudge",
+            durationMs: 300,
+            tracks: [
+              { slot: "head", keyframes: [{ t: 0, translateY: 0 }, { t: 1, translateY: 5 }] },
+            ],
+          },
+        ];
+
+        const bundle = buildCharacterBundle(fixture.document);
+        const happy = bundle.expressions.find((expression) => expression.id === "happy");
+        assert.deepEqual(happy?.poses, [{ slot: "mouth", scaleY: 0.5 }], "happy overridden by author");
+        assert.ok(
+          bundle.expressions.some((expression) => expression.id === "wink"),
+          "custom expression added"
+        );
+        assert.ok(
+          !bundle.expressions.some((expression) => expression.id === "sad"),
+          "sad pruned (character has no brow slots)"
+        );
+        assert.ok(
+          bundle.gestures.some((gesture) => gesture.id === "nudge"),
+          "custom gesture added"
+        );
+        assert.ok(
+          bundle.gestures.some((gesture) => gesture.id === "nod"),
+          "default head gesture retained"
+        );
+        return { valid: true, errors: [] };
+      },
+    },
   ];
 
   let hasErrors = false;

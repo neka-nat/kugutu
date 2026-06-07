@@ -7,6 +7,9 @@ import type {
   CharBundleAssetType,
   CharBundleRuntimeApiMethod,
 } from "./bundle.js";
+import type { CharacterExpression } from "./expressions.js";
+import type { CharacterGesture } from "./gestures.js";
+import type { VisemeMap } from "./visemes.js";
 import type { PartEditableProperty, PartSlotKey } from "./parts.js";
 import type { SlotKey } from "./slots.js";
 import type { TemplateKey } from "./templates.js";
@@ -75,6 +78,9 @@ export interface CharacterDefinition {
   slots: SlotBindingMap;
   parts?: CharacterParts;
   behaviors: CharacterBehavior[];
+  expressions?: CharacterExpression[];
+  gestures?: CharacterGesture[];
+  visemes?: VisemeMap;
 }
 
 export interface CharBundleAsset {
@@ -113,6 +119,9 @@ export interface CharBundle {
   bindings: CharBundleBindings;
   parts?: CharacterParts;
   behaviors: CompiledBehavior[];
+  expressions: CharacterExpression[];
+  gestures: CharacterGesture[];
+  visemes: VisemeMap;
   runtime: CharBundleRuntime;
 }
 
@@ -122,4 +131,10 @@ export interface CharPack {
   source?: CharacterDefinition;
   bundle: CharBundle;
   assets: CharPackAsset[];
+  /**
+   * Raw part fragments (catalog id → SVG fragment), included when the character
+   * uses anchor-mounted file parts. Lets editors recompose the SVG when parts
+   * change without re-reading the source tree.
+   */
+  partAssets?: Record<string, string>;
 }

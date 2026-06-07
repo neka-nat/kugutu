@@ -1,0 +1,85 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 320 320"
+  fill="none"
+  role="img"
+>
+  <title>Kugutu Mascot Rig</title>
+  <!--
+    Unified-art-direction rig. Face/hair/feature parts are file fragments drawn
+    around their own local origin and injected at the anchor mounts below
+    (data-kugutu-slot-mount). Paired slots (eye, brow) have a left mount and a
+    mirrored right mount, so a single part fragment fills both sides.
+
+    Palette tokens (apply consistently across all part fragments):
+      skin        #FAD0B0    skin-shade  #F3B591
+      ink         #34344A    blush       #FF9E9E
+      hair        #7C6CF0    hair-shade  #6253D6
+      accent      #FF8360    accent-2    #46C2A8
+      white       #FFFFFF
+  -->
+
+  <ellipse cx="160" cy="296" rx="92" ry="15" fill="#34344A" opacity="0.10" />
+
+  <g id="torso_group">
+    <g transform="translate(160 250)">
+      <g data-kugutu-slot-mount="outfit"></g>
+    </g>
+  </g>
+
+  <g id="neck_group">
+    <rect x="146" y="192" width="28" height="30" rx="12" fill="#F3B591" />
+  </g>
+
+  <g id="head_group">
+    <g transform="translate(160 126)">
+      <g id="hair_back">
+        <g data-kugutu-slot-mount="hair.back"></g>
+      </g>
+    </g>
+
+    <g transform="translate(160 126)">
+      <g data-kugutu-slot-mount="face"></g>
+    </g>
+
+    <g transform="translate(132 104)">
+      <g id="brow_left">
+        <g data-kugutu-slot-mount="brow"></g>
+      </g>
+    </g>
+    <g transform="translate(188 104)">
+      <g id="brow_right">
+        <g data-kugutu-slot-mount="brow" transform="scale(-1 1)"></g>
+      </g>
+    </g>
+
+    <g transform="translate(132 132)">
+      <g id="eye_left">
+        <g data-kugutu-slot-mount="eye"></g>
+      </g>
+    </g>
+    <g transform="translate(188 132)">
+      <g id="eye_right">
+        <g data-kugutu-slot-mount="eye" transform="scale(-1 1)"></g>
+      </g>
+    </g>
+
+    <g transform="translate(160 142)">
+      <g id="nose_node">
+        <g data-kugutu-slot-mount="nose"></g>
+      </g>
+    </g>
+
+    <g transform="translate(160 170)">
+      <g id="mouth_group">
+        <g data-kugutu-slot-mount="mouth"></g>
+      </g>
+    </g>
+
+    <g transform="translate(160 126)">
+      <g id="hair_front">
+        <g data-kugutu-slot-mount="hair.front"></g>
+      </g>
+    </g>
+  </g>
+</svg>

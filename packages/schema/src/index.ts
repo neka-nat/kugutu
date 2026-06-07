@@ -28,6 +28,19 @@ export {
   type SlotSide,
 } from "./slots.js";
 export {
+  DEFAULT_EXPRESSIONS,
+  EXPRESSION_POSE_NUMERIC_KEYS,
+  type CharacterExpression,
+  type ExpressionPose,
+  type ExpressionPoseNumericKey,
+} from "./expressions.js";
+export {
+  DEFAULT_GESTURES,
+  type CharacterGesture,
+  type GestureKeyframe,
+  type GestureTrack,
+} from "./gestures.js";
+export {
   PART_EDITABLE_PROPERTIES,
   PART_SLOT_DEFINITIONS,
   PART_SLOT_KEYS,
@@ -47,6 +60,17 @@ export {
   type TemplateDefinition,
   type TemplateKey,
 } from "./templates.js";
+export {
+  composeAnchorPartTransform,
+  composePartNodeTransform,
+  resolvePartTransform,
+} from "./parts-transform.js";
+export {
+  DEFAULT_VISEMES,
+  VISEME_REST_ID,
+  type VisemeMap,
+  type VisemePose,
+} from "./visemes.js";
 export {
   validateCharBundle,
   validateCharacterDefinition,

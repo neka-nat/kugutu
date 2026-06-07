@@ -301,7 +301,10 @@
 
         <section>
           <h2>Speech</h2>
-          <p>The slider maps directly to <code>player.setMouthOpen(value)</code>.</p>
+          <p>
+            The slider maps to <code>player.setMouthOpen(value)</code>; the button
+            drives viseme-based lip-sync via <code>player.speak(cues)</code>.
+          </p>
           <div class="meter">
             <label for="mouth-open">Mouth Open</label>
             <input id="mouth-open" type="range" min="0" max="1" step="0.01" value="0.08" />
@@ -309,6 +312,9 @@
               <span>Closed</span>
               <span id="mouth-open-value">0.08</span>
             </div>
+          </div>
+          <div class="row">
+            <button class="accent" id="speak-sample">Speak sample</button>
           </div>
         </section>
 
@@ -319,6 +325,18 @@
             <button class="accent" id="blink-now">Blink Now</button>
             <button id="look-center">Center Gaze</button>
           </div>
+        </section>
+
+        <section>
+          <h2>Gestures</h2>
+          <p><code>player.playGesture(id)</code> plays a data-driven gesture from the bundle.</p>
+          <div class="row" id="gesture-panel"></div>
+        </section>
+
+        <section>
+          <h2>Parts</h2>
+          <p><code>player.setPart(slot, id)</code> swaps the active part live.</p>
+          <div id="parts-panel"></div>
         </section>
 
         <section>

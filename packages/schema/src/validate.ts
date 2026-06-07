@@ -11,6 +11,7 @@ import {
   CHARBUNDLE_VERSION,
   CHARACTER_SCHEMA_VERSION,
 } from "./bundle.js";
+import { EXPRESSION_POSE_NUMERIC_KEYS } from "./expressions.js";
 import {
   PART_TRANSFORM_NUMBER_DEFINITIONS,
   isKnownPartEditableProperty,
@@ -314,6 +315,225 @@ function validateParts(partsValue: unknown, path: string, errors: string[]): voi
   }
 }
 
+function validateFiniteNumber(
+  value: unknown,
+  path: string,
+  errors: string[]
+): void {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    errors.push(`${path} must be a finite number`);
+  }
+}
+
+const EXPRESSION_NUMERIC_KEY_SET = new Set<string>(EXPRESSION_POSE_NUMERIC_KEYS);
+
+function validateOffsetKeys(
+  value: Record<string, unknown>,
+  reservedKeys: readonly string[],
+  path: string,
+  errors: string[]
+): void {
+  for (const [key, raw] of Object.entries(value)) {
+    if (reservedKeys.includes(key)) {
+      continue;
+    }
+
+    if (!EXPRESSION_NUMERIC_KEY_SET.has(key)) {
+      errors.push(`${path}.${key} is not a supported offset property`);
+      continue;
+    }
+
+    validateFiniteNumber(raw, `${path}.${key}`, errors);
+  }
+}
+
+function validateExpressionPose(
+  value: unknown,
+  path: string,
+  errors: string[]
+): void {
+  if (!isPlainObject(value)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  if (!isKnownSlot(String(value.slot))) {
+    errors.push(`${path}.slot must be a supported slot key`);
+  }
+
+  validateOffsetKeys(value, ["slot"], path, errors);
+}
+
+function validateExpression(value: unknown, path: string, errors: string[]): void {
+  if (!isPlainObject(value)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  validateIdentifier(value.id, `${path}.id`, errors);
+
+  if (!Array.isArray(value.poses) || value.poses.length === 0) {
+    errors.push(`${path}.poses must be a non-empty array`);
+    return;
+  }
+
+  for (let index = 0; index < value.poses.length; index += 1) {
+    validateExpressionPose(value.poses[index], `${path}.poses[${index}]`, errors);
+  }
+}
+
+function validateExpressions(value: unknown, path: string, errors: string[]): void {
+  if (!Array.isArray(value)) {
+    errors.push(`${path} must be an array`);
+    return;
+  }
+
+  const seen = new Set<string>();
+  for (let index = 0; index < value.length; index += 1) {
+    const expression = value[index];
+    validateExpression(expression, `${path}[${index}]`, errors);
+
+    if (isPlainObject(expression) && typeof expression.id === "string") {
+      if (seen.has(expression.id)) {
+        errors.push(`${path}[${index}].id "${expression.id}" is duplicated`);
+      }
+      seen.add(expression.id);
+    }
+  }
+}
+
+function validateGestureKeyframe(
+  value: unknown,
+  path: string,
+  errors: string[]
+): void {
+  if (!isPlainObject(value)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  if (typeof value.t !== "number" || !Number.isFinite(value.t) || value.t < 0 || value.t > 1) {
+    errors.push(`${path}.t must be a number between 0 and 1`);
+  }
+
+  validateOffsetKeys(value, ["t"], path, errors);
+}
+
+function validateGestureTrack(
+  value: unknown,
+  path: string,
+  errors: string[]
+): void {
+  if (!isPlainObject(value)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  if (!isKnownSlot(String(value.slot))) {
+    errors.push(`${path}.slot must be a supported slot key`);
+  }
+
+  if (!Array.isArray(value.keyframes) || value.keyframes.length === 0) {
+    errors.push(`${path}.keyframes must be a non-empty array`);
+    return;
+  }
+
+  for (let index = 0; index < value.keyframes.length; index += 1) {
+    validateGestureKeyframe(value.keyframes[index], `${path}.keyframes[${index}]`, errors);
+  }
+}
+
+function validateGesture(value: unknown, path: string, errors: string[]): void {
+  if (!isPlainObject(value)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  validateIdentifier(value.id, `${path}.id`, errors);
+
+  if (typeof value.durationMs !== "number" || !Number.isFinite(value.durationMs) || value.durationMs <= 0) {
+    errors.push(`${path}.durationMs must be a positive number`);
+  }
+
+  if (value.loop !== undefined && typeof value.loop !== "boolean") {
+    errors.push(`${path}.loop must be a boolean`);
+  }
+
+  if (!Array.isArray(value.tracks) || value.tracks.length === 0) {
+    errors.push(`${path}.tracks must be a non-empty array`);
+    return;
+  }
+
+  for (let index = 0; index < value.tracks.length; index += 1) {
+    validateGestureTrack(value.tracks[index], `${path}.tracks[${index}]`, errors);
+  }
+}
+
+function validateGestures(value: unknown, path: string, errors: string[]): void {
+  if (!Array.isArray(value)) {
+    errors.push(`${path} must be an array`);
+    return;
+  }
+
+  const seen = new Set<string>();
+  for (let index = 0; index < value.length; index += 1) {
+    const gesture = value[index];
+    validateGesture(gesture, `${path}[${index}]`, errors);
+
+    if (isPlainObject(gesture) && typeof gesture.id === "string") {
+      if (seen.has(gesture.id)) {
+        errors.push(`${path}[${index}].id "${gesture.id}" is duplicated`);
+      }
+      seen.add(gesture.id);
+    }
+  }
+}
+
+function validateViseme(value: unknown, path: string, errors: string[]): void {
+  if (!isPlainObject(value)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  if (
+    typeof value.open !== "number" ||
+    !Number.isFinite(value.open) ||
+    value.open < 0 ||
+    value.open > 1
+  ) {
+    errors.push(`${path}.open must be a number between 0 and 1`);
+  }
+
+  if (
+    value.width !== undefined &&
+    (typeof value.width !== "number" || !Number.isFinite(value.width) || value.width <= 0)
+  ) {
+    errors.push(`${path}.width must be a positive number`);
+  }
+
+  for (const key of Object.keys(value)) {
+    if (key !== "open" && key !== "width") {
+      errors.push(`${path}.${key} is not a supported viseme property`);
+    }
+  }
+}
+
+function validateVisemes(value: unknown, path: string, errors: string[]): void {
+  if (!isPlainObject(value)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  for (const [id, pose] of Object.entries(value)) {
+    if (!isNonEmptyString(id)) {
+      errors.push(`${path} keys must be non-empty viseme ids`);
+      continue;
+    }
+
+    validateViseme(pose, `${path}.${id}`, errors);
+  }
+}
+
 function validateBehavior(
   behaviorValue: unknown,
   slotMap: SlotBindingMap,
@@ -446,6 +666,18 @@ export function validateCharacterDefinition(document: unknown): ValidationResult
     validateParts(document.parts, "parts", errors);
   }
 
+  if (document.expressions !== undefined) {
+    validateExpressions(document.expressions, "expressions", errors);
+  }
+
+  if (document.gestures !== undefined) {
+    validateGestures(document.gestures, "gestures", errors);
+  }
+
+  if (document.visemes !== undefined) {
+    validateVisemes(document.visemes, "visemes", errors);
+  }
+
   let hasValidSlots = false;
 
   if (
@@ -537,6 +769,18 @@ export function validateCharBundle(bundle: unknown): ValidationResult {
 
   if (bundle.parts !== undefined) {
     validateParts(bundle.parts, "parts", errors);
+  }
+
+  if (bundle.expressions !== undefined) {
+    validateExpressions(bundle.expressions, "expressions", errors);
+  }
+
+  if (bundle.gestures !== undefined) {
+    validateGestures(bundle.gestures, "gestures", errors);
+  }
+
+  if (bundle.visemes !== undefined) {
+    validateVisemes(bundle.visemes, "visemes", errors);
   }
 
   if (!Array.isArray(bundle.behaviors)) {

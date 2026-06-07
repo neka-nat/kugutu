@@ -1,23 +1,5 @@
-import { createCharacterPlayer } from "@kugutu/runtime-web";
-import type { CharBundle } from "@kugutu/schema";
-
-async function fetchText(url: string): Promise<string> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: ${response.status}`);
-  }
-
-  return response.text();
-}
-
-async function fetchJson<T>(url: string): Promise<T> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: ${response.status}`);
-  }
-
-  return response.json() as Promise<T>;
-}
+import { Kugutu } from "@kugutu/runtime-web";
+import type { CharBundle, PartSlotKey } from "@kugutu/schema";
 
 function formatRuntimeSummary(bundle: CharBundle): string {
   const behaviorList = bundle.behaviors.map((behavior) => behavior.id).join("\n");
@@ -41,6 +23,63 @@ function setActiveEmotion(buttons: HTMLButtonElement[], emotion: string): void {
   }
 }
 
+function groupCatalogBySlot(
+  bundle: CharBundle
+): Map<PartSlotKey, { id: string; label: string }[]> {
+  const grouped = new Map<PartSlotKey, { id: string; label: string }[]>();
+
+  for (const item of Object.values(bundle.parts?.catalog ?? {})) {
+    const entries = grouped.get(item.slot) ?? [];
+    entries.push({ id: item.id, label: item.displayName ?? item.id });
+    grouped.set(item.slot, entries);
+  }
+
+  return grouped;
+}
+
+function renderPartsPanel(
+  panel: HTMLElement,
+  bundle: CharBundle,
+  getActive: (slot: PartSlotKey) => string | undefined,
+  onPick: (slot: PartSlotKey, partId: string) => void
+): void {
+  panel.replaceChildren();
+  const grouped = groupCatalogBySlot(bundle);
+
+  for (const [slot, options] of grouped) {
+    if (options.length < 2) {
+      continue;
+    }
+
+    const label = document.createElement("label");
+    label.textContent = slot;
+
+    const row = document.createElement("div");
+    row.className = "row";
+
+    for (const option of options) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = option.label;
+      button.dataset.slot = slot;
+      button.dataset.partId = option.id;
+      button.classList.toggle("active", getActive(slot) === option.id);
+      button.addEventListener("click", () => {
+        onPick(slot, option.id);
+        for (const sibling of Array.from(row.children)) {
+          sibling.classList.toggle(
+            "active",
+            (sibling as HTMLElement).dataset.partId === option.id
+          );
+        }
+      });
+      row.append(button);
+    }
+
+    panel.append(label, row);
+  }
+}
+
 async function main(): Promise<void> {
   const frame = document.querySelector<HTMLElement>("#character-frame");
   const stage = document.querySelector<HTMLElement>("#stage");
@@ -48,7 +87,10 @@ async function main(): Promise<void> {
   const centerButton = document.querySelector<HTMLButtonElement>("#look-center");
   const mouthOpenInput = document.querySelector<HTMLInputElement>("#mouth-open");
   const mouthOpenValue = document.querySelector<HTMLElement>("#mouth-open-value");
+  const speakButton = document.querySelector<HTMLButtonElement>("#speak-sample");
   const bundleReadout = document.querySelector<HTMLElement>("#bundle-readout");
+  const partsPanel = document.querySelector<HTMLElement>("#parts-panel");
+  const gesturePanel = document.querySelector<HTMLElement>("#gesture-panel");
   const emotionButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>("#emotion-buttons button[data-emotion]")
   );
@@ -60,30 +102,36 @@ async function main(): Promise<void> {
     !centerButton ||
     !mouthOpenInput ||
     !mouthOpenValue ||
-    !bundleReadout
+    !bundleReadout ||
+    !partsPanel ||
+    !gesturePanel ||
+    !speakButton
   ) {
     throw new Error("Demo markup is incomplete");
   }
 
-  const [svgText, bundle] = await Promise.all([
-    fetchText(`${import.meta.env.BASE_URL}avatar.svg`),
-    fetchJson<CharBundle>(`${import.meta.env.BASE_URL}avatar-lite.charbundle.json`),
-  ]);
+  // One-line actor load: fetch the .charpack, mount it, and start it.
+  const player = await Kugutu.load(`${import.meta.env.BASE_URL}avatar.charpack`, frame);
 
-  frame.innerHTML = svgText;
-  const svgRoot = frame.querySelector<SVGSVGElement>("svg");
+  bundleReadout.textContent = formatRuntimeSummary(player.bundle);
+  renderPartsPanel(
+    partsPanel,
+    player.bundle,
+    (slot) => player.getPart(slot),
+    (slot, partId) => player.setPart(slot, partId)
+  );
 
-  if (!svgRoot) {
-    throw new Error("SVG root not found in demo asset");
+  for (const gesture of player.bundle.gestures) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = gesture.id;
+    button.addEventListener("click", () => player.playGesture(gesture.id));
+    gesturePanel.append(button);
   }
 
-  bundleReadout.textContent = formatRuntimeSummary(bundle);
-
-  const player = createCharacterPlayer(bundle, svgRoot);
   setActiveEmotion(emotionButtons, "neutral");
   player.setEmotion("neutral", 0);
   player.setMouthOpen(Number(mouthOpenInput.value));
-  player.start();
 
   stage.addEventListener("pointermove", (event) => {
     const rect = stage.getBoundingClientRect();
@@ -108,6 +156,17 @@ async function main(): Promise<void> {
     const value = Number(mouthOpenInput.value);
     mouthOpenValue.textContent = value.toFixed(2);
     player.setMouthOpen(value);
+  });
+
+  // A short canned viseme stream, the way a TTS engine would emit cue timings.
+  const sampleVisemes = ["PP", "aa", "nn", "E", "kk", "U", "O", "aa", "I", "sil"];
+  const sampleCues = sampleVisemes.map((viseme, index) => ({
+    viseme,
+    startMs: index * 120,
+    endMs: index * 120 + 110,
+  }));
+  speakButton.addEventListener("click", () => {
+    player.speak(sampleCues);
   });
 
   for (const button of emotionButtons) {

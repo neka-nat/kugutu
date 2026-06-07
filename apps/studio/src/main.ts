@@ -32,12 +32,6 @@ interface StudioState {
   mouthOpen: number;
 }
 
-interface CharacterRecipe {
-  id: string;
-  label: string;
-  parts: Partial<Record<PartSlotKey, string>>;
-}
-
 const NUMERIC_FIELDS: {
   key: NumericTransformKey;
   label: string;
@@ -56,92 +50,6 @@ const NUMERIC_FIELDS: {
 
 const EMOTIONS = ["neutral", "happy", "sad", "angry", "surprised"];
 const EXPORT_KINDS = ["charpack"] as const;
-const CHARACTER_RECIPES: CharacterRecipe[] = [
-  {
-    id: "dev",
-    label: "Developer",
-    parts: {
-      face: "face-dev-01",
-      "hair.back": "hair-back-dev-01",
-      "hair.front": "hair-front-dev-01",
-      eye: "eye-glasses-01",
-      brow: "brow-dev-01",
-      nose: "nose-soft-01",
-      mouth: "mouth-smirk-01",
-      outfit: "outfit-dev-01",
-    },
-  },
-  {
-    id: "puppet",
-    label: "Puppet",
-    parts: {
-      face: "face-warm-01",
-      "hair.back": "hair-back-puppet-01",
-      "hair.front": "hair-front-puppet-01",
-      eye: "eye-puppet-01",
-      brow: "brow-rounded-01",
-      nose: "nose-round-01",
-      mouth: "mouth-open-01",
-      outfit: "outfit-hoodie-01",
-    },
-  },
-  {
-    id: "robot",
-    label: "Robot",
-    parts: {
-      face: "face-display-01",
-      "hair.back": "hair-back-none-01",
-      "hair.front": "hair-front-leaf-01",
-      eye: "eye-screen-01",
-      brow: "brow-screen-01",
-      nose: "nose-dot-01",
-      mouth: "mouth-screen-01",
-      outfit: "outfit-robot-01",
-    },
-  },
-  {
-    id: "assistant",
-    label: "Assistant",
-    parts: {
-      face: "face-soft-01",
-      "hair.back": "hair-back-bob-01",
-      "hair.front": "hair-front-bob-01",
-      eye: "eye-stage-01",
-      brow: "brow-soft-01",
-      nose: "nose-dot-01",
-      mouth: "mouth-smile-01",
-      outfit: "outfit-blue-01",
-    },
-  },
-  {
-    id: "paper",
-    label: "Paper",
-    parts: {
-      face: "face-paper-01",
-      "hair.back": "hair-back-paper-01",
-      "hair.front": "hair-front-paper-01",
-      eye: "eye-paper-01",
-      brow: "brow-paper-01",
-      nose: "nose-triangle-01",
-      mouth: "mouth-paper-01",
-      outfit: "outfit-overalls-01",
-    },
-  },
-  {
-    id: "stage",
-    label: "Stage",
-    parts: {
-      face: "face-stage-01",
-      "hair.back": "hair-back-stage-01",
-      "hair.front": "hair-front-stage-01",
-      eye: "eye-stage-01",
-      brow: "brow-stage-01",
-      nose: "nose-button-01",
-      mouth: "mouth-stage-01",
-      outfit: "outfit-stage-01",
-    },
-  },
-];
 
 const root = document.querySelector<HTMLElement>("#app");
 if (!root) {
@@ -180,6 +88,7 @@ function getInitialBaseSvg(pack: CharPack): string {
 }
 
 let baseSvgText = "";
+let partAssets: Record<string, string> = {};
 
 let state: StudioState;
 
@@ -292,22 +201,6 @@ function setPart(slot: PartSlotKey, partId: string): void {
   };
 }
 
-function applyRecipe(recipe: CharacterRecipe): void {
-  if (!state.character.parts) {
-    return;
-  }
-
-  for (const [slotValue, partId] of Object.entries(recipe.parts)) {
-    const slot = slotValue as PartSlotKey;
-    const item = state.character.parts.catalog[partId];
-    if (!item || item.slot !== slot) {
-      continue;
-    }
-
-    state.character.parts.selections[slot] = { partId };
-  }
-}
-
 function updateTransform(slot: PartSlotKey, patch: PartTransform): void {
   const selection = ensureSelection(slot);
   selection.transform = {
@@ -344,7 +237,7 @@ function renderPreview(): void {
   destroyPlayer();
 
   const characterDocument = cloneCharacter(state.character);
-  const svgText = composeCharacterSvg(characterDocument, baseSvgText);
+  const svgText = composeCharacterSvg(characterDocument, baseSvgText, { partAssets });
   const bundle = buildCharacterBundle(characterDocument);
 
   preview.innerHTML = svgText;
@@ -365,7 +258,7 @@ function exportArtifact(kind: ExportKind): void {
 
   downloadText(
     `${baseName}.charpack`,
-    `${JSON.stringify(buildCharacterPack(characterDocument, baseSvgText), null, 2)}\n`,
+    `${JSON.stringify(buildCharacterPack(characterDocument, baseSvgText, { partAssets }), null, 2)}\n`,
     "application/json;charset=utf-8"
   );
 }
@@ -390,20 +283,27 @@ function renderPartTabs(): string {
     .join("");
 }
 
-function renderRecipeButtons(): string {
-  return CHARACTER_RECIPES.map((recipe) => {
-    const active = Object.entries(recipe.parts).every(
-      ([slot, partId]) => getSelection(slot as PartSlotKey)?.partId === partId
-    )
-      ? "true"
-      : "false";
+const PART_PREVIEW_VIEWBOX: Record<PartSlotKey, string> = {
+  face: "-96 -96 192 192",
+  "hair.front": "-96 -96 192 150",
+  "hair.back": "-96 -96 192 230",
+  eye: "-22 -22 44 44",
+  brow: "-20 -18 40 32",
+  nose: "-13 -14 26 28",
+  mouth: "-20 -16 40 36",
+  outfit: "-80 -40 160 90",
+};
 
-    return `
-      <button class="recipe-button" type="button" data-recipe-id="${recipe.id}" aria-pressed="${active}">
-        ${recipe.label}
-      </button>
-    `;
-  }).join("");
+function renderPartThumb(slot: PartSlotKey, partId: string): string {
+  const fragment = partAssets[partId] ?? "";
+  const hasArt = /<(path|circle|ellipse|rect|polygon|polyline|line)\b/i.test(fragment);
+
+  if (!hasArt) {
+    return `<span class="part-thumb part-thumb-empty">None</span>`;
+  }
+
+  const viewBox = PART_PREVIEW_VIEWBOX[slot] ?? "-96 -96 192 192";
+  return `<svg class="part-thumb" viewBox="${viewBox}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${fragment}</svg>`;
 }
 
 function renderPartOptions(slot: PartSlotKey): string {
@@ -415,8 +315,8 @@ function renderPartOptions(slot: PartSlotKey): string {
       const label = item.displayName ?? item.id;
       return `
         <button class="part-option" type="button" data-part-id="${item.id}" aria-pressed="${active}">
+          ${renderPartThumb(slot, item.id)}
           <span>${label}</span>
-          <small>${item.asset}</small>
         </button>
       `;
     })
@@ -500,13 +400,6 @@ function renderApp(): void {
     </section>
     <section class="workspace">
       <aside class="sidebar">
-        <section class="recipe-panel">
-          <header>
-            <span>Looks</span>
-            <strong>${CHARACTER_RECIPES.length}</strong>
-          </header>
-          <div class="recipe-list">${renderRecipeButtons()}</div>
-        </section>
         <header>
           <span>Parts</span>
           <strong>${getPartSlots().length}</strong>
@@ -576,18 +469,6 @@ function bindEvents(): void {
     });
   }
 
-  for (const button of Array.from(document.querySelectorAll<HTMLButtonElement>("[data-recipe-id]"))) {
-    button.addEventListener("click", () => {
-      const recipe = CHARACTER_RECIPES.find((item) => item.id === button.dataset.recipeId);
-      if (!recipe) {
-        return;
-      }
-
-      applyRecipe(recipe);
-      renderApp();
-    });
-  }
-
   for (const input of Array.from(document.querySelectorAll<HTMLInputElement>("[data-transform-key]"))) {
     input.addEventListener("input", () => {
       const key = input.dataset.transformKey;
@@ -649,6 +530,7 @@ function bindEvents(): void {
 
 function initializeStudio(initialPack: CharPack): void {
   baseSvgText = getInitialBaseSvg(initialPack);
+  partAssets = initialPack.partAssets ?? {};
   state = {
     character: getInitialCharacter(initialPack),
     activeSlot: "eye",

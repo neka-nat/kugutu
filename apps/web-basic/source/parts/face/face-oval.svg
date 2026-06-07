@@ -1,0 +1,7 @@
+<g>
+  <circle cx="-76" cy="6" r="13" fill="#FAD0B0" />
+  <circle cx="76" cy="6" r="13" fill="#FAD0B0" />
+  <ellipse cx="0" cy="0" rx="76" ry="84" fill="#FAD0B0" />
+  <ellipse cx="-44" cy="30" rx="12" ry="8" fill="#FF9E9E" opacity="0.45" />
+  <ellipse cx="44" cy="30" rx="12" ry="8" fill="#FF9E9E" opacity="0.45" />
+</g>

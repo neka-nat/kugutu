@@ -12,6 +12,8 @@ import {
 import {
   BEHAVIOR_SPECS,
   CHARACTER_SCHEMA_VERSION,
+  DEFAULT_EXPRESSIONS,
+  DEFAULT_GESTURES,
   PART_SLOT_DEFINITIONS,
   PART_TRANSFORM_NUMBER_DEFINITIONS,
   SLOT_DEFINITIONS,
@@ -25,6 +27,8 @@ import {
   type BehaviorType,
   type CharacterBehavior,
   type CharacterDefinition,
+  type CharacterExpression,
+  type CharacterGesture,
   type CharacterPartCatalogItem,
   type CharacterParts,
   type PartEditableProperty,
@@ -45,6 +49,8 @@ function printUsage(): void {
   kugutu set-part <source.json> <part-slot> <part-id>
   kugutu tune-part <source.json> <part-slot> [--x 0] [--y 0] [--scale 1] [--scale-x 1] [--scale-y 1] [--rotation 0] [--spacing 0] [--color #000] [--layer 0]
   kugutu add-behavior <source.json> <type> [--id blink-default] [--targets eye.l,eye.r] [--replace]
+  kugutu add-expression <source.json> <id> [--replace]
+  kugutu add-gesture <source.json> <id> [--replace]
   kugutu compose-svg <source.json> <input.svg> --out <output.svg>
   kugutu pack <source.json> <input.svg> --out <output.charpack> [--no-source]
   kugutu validate <source.json>
@@ -866,6 +872,61 @@ async function addBehaviorCommand(
   console.log(`added: ${id} (${behaviorTypeValue})`);
 }
 
+async function addExpressionCommand(
+  sourcePath: string,
+  id: string,
+  args: string[]
+): Promise<void> {
+  const fromDefault = DEFAULT_EXPRESSIONS.find((expression) => expression.id === id);
+  if (!fromDefault) {
+    throw new Error(
+      `Unknown built-in expression: ${id}. Available: ${DEFAULT_EXPRESSIONS.map((expression) => expression.id).join(", ")}`
+    );
+  }
+
+  const document = await readCharacterDefinition(sourcePath);
+  const expressions = Array.isArray(document.expressions) ? document.expressions : [];
+
+  if (!hasFlag(args, "--replace") && expressions.some((expression) => expression.id === id)) {
+    throw new Error(`Expression already exists: ${id}. Pass --replace to update it.`);
+  }
+
+  const next = JSON.parse(JSON.stringify(fromDefault)) as CharacterExpression;
+  document.expressions = [
+    ...expressions.filter((expression) => expression.id !== id),
+    next,
+  ];
+
+  await writeJson(sourcePath, document);
+  console.log(`added expression: ${id}`);
+}
+
+async function addGestureCommand(
+  sourcePath: string,
+  id: string,
+  args: string[]
+): Promise<void> {
+  const fromDefault = DEFAULT_GESTURES.find((gesture) => gesture.id === id);
+  if (!fromDefault) {
+    throw new Error(
+      `Unknown built-in gesture: ${id}. Available: ${DEFAULT_GESTURES.map((gesture) => gesture.id).join(", ")}`
+    );
+  }
+
+  const document = await readCharacterDefinition(sourcePath);
+  const gestures = Array.isArray(document.gestures) ? document.gestures : [];
+
+  if (!hasFlag(args, "--replace") && gestures.some((gesture) => gesture.id === id)) {
+    throw new Error(`Gesture already exists: ${id}. Pass --replace to update it.`);
+  }
+
+  const next = JSON.parse(JSON.stringify(fromDefault)) as CharacterGesture;
+  document.gestures = [...gestures.filter((gesture) => gesture.id !== id), next];
+
+  await writeJson(sourcePath, document);
+  console.log(`added gesture: ${id}`);
+}
+
 function parseOutPath(args: string[]): string {
   const outIndex = args.indexOf("--out");
   if (outIndex === -1 || outIndex === args.length - 1) {
@@ -1044,6 +1105,24 @@ async function main(argv: string[]): Promise<void> {
       throw new Error(`Usage: kugutu add-behavior <source.json> <type>`);
     }
     await addBehaviorCommand(sourcePath, behaviorType, rest);
+    return;
+  }
+
+  if (command === "add-expression") {
+    const [sourcePath, id, ...rest] = args;
+    if (!sourcePath || !id) {
+      throw new Error(`Usage: kugutu add-expression <source.json> <id> [--replace]`);
+    }
+    await addExpressionCommand(sourcePath, id, rest);
+    return;
+  }
+
+  if (command === "add-gesture") {
+    const [sourcePath, id, ...rest] = args;
+    if (!sourcePath || !id) {
+      throw new Error(`Usage: kugutu add-gesture <source.json> <id> [--replace]`);
+    }
+    await addGestureCommand(sourcePath, id, rest);
     return;
   }
 
