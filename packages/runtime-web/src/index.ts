@@ -1,4 +1,5 @@
 import {
+  KUGUTU_PIVOT_ATTR,
   PART_SLOT_DEFINITIONS,
   composeAnchorPartTransform,
   composePartNodeTransform,
@@ -204,6 +205,47 @@ function getBehaviorParam(
   return typeof value === "number" ? value : fallback;
 }
 
+/**
+ * Sets the CSS rotation/scale pivot for a slot node. Joints (arms) carry a
+ * `data-kugutu-pivot` marker as a direct child so they rotate around the
+ * shoulder/elbow/wrist rather than their bounding-box center; everything else
+ * (and any node whose pivot can't be measured) falls back to center.
+ */
+function applySlotPivot(node: SVGGraphicsElement): void {
+  node.style.transformBox = "fill-box";
+  node.style.transformOrigin = "center";
+
+  const marker = node.querySelector<SVGGraphicsElement>(
+    `:scope > [${KUGUTU_PIVOT_ATTR}]`
+  );
+  if (!marker) {
+    return;
+  }
+
+  try {
+    // Marker is an untransformed direct child, so its bbox is already in the
+    // joint's local user space — the same space `node.getBBox()` reports.
+    const pivot = marker.getBBox();
+    const pivotX = pivot.x + pivot.width / 2;
+    const pivotY = pivot.y + pivot.height / 2;
+
+    // Hide the marker before measuring the joint so it never affects the bbox
+    // (or renders).
+    marker.style.display = "none";
+
+    const box = node.getBBox();
+    if (box.width === 0 || box.height === 0) {
+      return;
+    }
+
+    // `transform-box: fill-box` makes transform-origin lengths offsets from the
+    // top-left of the joint's bbox, in local user units.
+    node.style.transformOrigin = `${pivotX - box.x}px ${pivotY - box.y}px`;
+  } catch {
+    // getBBox throws in non-rendering/headless DOM stubs — keep center.
+  }
+}
+
 function querySlotNodes(
   bundle: CharBundle,
   svgRoot: SVGSVGElement
@@ -221,8 +263,7 @@ function querySlotNodes(
     const node = svgRoot.querySelector<SVGGraphicsElement>(`#${CSS.escape(nodeId)}`);
 
     if (node) {
-      node.style.transformBox = "fill-box";
-      node.style.transformOrigin = "center";
+      applySlotPivot(node);
       nodes.set(slotKey, node);
     }
   }

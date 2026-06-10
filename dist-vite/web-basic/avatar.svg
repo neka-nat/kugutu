@@ -39,16 +39,74 @@
 
   <ellipse cx="160" cy="296" rx="92" ry="15" fill="#34344A" opacity="0.10" />
 
+  <!--
+    Arms are FK joint chains: each joint is a nested <g> (upper_arm > forearm >
+    hand) so a parent's runtime CSS transform propagates to its children. The
+    direct-child <circle data-kugutu-pivot> marks the rotation origin
+    (shoulder/elbow/wrist); the runtime reads it, then hides it. Segments are
+    drawn in root coordinates so markers sit at absolute joint positions.
+
+    Single-tone skin capsules (round-capped <line>s overlapping at the elbow so
+    they read as one soft, bendable arm) with mitten hands. Drawn BEFORE the
+    torso so the upper arm/shoulder tucks behind the outfit (only the forearm
+    and hand show beside the body — no limb pasted on top of the clothes). Rest
+    pose is a relaxed V bend with the hands held up at the sides, kept above the
+    outfit hem so nothing dangles below the body.
+  -->
+  <g id="upper_arm_l">
+    <circle data-kugutu-pivot cx="122" cy="242" r="0.01" fill="none" />
+    <line x1="122" y1="242" x2="78" y2="272" stroke="#FAD0B0" stroke-width="17" stroke-linecap="round" />
+    <g id="forearm_l">
+      <circle data-kugutu-pivot cx="78" cy="272" r="0.01" fill="none" />
+      <line x1="78" y1="272" x2="68" y2="232" stroke="#FAD0B0" stroke-width="14" stroke-linecap="round" />
+      <g id="hand_l">
+        <circle data-kugutu-pivot cx="68" cy="232" r="0.01" fill="none" />
+        <ellipse cx="66" cy="228" rx="11" ry="12" fill="#FAD0B0" />
+      </g>
+    </g>
+  </g>
+
+  <g id="upper_arm_r">
+    <circle data-kugutu-pivot cx="198" cy="242" r="0.01" fill="none" />
+    <line x1="198" y1="242" x2="242" y2="272" stroke="#FAD0B0" stroke-width="17" stroke-linecap="round" />
+    <g id="forearm_r">
+      <circle data-kugutu-pivot cx="242" cy="272" r="0.01" fill="none" />
+      <line x1="242" y1="272" x2="252" y2="232" stroke="#FAD0B0" stroke-width="14" stroke-linecap="round" />
+      <g id="hand_r">
+        <circle data-kugutu-pivot cx="252" cy="232" r="0.01" fill="none" />
+        <ellipse cx="254" cy="228" rx="11" ry="12" fill="#FAD0B0" />
+      </g>
+    </g>
+  </g>
+
   <g id="torso_group">
     <g transform="translate(160 250)">
       <g data-kugutu-slot-mount="outfit"><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-tee"><g>
   <path d="M-58 -18 Q-30 -34 0 -34 Q30 -34 58 -18 L70 32 Q0 44 -70 32 Z" fill="#FF8360" />
+  <!-- Short cap sleeves: the arms are drawn behind the outfit, so these drape
+       over the shoulder/upper-arm root and the arm emerges from under them
+       (instead of sprouting from a bare, sleeveless torso). -->
+  <path d="M38 -22 Q62 -26 71 -6 Q75 9 60 16 Q47 7 41 -9 Z" fill="#FF8360" />
+  <path d="M-38 -22 Q-62 -26 -71 -6 Q-75 9 -60 16 Q-47 7 -41 -9 Z" fill="#FF8360" />
+  <path d="M64 -2 Q70 9 59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
+  <path d="M-64 -2 Q-70 9 -59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
   <path d="M-22 -30 Q0 -14 22 -30" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
 </g></g><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-collar"><g>
   <path d="M-58 -18 Q-30 -34 0 -34 Q30 -34 58 -18 L70 32 Q0 44 -70 32 Z" fill="#FF8360" />
+  <!-- Short cap sleeves (see outfit-tee.svg) so the arms emerge from the shirt. -->
+  <path d="M38 -22 Q62 -26 71 -6 Q75 9 60 16 Q47 7 41 -9 Z" fill="#FF8360" />
+  <path d="M-38 -22 Q-62 -26 -71 -6 Q-75 9 -60 16 Q-47 7 -41 -9 Z" fill="#FF8360" />
+  <path d="M64 -2 Q70 9 59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
+  <path d="M-64 -2 Q-70 9 -59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
   <path d="M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z" fill="#FFFFFF" />
 </g></g><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-hoodie"><g>
   <path d="M-62 -16 Q-30 -34 0 -34 Q30 -34 62 -16 L74 38 Q0 50 -74 38 Z" fill="#46C2A8" />
+  <!-- Baggier cap sleeves (hoodie), drawn over the arm root so the arms emerge
+       from the sleeves rather than the bare torso. -->
+  <path d="M44 -20 Q70 -24 80 -2 Q84 13 67 19 Q53 9 47 -7 Z" fill="#46C2A8" />
+  <path d="M-44 -20 Q-70 -24 -80 -2 Q-84 13 -67 19 Q-53 9 -47 -7 Z" fill="#46C2A8" />
+  <path d="M70 2 Q76 13 66 18" fill="none" stroke="#3AA890" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M-70 2 Q-76 13 -66 18" fill="none" stroke="#3AA890" stroke-width="3.5" stroke-linecap="round" />
   <path d="M-28 -28 Q0 -12 28 -28 L23 -2 Q0 8 -23 -2 Z" fill="#3AA890" />
   <path d="M-10 -6 L-10 34" fill="none" stroke="#2E8B76" stroke-width="3.5" stroke-linecap="round" />
   <path d="M10 -6 L10 34" fill="none" stroke="#2E8B76" stroke-width="3.5" stroke-linecap="round" />

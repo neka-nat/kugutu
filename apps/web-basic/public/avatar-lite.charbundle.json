@@ -3,7 +3,7 @@
   "sourceSchemaVersion": "0.1.0",
   "character": {
     "id": "kugutu-mascot",
-    "template": "avatar-lite"
+    "template": "mascot-upper"
   },
   "assets": [
     {
@@ -24,7 +24,13 @@
       "hair.front": "transform.hair_front",
       "hair.back": "transform.hair_back",
       "neck": "transform.neck_group",
-      "torso": "transform.torso_group"
+      "torso": "transform.torso_group",
+      "upperArm.l": "transform.upper_arm_l",
+      "forearm.l": "transform.forearm_l",
+      "hand.l": "transform.hand_l",
+      "upperArm.r": "transform.upper_arm_r",
+      "forearm.r": "transform.forearm_r",
+      "hand.r": "transform.hand_r"
     }
   },
   "behaviors": [
@@ -243,6 +249,162 @@
           ]
         }
       ]
+    },
+    {
+      "id": "wave",
+      "durationMs": 1100,
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.18,
+              "rotate": -60
+            },
+            {
+              "t": 0.85,
+              "rotate": -60
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.18,
+              "rotate": -18
+            },
+            {
+              "t": 0.36,
+              "rotate": 14
+            },
+            {
+              "t": 0.54,
+              "rotate": -18
+            },
+            {
+              "t": 0.72,
+              "rotate": 14
+            },
+            {
+              "t": 0.85,
+              "rotate": -4
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "raise-hand",
+      "durationMs": 760,
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.35,
+              "rotate": -68
+            },
+            {
+              "t": 0.8,
+              "rotate": -68
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.35,
+              "rotate": -8
+            },
+            {
+              "t": 0.8,
+              "rotate": -8
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "point",
+      "durationMs": 680,
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "rotate": -52
+            },
+            {
+              "t": 0.82,
+              "rotate": -52
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "rotate": 42
+            },
+            {
+              "t": 0.82,
+              "rotate": 42
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
     }
   ],
   "visemes": {
@@ -345,7 +507,8 @@
           "color"
         ],
         "defaults": {
-          "scale": 1
+          "scale": 1,
+          "y": 10
         }
       },
       "eye-round": {

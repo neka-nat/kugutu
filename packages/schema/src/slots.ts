@@ -13,7 +13,25 @@ export interface SlotDefinition {
   group: SlotGroup;
   side: SlotSide;
   description: string;
+  /**
+   * Parent slot in a forward-kinematics joint chain (e.g. `forearm.l` →
+   * `upperArm.l`). When the rig nests these slots in the SVG DOM, a parent's
+   * transform automatically propagates to its children, so the runtime only
+   * has to rotate each joint around its own pivot.
+   *
+   * Typed as `string` (not `SlotKey`) to avoid a circular type reference with
+   * `SLOT_DEFINITIONS`; values are always valid `SlotKey`s.
+   */
+  parent?: string;
 }
+
+/**
+ * Attribute marking a joint pivot inside a slot group in the rig SVG. Place an
+ * untransformed marker element (e.g. `<circle data-kugutu-pivot cx cy r="0"/>`)
+ * as a direct child of the joint group; the runtime reads its center as the
+ * rotation origin (shoulder/elbow/wrist) and hides it before rendering.
+ */
+export const KUGUTU_PIVOT_ATTR = "data-kugutu-pivot";
 
 export const SLOT_DEFINITIONS = {
   head: {
@@ -100,21 +118,25 @@ export const SLOT_DEFINITIONS = {
     group: SLOT_GROUPS.arms,
     side: "left",
     description: "Left forearm control.",
+    parent: "upperArm.l",
   },
   "forearm.r": {
     group: SLOT_GROUPS.arms,
     side: "right",
     description: "Right forearm control.",
+    parent: "upperArm.r",
   },
   "hand.l": {
     group: SLOT_GROUPS.arms,
     side: "left",
     description: "Left hand control.",
+    parent: "forearm.l",
   },
   "hand.r": {
     group: SLOT_GROUPS.arms,
     side: "right",
     description: "Right hand control.",
+    parent: "forearm.r",
   },
 } as const satisfies Record<string, SlotDefinition>;
 
@@ -128,4 +150,25 @@ const SLOT_KEY_SET = new Set<SlotKey>(SLOT_KEYS);
 
 export function isKnownSlot(slotKey: string): slotKey is SlotKey {
   return SLOT_KEY_SET.has(slotKey as SlotKey);
+}
+
+/** Returns the parent slot in the FK joint chain, or undefined for a root slot. */
+export function getSlotParent(slotKey: SlotKey): SlotKey | undefined {
+  return (SLOT_DEFINITIONS[slotKey] as SlotDefinition).parent as
+    | SlotKey
+    | undefined;
+}
+
+/**
+ * Walks the FK joint chain from a slot up to its root (e.g. `hand.r` →
+ * `["hand.r", "forearm.r", "upperArm.r"]`). The slot itself is the first entry.
+ */
+export function getSlotChain(slotKey: SlotKey): SlotKey[] {
+  const chain: SlotKey[] = [slotKey];
+  let parent = getSlotParent(slotKey);
+  while (parent && !chain.includes(parent)) {
+    chain.push(parent);
+    parent = getSlotParent(parent);
+  }
+  return chain;
 }

@@ -18,9 +18,12 @@ export {
   type NumericParamDefinition,
 } from "./behaviors.js";
 export {
+  KUGUTU_PIVOT_ATTR,
   SLOT_DEFINITIONS,
   SLOT_GROUPS,
   SLOT_KEYS,
+  getSlotChain,
+  getSlotParent,
   isKnownSlot,
   type SlotDefinition,
   type SlotGroup,

@@ -28,6 +28,7 @@ import {
   type SlotKey,
   type VisemeMap,
   SLOT_DEFINITIONS,
+  getSlotParent,
 } from "@kugutu/schema";
 
 function slotToChannelId(nodeId: string): string {
@@ -782,6 +783,20 @@ export function lintCharacter(
   const base = validateCharacterDefinition(document);
   const errors = [...base.errors];
   const warnings: string[] = [];
+
+  // FK joint chains must be complete: a child arm slot rotates relative to its
+  // parent, so binding `forearm.*`/`hand.*` without the parent above it leaves
+  // the joint pivoting in isolation (no shoulder/elbow follow-through).
+  if (base.valid) {
+    for (const slotKey of Object.keys(document.slots ?? {}) as SlotKey[]) {
+      const parent = getSlotParent(slotKey);
+      if (parent && !document.slots?.[parent]) {
+        warnings.push(
+          `slots.${slotKey} is bound but its FK parent slots.${parent} is not; the joint will not follow its parent. Bind ${parent} for a connected arm.`
+        );
+      }
+    }
+  }
 
   if (svgText !== undefined && base.valid && document.parts) {
     const renderable = (partId: string, partSlot: PartSlotKey): boolean =>

@@ -4,7 +4,7 @@
   "character": {
     "id": "kugutu-mascot",
     "displayName": "Kugutu Mascot",
-    "template": "avatar-lite"
+    "template": "mascot-upper"
   },
   "assets": {
     "primary": "../public/avatar.svg"
@@ -20,7 +20,13 @@
     "hair.front": "hair_front",
     "hair.back": "hair_back",
     "neck": "neck_group",
-    "torso": "torso_group"
+    "torso": "torso_group",
+    "upperArm.l": "upper_arm_l",
+    "forearm.l": "forearm_l",
+    "hand.l": "hand_l",
+    "upperArm.r": "upper_arm_r",
+    "forearm.r": "forearm_r",
+    "hand.r": "hand_r"
   },
   "parts": {
     "catalog": {
@@ -32,7 +38,7 @@
       "face-oval": {
         "id": "face-oval", "slot": "face", "displayName": "Oval face",
         "asset": "parts/face/face-oval.svg",
-        "editable": ["scale", "color"], "defaults": { "scale": 1 }
+        "editable": ["scale", "color"], "defaults": { "scale": 1, "y": 10 }
       },
       "eye-round": {
         "id": "eye-round", "slot": "eye", "displayName": "Round eyes",
