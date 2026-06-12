@@ -63,6 +63,8 @@ function compileChannel(
       return `${baseChannel}.translateY`;
     case "mouth-open":
       return `${baseChannel}.scaleY`;
+    case "arm-idle":
+      return `${baseChannel}.rotate`;
   }
 }
 

@@ -1,8 +1,10 @@
 import {
   KUGUTU_PIVOT_ATTR,
   PART_SLOT_DEFINITIONS,
+  SLOT_DEFINITIONS,
   composeAnchorPartTransform,
   composePartNodeTransform,
+  getSlotChain,
   resolvePartTransform,
   type BehaviorType,
   type CharBundle,
@@ -110,6 +112,7 @@ interface PlayerState {
   emotion: EmotionState;
   blink: BlinkState;
   breathingElapsedMs: number;
+  armIdleElapsedMs: number;
   gesture: GestureState | null;
   speaking: SpeakingState | null;
   rafId: number | null;
@@ -246,6 +249,42 @@ function applySlotPivot(node: SVGGraphicsElement): void {
   }
 }
 
+/** True for arm joints, whose FK is composed by the runtime (see applyArmTransform). */
+function isArmSlot(slotKey: SlotKey): boolean {
+  return SLOT_DEFINITIONS[slotKey]?.group === "arms";
+}
+
+/**
+ * Reads a joint's pivot center in root user coordinates from its direct-child
+ * `data-kugutu-pivot` marker (circle `cx`/`cy`, falling back to the marker
+ * bbox), then hides the marker. Returns null when there is no marker.
+ */
+function readArmPivot(node: SVGGraphicsElement): { x: number; y: number } | null {
+  const marker = node.querySelector<SVGGraphicsElement>(
+    `:scope > [${KUGUTU_PIVOT_ATTR}]`
+  );
+  if (!marker) {
+    return null;
+  }
+
+  let center: { x: number; y: number } | null = null;
+  const cx = marker.getAttribute("cx");
+  const cy = marker.getAttribute("cy");
+  if (cx !== null && cy !== null) {
+    center = { x: Number(cx), y: Number(cy) };
+  } else {
+    try {
+      const box = marker.getBBox();
+      center = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+    } catch {
+      center = null;
+    }
+  }
+
+  marker.style.display = "none";
+  return center;
+}
+
 function querySlotNodes(
   bundle: CharBundle,
   svgRoot: SVGSVGElement
@@ -263,7 +302,12 @@ function querySlotNodes(
     const node = svgRoot.querySelector<SVGGraphicsElement>(`#${CSS.escape(nodeId)}`);
 
     if (node) {
-      applySlotPivot(node);
+      // Arm joints are positioned via the SVG `transform` attribute (a composed
+      // FK rotation chain), not CSS — so they skip the CSS transform-origin pivot
+      // and have their pivot read by the player instead.
+      if (!isArmSlot(slotKey)) {
+        applySlotPivot(node);
+      }
       nodes.set(slotKey, node);
     }
   }
@@ -297,6 +341,22 @@ export function createCharacterPlayer(
 ): CharacterPlayer {
   const nodes = querySlotNodes(bundle, svgRoot);
   const transforms = new Map<SlotKey, TransformState>();
+
+  // Arm joints are NOT DOM-nested, so FK is composed by the runtime: each joint's
+  // pivot (shoulder/elbow/wrist, in root coords) is read once here, and every
+  // frame the joint is positioned by a chain of SVG rotations about its and its
+  // ancestors' pivots. This lets the upper arm sit behind the outfit while the
+  // forearm/hand sit in front, without the chain losing its shoulder→elbow bend.
+  const armPivots = new Map<SlotKey, { x: number; y: number }>();
+  for (const [slotKey, node] of nodes.entries()) {
+    if (!isArmSlot(slotKey)) {
+      continue;
+    }
+    const pivot = readArmPivot(node);
+    if (pivot) {
+      armPivots.set(slotKey, pivot);
+    }
+  }
 
   // The mouth opens by crossfading between distinct closed and open artwork
   // (a blend-shape pair) rather than vertically stretching a single shape, so
@@ -335,6 +395,7 @@ export function createCharacterPlayer(
       forced: false,
     },
     breathingElapsedMs: 0,
+    armIdleElapsedMs: 0,
     gesture: null,
     speaking: null,
     rafId: null,
@@ -661,6 +722,38 @@ export function createCharacterPlayer(
     }
   }
 
+  // Gentle continuous sway of the resting arms so they never freeze stiff
+  // between gestures. Left/right use mirrored signs so both shoulders rise and
+  // fall together (like a breath); the forearm lags the shoulder slightly for a
+  // little follow-through. Hands ride along via FK (the SVG nests them under the
+  // forearm), so only the shoulder + elbow are driven here. Additive with any
+  // active gesture — the small idle just rides on top of a big motion.
+  function applyArmIdle(deltaMs: number): void {
+    const behavior = findBehavior(bundle, "arm-idle");
+    if (!behavior) {
+      return;
+    }
+
+    state.armIdleElapsedMs += deltaMs;
+
+    const cycleMs = getBehaviorParam(behavior, "cycleMs", 3600);
+    const swayDeg = getBehaviorParam(behavior, "swayDeg", 2);
+    const phase = (state.armIdleElapsedMs / cycleMs) * Math.PI * 2;
+    const upper = swayDeg * Math.sin(phase);
+    const fore = swayDeg * 0.7 * Math.sin(phase - 0.6);
+
+    for (const slotKey of ["upperArm.r", "upperArm.l"] as const) {
+      if (nodes.has(slotKey)) {
+        rotate(slotKey, slotKey.endsWith(".l") ? -upper : upper);
+      }
+    }
+    for (const slotKey of ["forearm.r", "forearm.l"] as const) {
+      if (nodes.has(slotKey)) {
+        rotate(slotKey, slotKey.endsWith(".l") ? -fore : fore);
+      }
+    }
+  }
+
   function sliderMouthOpen(): number {
     const behavior = findBehavior(bundle, "mouth-open");
     if (!behavior) {
@@ -837,8 +930,36 @@ export function createCharacterPlayer(
     }
   }
 
+  // Positions an arm joint by composing the FK chain as SVG rotations about each
+  // joint's pivot, outermost (root/shoulder) first. Because the joints are not
+  // DOM-nested, the full chain is applied to each joint. Arm channels are
+  // rotation-only (gestures/arm-idle), so translate/scale are not composed here.
+  function applyArmTransform(slotKey: SlotKey, node: SVGGraphicsElement): void {
+    const chain = getSlotChain(slotKey); // [self, parent, ..., root]
+    const rotations: string[] = [];
+    for (let index = chain.length - 1; index >= 0; index -= 1) {
+      const joint = chain[index]!;
+      const pivot = armPivots.get(joint);
+      if (!pivot) {
+        continue;
+      }
+      const deg = transforms.get(joint)?.rotateDeg ?? 0;
+      rotations.push(`rotate(${deg} ${pivot.x} ${pivot.y})`);
+    }
+
+    if (rotations.length > 0) {
+      node.setAttribute("transform", rotations.join(" "));
+    } else {
+      node.removeAttribute("transform");
+    }
+  }
+
   function render(): void {
     for (const [slotKey, node] of nodes.entries()) {
+      if (isArmSlot(slotKey)) {
+        applyArmTransform(slotKey, node);
+        continue;
+      }
       const transform = transforms.get(slotKey) ?? createNeutralTransform();
       applyCssTransform(node, transform);
     }
@@ -850,6 +971,7 @@ export function createCharacterPlayer(
     applyLookAt();
     applyBlink(deltaMs);
     applyBreathing(deltaMs);
+    applyArmIdle(deltaMs);
     const baseMouthOpen = state.speaking
       ? applySpeaking(deltaMs)
       : sliderMouthOpen();
@@ -988,8 +1110,11 @@ export function createCharacterPlayer(
     },
     destroy(): void {
       this.stop();
-      for (const node of nodes.values()) {
+      for (const [slotKey, node] of nodes.entries()) {
         node.style.transform = "";
+        if (isArmSlot(slotKey)) {
+          node.removeAttribute("transform");
+        }
       }
     },
   };

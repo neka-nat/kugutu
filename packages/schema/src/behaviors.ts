@@ -5,6 +5,7 @@ export const BEHAVIOR_TYPES = [
   "look-at",
   "breathing",
   "mouth-open",
+  "arm-idle",
 ] as const;
 
 export type BehaviorType = (typeof BEHAVIOR_TYPES)[number];
@@ -41,11 +42,17 @@ export interface MouthOpenParams {
   smoothing: number;
 }
 
+export interface ArmIdleParams {
+  cycleMs: number;
+  swayDeg: number;
+}
+
 export type BehaviorParamsMap = {
   blink: BlinkParams;
   "look-at": LookAtParams;
   breathing: BreathingParams;
   "mouth-open": MouthOpenParams;
+  "arm-idle": ArmIdleParams;
 };
 
 export type BehaviorAllowedTargetMap = {
@@ -53,6 +60,13 @@ export type BehaviorAllowedTargetMap = {
   "look-at": "eye.l" | "eye.r" | "pupil.l" | "pupil.r" | "head" | "neck";
   breathing: "torso" | "neck" | "head";
   "mouth-open": "mouth" | "jaw";
+  "arm-idle":
+    | "upperArm.l"
+    | "upperArm.r"
+    | "forearm.l"
+    | "forearm.r"
+    | "hand.l"
+    | "hand.r";
 };
 
 type BehaviorParamDefinitionsMap = {
@@ -111,6 +125,23 @@ export const BEHAVIOR_SPECS = {
     params: {
       maxOpen: { type: "number", min: 0, max: 1, default: 0.9 },
       smoothing: { type: "number", min: 0, max: 1, default: 0.2 },
+    },
+  },
+  "arm-idle": {
+    description:
+      "Subtle continuous sway of the shoulders/forearms so resting arms feel alive.",
+    requiredTargets: [],
+    allowedTargets: [
+      "upperArm.l",
+      "upperArm.r",
+      "forearm.l",
+      "forearm.r",
+      "hand.l",
+      "hand.r",
+    ],
+    params: {
+      cycleMs: { type: "integer", min: 1500, max: 9000, default: 3600 },
+      swayDeg: { type: "number", min: 0, max: 12, default: 2 },
     },
   },
 } as const satisfies {

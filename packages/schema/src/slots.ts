@@ -15,9 +15,10 @@ export interface SlotDefinition {
   description: string;
   /**
    * Parent slot in a forward-kinematics joint chain (e.g. `forearm.l` →
-   * `upperArm.l`). When the rig nests these slots in the SVG DOM, a parent's
-   * transform automatically propagates to its children, so the runtime only
-   * has to rotate each joint around its own pivot.
+   * `upperArm.l`). The runtime composes the chain from this parent link and each
+   * joint's `data-kugutu-pivot` marker, so the joints do NOT need to be nested
+   * in the SVG DOM — they can live at different z-layers (e.g. the upper arm
+   * behind the outfit, the forearm/hand in front) and still bend correctly.
    *
    * Typed as `string` (not `SlotKey`) to avoid a circular type reference with
    * `SLOT_DEFINITIONS`; values are always valid `SlotKey`s.

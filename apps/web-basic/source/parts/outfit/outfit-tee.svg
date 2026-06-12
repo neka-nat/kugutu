@@ -3,9 +3,10 @@
   <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
   <!-- Neckline (a soft collar accent). -->
   <path d="M-21 -31 Q0 -15 21 -31" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
-  <!-- Short cap sleeves: the arms are drawn behind the outfit and emerge from
-       under these. The darker cuff band marks the sleeve opening at the outer
-       edge where the arm exits, so it reads as a rolled sleeve, not a wrinkle. -->
+  <!-- Short cap sleeves = the shirt's shoulder. The arm now sits in FRONT of
+       the outfit and covers these at rest; when it lifts away they stay put as
+       the shoulder. The darker cuff band marks the sleeve opening so it reads as
+       a rolled sleeve, not a wrinkle. -->
   <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
   <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
   <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />

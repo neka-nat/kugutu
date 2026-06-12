@@ -51,7 +51,13 @@ export const TEMPLATES = {
       "jaw",
       "neck",
     ],
-    recommendedBehaviors: ["blink", "look-at", "breathing", "mouth-open"],
+    recommendedBehaviors: [
+      "blink",
+      "look-at",
+      "breathing",
+      "mouth-open",
+      "arm-idle",
+    ],
   },
   "vtuber-lite": {
     description: "Face-first avatar with stronger eye and mouth control.",

@@ -22,49 +22,49 @@
   <ellipse cx="160" cy="296" rx="92" ry="15" fill="#34344A" opacity="0.10" />
 
   <!--
-    Arms are FK joint chains: each joint is a nested <g> (upper_arm > forearm >
-    hand) so a parent's runtime CSS transform propagates to its children. The
-    direct-child <circle data-kugutu-pivot> marks the rotation origin
-    (shoulder/elbow/wrist); the runtime reads it, then hides it. Segments are
-    drawn in root coordinates so markers sit at absolute joint positions.
+    Arms are FK joint chains, but the joints are NOT DOM-nested: the runtime
+    composes each joint's transform from its <circle data-kugutu-pivot> marker
+    (shoulder/elbow/wrist, in root coords) and the slot parent chain. That lets
+    the joints live at different z-layers: the UPPER ARMS are drawn BEFORE the
+    torso (behind the shirt) while the FOREARMS + HANDS are drawn AFTER it (in
+    front). So the shoulder/upper-arm tucks behind the clothes and the forearm
+    reads in front — without breaking the shoulder→elbow→wrist bend.
 
     Single-tone skin capsules (round-capped <line>s overlapping at the elbow so
-    they read as one soft, bendable arm) with mitten hands. Drawn BEFORE the
-    torso so the upper arm/shoulder tucks behind the outfit (only the forearm
-    and hand show beside the body — no limb pasted on top of the clothes). Rest
-    pose is a relaxed V bend with the hands held up at the sides, kept above the
-    outfit hem so nothing dangles below the body.
+    they read as one soft, bendable arm) with mitten hands. Rest pose is a
+    relaxed V bend with the hands held up at the sides, kept above the outfit
+    hem so nothing dangles below the body.
   -->
   <g id="upper_arm_l">
     <circle data-kugutu-pivot cx="120" cy="240" r="0.01" fill="none" />
     <line x1="120" y1="240" x2="82" y2="266" stroke="#FAD0B0" stroke-width="18" stroke-linecap="round" />
-    <g id="forearm_l">
-      <circle data-kugutu-pivot cx="82" cy="266" r="0.01" fill="none" />
-      <line x1="82" y1="266" x2="90" y2="232" stroke="#FAD0B0" stroke-width="16" stroke-linecap="round" />
-      <g id="hand_l">
-        <circle data-kugutu-pivot cx="90" cy="232" r="0.01" fill="none" />
-        <ellipse cx="88" cy="228" rx="13" ry="14" fill="#FAD0B0" />
-      </g>
-    </g>
   </g>
-
   <g id="upper_arm_r">
     <circle data-kugutu-pivot cx="200" cy="240" r="0.01" fill="none" />
     <line x1="200" y1="240" x2="238" y2="266" stroke="#FAD0B0" stroke-width="18" stroke-linecap="round" />
-    <g id="forearm_r">
-      <circle data-kugutu-pivot cx="238" cy="266" r="0.01" fill="none" />
-      <line x1="238" y1="266" x2="230" y2="232" stroke="#FAD0B0" stroke-width="16" stroke-linecap="round" />
-      <g id="hand_r">
-        <circle data-kugutu-pivot cx="230" cy="232" r="0.01" fill="none" />
-        <ellipse cx="232" cy="228" rx="13" ry="14" fill="#FAD0B0" />
-      </g>
-    </g>
   </g>
 
   <g id="torso_group">
     <g transform="translate(160 250)">
       <g data-kugutu-slot-mount="outfit"></g>
     </g>
+  </g>
+
+  <g id="forearm_l">
+    <circle data-kugutu-pivot cx="82" cy="266" r="0.01" fill="none" />
+    <line x1="82" y1="266" x2="90" y2="232" stroke="#FAD0B0" stroke-width="16" stroke-linecap="round" />
+  </g>
+  <g id="hand_l">
+    <circle data-kugutu-pivot cx="90" cy="232" r="0.01" fill="none" />
+    <ellipse cx="88" cy="228" rx="13" ry="14" fill="#FAD0B0" />
+  </g>
+  <g id="forearm_r">
+    <circle data-kugutu-pivot cx="238" cy="266" r="0.01" fill="none" />
+    <line x1="238" y1="266" x2="230" y2="232" stroke="#FAD0B0" stroke-width="16" stroke-linecap="round" />
+  </g>
+  <g id="hand_r">
+    <circle data-kugutu-pivot cx="230" cy="232" r="0.01" fill="none" />
+    <ellipse cx="232" cy="228" rx="13" ry="14" fill="#FAD0B0" />
   </g>
 
   <g id="neck_group">

@@ -203,6 +203,11 @@
     {
       "id": "mouth-open-default", "type": "mouth-open", "targets": ["mouth"],
       "params": { "maxOpen": 0.9, "smoothing": 0.25 }
+    },
+    {
+      "id": "arm-idle-default", "type": "arm-idle",
+      "targets": ["upperArm.l", "upperArm.r", "forearm.l", "forearm.r"],
+      "params": { "cycleMs": 3800, "swayDeg": 2.2 }
     }
   ]
 }

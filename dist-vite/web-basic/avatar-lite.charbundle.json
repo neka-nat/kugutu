@@ -88,6 +88,20 @@
         "maxOpen": 0.9,
         "smoothing": 0.25
       }
+    },
+    {
+      "id": "arm-idle-default",
+      "type": "arm-idle",
+      "channels": [
+        "transform.upper_arm_l.rotate",
+        "transform.upper_arm_r.rotate",
+        "transform.forearm_l.rotate",
+        "transform.forearm_r.rotate"
+      ],
+      "params": {
+        "cycleMs": 3800,
+        "swayDeg": 2.2
+      }
     }
   ],
   "expressions": [
@@ -382,6 +396,66 @@
       ]
     },
     {
+      "id": "wave-left",
+      "durationMs": 1100,
+      "tracks": [
+        {
+          "slot": "upperArm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.18,
+              "rotate": 84
+            },
+            {
+              "t": 0.85,
+              "rotate": 84
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.18,
+              "rotate": -26
+            },
+            {
+              "t": 0.36,
+              "rotate": -10
+            },
+            {
+              "t": 0.54,
+              "rotate": -26
+            },
+            {
+              "t": 0.72,
+              "rotate": -10
+            },
+            {
+              "t": 0.85,
+              "rotate": -20
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "raise-hand",
       "durationMs": 760,
       "tracks": [
@@ -468,6 +542,202 @@
             {
               "t": 0.82,
               "rotate": 58
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cheer",
+      "durationMs": 900,
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.3,
+              "rotate": -84
+            },
+            {
+              "t": 0.5,
+              "rotate": -74
+            },
+            {
+              "t": 0.7,
+              "rotate": -84
+            },
+            {
+              "t": 0.85,
+              "rotate": -74
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.3,
+              "rotate": -12
+            },
+            {
+              "t": 0.85,
+              "rotate": -12
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "upperArm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.3,
+              "rotate": 84
+            },
+            {
+              "t": 0.5,
+              "rotate": 74
+            },
+            {
+              "t": 0.7,
+              "rotate": 84
+            },
+            {
+              "t": 0.85,
+              "rotate": 74
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.3,
+              "rotate": 12
+            },
+            {
+              "t": 0.85,
+              "rotate": 12
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shrug",
+      "durationMs": 760,
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "rotate": -16
+            },
+            {
+              "t": 0.75,
+              "rotate": -16
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "rotate": 34
+            },
+            {
+              "t": 0.75,
+              "rotate": 34
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "upperArm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "rotate": 16
+            },
+            {
+              "t": 0.75,
+              "rotate": 16
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.4,
+              "rotate": -34
+            },
+            {
+              "t": 0.75,
+              "rotate": -34
             },
             {
               "t": 1,

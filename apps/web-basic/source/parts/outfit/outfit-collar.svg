@@ -1,6 +1,6 @@
 <g>
   <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
-  <!-- Short cap sleeves (see outfit-tee.svg): arms emerge from under the cuff. -->
+  <!-- Short cap sleeves = shirt shoulder (see outfit-tee.svg); the in-front arm covers them at rest. -->
   <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
   <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
   <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
