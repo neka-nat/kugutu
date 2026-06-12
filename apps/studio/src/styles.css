@@ -259,8 +259,7 @@ button[aria-pressed="true"] {
   border-bottom: 1px solid var(--line);
 }
 
-.range-row,
-.color-row {
+.range-row {
   display: grid;
   grid-template-columns: 82px minmax(0, 1fr) 46px;
   align-items: center;
@@ -281,15 +280,90 @@ button[aria-pressed="true"] {
   font-variant-numeric: tabular-nums;
 }
 
-.color-row input {
-  grid-column: 2 / span 2;
-  min-width: 0;
-  height: 34px;
-  padding: 0 9px;
+.color-control {
+  display: grid;
+  gap: 8px;
+}
+
+.color-control-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.color-current {
+  color: var(--ink);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+}
+
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.swatch {
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: white;
-  color: var(--ink);
+  background: var(--swatch, var(--surface));
+  box-shadow: inset 0 0 0 2px var(--surface);
+  cursor: pointer;
+}
+
+.swatch:hover {
+  border-color: var(--teal);
+}
+
+.swatch[aria-pressed="true"] {
+  border-color: var(--ink);
+  box-shadow:
+    inset 0 0 0 2px var(--surface),
+    0 0 0 2px var(--ink);
+}
+
+.swatch-custom {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    conic-gradient(
+      from 90deg,
+      #ff5f6d, #ffc371, #47e08b, #1fa2ff, #a86bff, #ff5f6d
+    );
+  box-shadow: none;
+}
+
+.swatch-custom input[type="color"] {
+  width: 150%;
+  height: 150%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.swatch-reset {
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.swatch-reset[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px var(--ink);
 }
 
 .runtime-panel {

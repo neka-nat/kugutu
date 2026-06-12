@@ -1,12 +1,12 @@
 <g>
   <path d="M-62 -16 Q-32 -34 0 -34 Q32 -34 62 -16 L72 38 Q0 48 -72 38 Z" fill="#46C2A8" />
   <!-- Baggier cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->
-  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.55">
+  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.85">
     <circle data-kugutu-pivot cx="40" cy="-10" r="0.01" fill="none" />
     <path d="M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z" fill="#46C2A8" />
     <path d="M63 18 Q78 13 79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />
   </g>
-  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.55">
+  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.85">
     <circle data-kugutu-pivot cx="-40" cy="-10" r="0.01" fill="none" />
     <path d="M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z" fill="#46C2A8" />
     <path d="M-63 18 Q-78 13 -79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />

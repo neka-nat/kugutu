@@ -8,12 +8,12 @@
        the shoulder (outfit-local: root shoulder 200/120,240 minus the mount's
        translate 160,250 = ±40,-10). amount<1 = fabric lag. The darker cuff band
        marks the sleeve opening so it reads as a rolled sleeve, not a wrinkle. -->
-  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.55">
+  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.85">
     <circle data-kugutu-pivot cx="40" cy="-10" r="0.01" fill="none" />
     <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
     <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
   </g>
-  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.55">
+  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.85">
     <circle data-kugutu-pivot cx="-40" cy="-10" r="0.01" fill="none" />
     <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
     <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />

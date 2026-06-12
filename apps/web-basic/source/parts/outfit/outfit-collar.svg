@@ -1,12 +1,12 @@
 <g>
   <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
   <!-- Cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->
-  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.55">
+  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.85">
     <circle data-kugutu-pivot cx="40" cy="-10" r="0.01" fill="none" />
     <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
     <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
   </g>
-  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.55">
+  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.85">
     <circle data-kugutu-pivot cx="-40" cy="-10" r="0.01" fill="none" />
     <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
     <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />

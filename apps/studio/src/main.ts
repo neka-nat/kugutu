@@ -51,6 +51,53 @@ const NUMERIC_FIELDS: {
 const EMOTIONS = ["neutral", "happy", "sad", "angry", "surprised"];
 const EXPORT_KINDS = ["charpack"] as const;
 
+// Curated swatches per slot so color editing feels like picking from a Mii-style
+// palette instead of typing a hex code. Falls back to DEFAULT_PALETTE.
+const SKIN_PALETTE = [
+  "#ffe0c4", "#f8d2ad", "#f1bd95", "#e0a878", "#c68a5e", "#9c6644", "#6f4a2f",
+];
+const HAIR_PALETTE = [
+  "#1c1a18", "#3b2a20", "#6b4423", "#a86b35", "#d8a25a", "#e8c887",
+  "#b03a2e", "#c0392b", "#7d5fb2", "#2e7d6b", "#cfd2d6", "#f4f1ea",
+];
+const DEFAULT_PALETTE = [
+  "#167c80", "#c65d45", "#b88319", "#3a5fb0", "#2e7d4f", "#7d5fb2",
+  "#d65b8a", "#2d3436", "#8a8d91", "#e8e1d4", "#fffdf8", "#1c1a18",
+];
+
+const COLOR_PALETTES: Partial<Record<PartSlotKey, string[]>> = {
+  face: SKIN_PALETTE,
+  nose: SKIN_PALETTE,
+  "hair.front": HAIR_PALETTE,
+  "hair.back": HAIR_PALETTE,
+  brow: HAIR_PALETTE,
+  eye: ["#3b2a20", "#6b4423", "#1f6f78", "#2e7d4f", "#3a5fb0", "#7d3fb2", "#8a8d91", "#1c1a18"],
+  mouth: ["#c0392b", "#d65b4a", "#e08a7a", "#b8556b", "#9c4f57", "#7a3b3b"],
+  outfit: [
+    "#167c80", "#c65d45", "#b88319", "#3a5fb0", "#2e7d4f", "#7d5fb2",
+    "#d65b8a", "#2d3436", "#e8e1d4", "#f4f1ea",
+  ],
+};
+
+function getPalette(slot: PartSlotKey): string[] {
+  return COLOR_PALETTES[slot] ?? DEFAULT_PALETTE;
+}
+
+// Native <input type="color"> only accepts 6-digit hex. Coerce shorthand/None
+// into something it will display without throwing away the authored value.
+function toPickerHex(color: string | undefined): string {
+  if (!color) {
+    return "#cccccc";
+  }
+
+  const short = /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.exec(color);
+  if (short) {
+    return `#${short[1]}${short[1]}${short[2]}${short[2]}${short[3]}${short[3]}`;
+  }
+
+  return /^#[0-9a-f]{6}$/i.test(color) ? color : "#cccccc";
+}
+
 const root = document.querySelector<HTMLElement>("#app");
 if (!root) {
   throw new Error("Studio root not found.");
@@ -209,6 +256,13 @@ function updateTransform(slot: PartSlotKey, patch: PartTransform): void {
   };
 }
 
+function clearTransformKey(slot: PartSlotKey, key: keyof PartTransform): void {
+  const selection = getSelection(slot);
+  if (selection?.transform) {
+    delete selection.transform[key];
+  }
+}
+
 function emotionIntensity(emotion: string): number {
   const intensities: Record<string, number> = {
     neutral: 0,
@@ -357,16 +411,50 @@ function renderControls(slot: PartSlotKey): string {
           `;
         })
         .join("")}
-      ${
-        colorEditable
-          ? `
-            <label class="color-row">
-              <span>Color</span>
-              <input type="text" value="${transform.color ?? ""}" data-transform-key="color" />
-            </label>
-          `
-          : ""
-      }
+      ${colorEditable ? renderColorControl(slot, transform) : ""}
+    </div>
+  `;
+}
+
+function renderColorControl(slot: PartSlotKey, transform: PartTransform): string {
+  const current = transform.color?.toLowerCase();
+  const swatches = getPalette(slot)
+    .map((color) => {
+      const active = color.toLowerCase() === current ? "true" : "false";
+      return `
+        <button
+          type="button"
+          class="swatch"
+          style="--swatch:${color}"
+          data-color-swatch="${color}"
+          aria-pressed="${active}"
+          title="${color}"
+          aria-label="色 ${color}"
+        ></button>
+      `;
+    })
+    .join("");
+
+  return `
+    <div class="color-control">
+      <div class="color-control-head">
+        <span>Color</span>
+        <span class="color-current">${transform.color ?? "default"}</span>
+      </div>
+      <div class="swatch-grid">
+        ${swatches}
+        <label class="swatch swatch-custom" title="カスタム色" aria-label="カスタム色">
+          <input type="color" value="${toPickerHex(transform.color)}" data-color-picker />
+        </label>
+        <button
+          type="button"
+          class="swatch swatch-reset"
+          data-color-reset
+          aria-pressed="${current ? "false" : "true"}"
+          title="デフォルトに戻す"
+          aria-label="デフォルトに戻す"
+        >⟲</button>
+      </div>
     </div>
   `;
 }
@@ -493,15 +581,37 @@ function bindEvents(): void {
         return;
       }
 
-      if (key === "color") {
-        updateTransform(state.activeSlot, { color: input.value });
-      } else {
-        updateTransform(state.activeSlot, { [key]: Number(input.value) } as PartTransform);
-      }
-
+      updateTransform(state.activeSlot, { [key]: Number(input.value) } as PartTransform);
       renderApp();
     });
   }
+
+  for (const button of Array.from(document.querySelectorAll<HTMLButtonElement>("[data-color-swatch]"))) {
+    button.addEventListener("click", () => {
+      const color = button.dataset.colorSwatch;
+      if (!color) {
+        return;
+      }
+      updateTransform(state.activeSlot, { color });
+      renderApp();
+    });
+  }
+
+  document.querySelector<HTMLButtonElement>("[data-color-reset]")?.addEventListener("click", () => {
+    clearTransformKey(state.activeSlot, "color");
+    renderApp();
+  });
+
+  // Live-update the preview while dragging the native picker, but only commit a
+  // full re-render on `change` — rebuilding the DOM mid-drag closes the picker.
+  const colorPicker = document.querySelector<HTMLInputElement>("[data-color-picker]");
+  colorPicker?.addEventListener("input", () => {
+    updateTransform(state.activeSlot, { color: colorPicker.value });
+    renderPreview();
+  });
+  colorPicker?.addEventListener("change", () => {
+    renderApp();
+  });
 
   for (const button of Array.from(document.querySelectorAll<HTMLButtonElement>("[data-emotion]"))) {
     button.addEventListener("click", () => {
