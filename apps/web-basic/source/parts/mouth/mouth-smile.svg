@@ -1,3 +1,10 @@
 <g>
-  <path d="M-14 -1 Q0 13 14 -1" fill="none" stroke="#34344A" stroke-width="4.5" stroke-linecap="round" />
+  <g data-kugutu-mouth-open>
+    <path d="M-12 -3 Q0 7 12 -3 Q13 13 0 15 Q-13 13 -12 -3 Z" fill="#7A2E3A" />
+    <path d="M-7 9 Q0 14 7 9 Q0 6 -7 9 Z" fill="#FF8E8E" />
+    <path d="M-12 -3 Q0 7 12 -3" fill="none" stroke="#34344A" stroke-width="2.6" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-12 -3 Q0 7 12 -3" fill="none" stroke="#34344A" stroke-width="3" stroke-linecap="round" />
+  </g>
 </g>

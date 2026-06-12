@@ -298,6 +298,32 @@ export function createCharacterPlayer(
   const nodes = querySlotNodes(bundle, svgRoot);
   const transforms = new Map<SlotKey, TransformState>();
 
+  // The mouth opens by crossfading between distinct closed and open artwork
+  // (a blend-shape pair) rather than vertically stretching a single shape, so
+  // every mouth — even a flat neutral line — has a real, visibly different open
+  // state. All variants are pre-rendered into the SVG; we collect every
+  // variant's pair once and drive them together (hidden variants are inert).
+  const mouthClosedGroups: SVGGraphicsElement[] = [];
+  const mouthOpenGroups: SVGGraphicsElement[] = [];
+  {
+    const mouthNode = nodes.get("mouth");
+    if (mouthNode) {
+      mouthNode
+        .querySelectorAll<SVGGraphicsElement>("[data-kugutu-mouth-closed]")
+        .forEach((group) => mouthClosedGroups.push(group));
+      mouthNode
+        .querySelectorAll<SVGGraphicsElement>("[data-kugutu-mouth-open]")
+        .forEach((group) => {
+          group.style.transformBox = "fill-box";
+          group.style.transformOrigin = "center top";
+          mouthOpenGroups.push(group);
+        });
+    }
+  }
+  // Mouth opening contributed by the active expression (e.g. "surprised"),
+  // accumulated each frame in applyExpression and folded into the open amount.
+  let frameExpressionMouthOpen = 0;
+
   const state: PlayerState = {
     lookAt: { x: 0, y: 0 },
     mouthOpen: 0,
@@ -635,19 +661,27 @@ export function createCharacterPlayer(
     }
   }
 
-  function applyMouthOpen(): void {
+  function sliderMouthOpen(): number {
     const behavior = findBehavior(bundle, "mouth-open");
     if (!behavior) {
-      return;
+      return 0;
     }
+    const maxOpen = clamp(getBehaviorParam(behavior, "maxOpen", 0.9), 0, 1);
+    return clamp(state.mouthOpen, 0, 1) * maxOpen;
+  }
 
-    const maxOpen = getBehaviorParam(behavior, "maxOpen", 0.9);
-    const openness = 1 + clamp(state.mouthOpen, 0, 1) * maxOpen;
-
-    for (const slotKey of ["mouth", "jaw"] as const) {
-      if (nodes.has(slotKey)) {
-        scaleY(slotKey, openness);
-      }
+  // Crossfades the closed and open mouth artwork by the open amount and gives
+  // the open shape a little growth so it reads as the jaw dropping, not just a
+  // fade. Driven once per frame after the slot transforms are committed.
+  function applyMouthShape(openAmount: number): void {
+    const open = clamp(openAmount, 0, 1);
+    const t = open * open * (3 - 2 * open); // smoothstep for a snappier open
+    for (const group of mouthClosedGroups) {
+      group.style.opacity = String(1 - t);
+    }
+    for (const group of mouthOpenGroups) {
+      group.style.opacity = String(t);
+      group.style.transform = `scaleY(${0.7 + 0.3 * open})`;
     }
   }
 
@@ -666,10 +700,12 @@ export function createCharacterPlayer(
     return current;
   }
 
-  function applySpeaking(deltaMs: number): void {
+  // Advances the active viseme stream and returns the smoothed open amount
+  // [0, 1]; viseme width (rounding for O/U) is applied to the mouth slot.
+  function applySpeaking(deltaMs: number): number {
     const speaking = state.speaking;
     if (!speaking) {
-      return;
+      return 0;
     }
 
     speaking.elapsedMs += deltaMs;
@@ -689,27 +725,25 @@ export function createCharacterPlayer(
     }
 
     const behavior = findBehavior(bundle, "mouth-open");
-    const maxOpen = getBehaviorParam(behavior, "maxOpen", 0.9);
+    const maxOpen = clamp(getBehaviorParam(behavior, "maxOpen", 0.9), 0, 1);
     const smoothing = clamp(getBehaviorParam(behavior, "smoothing", 0.2), 0, 1);
     const tau = 20 + smoothing * 160;
     const alpha = deltaMs <= 0 ? 0 : 1 - Math.exp(-deltaMs / tau);
 
     speaking.open += (target.open - speaking.open) * alpha;
     speaking.width += (target.width - speaking.width) * alpha;
-    const open = clamp(speaking.open, 0, 1);
+    const open = clamp(speaking.open, 0, 1) * maxOpen;
 
-    if (nodes.has("mouth")) {
-      scaleY("mouth", 1 + open * maxOpen);
+    if (nodes.has("mouth") && Math.abs(speaking.width - 1) > 0.001) {
       scaleX("mouth", speaking.width);
-    }
-    if (nodes.has("jaw")) {
-      scaleY("jaw", 1 + open * maxOpen);
     }
 
     if (!speaking.loop && elapsed >= total) {
       state.speaking = null;
       state.mouthOpen = 0;
     }
+
+    return open;
   }
 
   function applyExpression(): void {
@@ -742,7 +776,13 @@ export function createCharacterPlayer(
         scaleX(pose.slot, 1 + pose.scaleX * intensity);
       }
       if (pose.scaleY) {
-        scaleY(pose.slot, 1 + pose.scaleY * intensity);
+        // For the mouth, "scaleY" means open the mouth — route it through the
+        // crossfade open channel instead of vertically stretching the shape.
+        if (pose.slot === "mouth") {
+          frameExpressionMouthOpen += pose.scaleY * intensity;
+        } else {
+          scaleY(pose.slot, 1 + pose.scaleY * intensity);
+        }
       }
     }
   }
@@ -806,17 +846,17 @@ export function createCharacterPlayer(
 
   function step(deltaMs: number): void {
     resetTransforms();
+    frameExpressionMouthOpen = 0;
     applyLookAt();
     applyBlink(deltaMs);
     applyBreathing(deltaMs);
-    if (state.speaking) {
-      applySpeaking(deltaMs);
-    } else {
-      applyMouthOpen();
-    }
+    const baseMouthOpen = state.speaking
+      ? applySpeaking(deltaMs)
+      : sliderMouthOpen();
     applyExpression();
     applyGesture(deltaMs);
     render();
+    applyMouthShape(baseMouthOpen + frameExpressionMouthOpen);
   }
 
   function frame(timeMs: number): void {

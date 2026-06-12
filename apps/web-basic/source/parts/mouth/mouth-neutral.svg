@@ -1,3 +1,13 @@
 <g>
-  <path d="M-11 0 L11 0" fill="none" stroke="#34344A" stroke-width="4" stroke-linecap="round" />
+  <!-- The runtime crossfades between the open and closed groups by the mouth
+       open amount, so each mouth has a real, distinct open state rather than a
+       stretched line. Open artwork is authored at full-open size. -->
+  <g data-kugutu-mouth-open>
+    <path d="M-9 -1 Q0 2 9 -1 Q11 9 0 12 Q-11 9 -9 -1 Z" fill="#7A2E3A" />
+    <path d="M-6 7 Q0 12 6 7 Q0 4 -6 7 Z" fill="#FF8E8E" />
+    <path d="M-9 -1 Q0 2 9 -1" fill="none" stroke="#34344A" stroke-width="2.8" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-10 0 Q0 1 10 0" fill="none" stroke="#34344A" stroke-width="2.8" stroke-linecap="round" />
+  </g>
 </g>

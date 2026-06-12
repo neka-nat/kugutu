@@ -176,10 +176,10 @@ async function main(): Promise<void> {
 
       const intensityMap: Record<string, number> = {
         neutral: 0,
-        happy: 0.55,
-        sad: 0.4,
-        angry: 0.55,
-        surprised: 0.75,
+        happy: 0.7,
+        sad: 0.65,
+        angry: 0.7,
+        surprised: 0.8,
       };
 
       player.setEmotion(emotion, intensityMap[emotion] ?? 0.45);

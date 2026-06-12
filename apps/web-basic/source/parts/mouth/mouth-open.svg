@@ -1,5 +1,10 @@
 <g>
-  <path d="M-13 -3 Q0 3 13 -3 Q0 17 -13 -3 Z" fill="#7A2E3A" />
-  <path d="M-8 7 Q0 12 8 7 Q0 3 -8 7 Z" fill="#FF8E8E" />
-  <path d="M-13 -3 Q0 3 13 -3" fill="none" stroke="#34344A" stroke-width="3" stroke-linecap="round" />
+  <g data-kugutu-mouth-open>
+    <path d="M-11 -4 Q0 0 11 -4 Q13 10 0 13 Q-13 10 -11 -4 Z" fill="#7A2E3A" />
+    <path d="M-7 8 Q0 13 7 8 Q0 5 -7 8 Z" fill="#FF8E8E" />
+    <path d="M-11 -4 Q0 0 11 -4" fill="none" stroke="#34344A" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-8 0 Q0 2 8 0" fill="none" stroke="#34344A" stroke-width="2.8" stroke-linecap="round" />
+  </g>
 </g>

@@ -246,9 +246,13 @@ async function main(): Promise<void> {
           bundle.expressions.some((expression) => expression.id === "wink"),
           "custom expression added"
         );
+        const sad = bundle.expressions.find((expression) => expression.id === "sad");
+        assert.ok(sad, "sad retained (still targets eye/mouth/head slots)");
         assert.ok(
-          !bundle.expressions.some((expression) => expression.id === "sad"),
-          "sad pruned (character has no brow slots)"
+          !sad?.poses.some(
+            (pose) => pose.slot === "brow.l" || pose.slot === "brow.r"
+          ),
+          "sad brow poses pruned (character has no brow slots)"
         );
         assert.ok(
           bundle.gestures.some((gesture) => gesture.id === "nudge"),

@@ -96,15 +96,28 @@
       "poses": [
         {
           "slot": "brow.l",
-          "rotate": -8
+          "rotate": -5,
+          "translateY": -2
         },
         {
           "slot": "brow.r",
-          "rotate": 8
+          "rotate": 5,
+          "translateY": -2
+        },
+        {
+          "slot": "eye.l",
+          "scaleY": -0.46,
+          "translateY": 1.5
+        },
+        {
+          "slot": "eye.r",
+          "scaleY": -0.46,
+          "translateY": 1.5
         },
         {
           "slot": "mouth",
-          "scaleY": 0.12
+          "scaleX": 0.18,
+          "scaleY": 0.2
         }
       ]
     },
@@ -113,11 +126,33 @@
       "poses": [
         {
           "slot": "brow.l",
-          "rotate": 6
+          "rotate": -14,
+          "translateY": 1
         },
         {
           "slot": "brow.r",
-          "rotate": -6
+          "rotate": 14,
+          "translateY": 1
+        },
+        {
+          "slot": "eye.l",
+          "scaleY": -0.16,
+          "translateY": 2
+        },
+        {
+          "slot": "eye.r",
+          "scaleY": -0.16,
+          "translateY": 2
+        },
+        {
+          "slot": "mouth",
+          "scaleX": -0.12,
+          "translateY": 1.5
+        },
+        {
+          "slot": "head",
+          "rotate": 4,
+          "translateY": 3
         }
       ]
     },
@@ -126,11 +161,32 @@
       "poses": [
         {
           "slot": "brow.l",
-          "rotate": 10
+          "rotate": 17,
+          "translateY": 4
         },
         {
           "slot": "brow.r",
-          "rotate": -10
+          "rotate": -17,
+          "translateY": 4
+        },
+        {
+          "slot": "eye.l",
+          "scaleY": -0.12,
+          "scaleX": 0.06
+        },
+        {
+          "slot": "eye.r",
+          "scaleY": -0.12,
+          "scaleX": 0.06
+        },
+        {
+          "slot": "mouth",
+          "scaleX": -0.1,
+          "translateY": 0.5
+        },
+        {
+          "slot": "head",
+          "translateY": 2
         }
       ]
     },
@@ -139,15 +195,30 @@
       "poses": [
         {
           "slot": "brow.l",
-          "translateY": -6
+          "translateY": -7
         },
         {
           "slot": "brow.r",
-          "translateY": -6
+          "translateY": -7
+        },
+        {
+          "slot": "eye.l",
+          "scaleY": 0.24,
+          "scaleX": 0.12
+        },
+        {
+          "slot": "eye.r",
+          "scaleY": 0.24,
+          "scaleX": 0.12
         },
         {
           "slot": "mouth",
-          "scaleY": 0.25
+          "scaleY": 0.55,
+          "scaleX": -0.1
+        },
+        {
+          "slot": "head",
+          "translateY": -1.5
         }
       ]
     }
@@ -263,11 +334,11 @@
             },
             {
               "t": 0.18,
-              "rotate": -60
+              "rotate": -74
             },
             {
               "t": 0.85,
-              "rotate": -60
+              "rotate": -74
             },
             {
               "t": 1,
@@ -284,23 +355,23 @@
             },
             {
               "t": 0.18,
-              "rotate": -18
+              "rotate": -22
             },
             {
               "t": 0.36,
-              "rotate": 14
+              "rotate": 2
             },
             {
               "t": 0.54,
-              "rotate": -18
+              "rotate": -22
             },
             {
               "t": 0.72,
-              "rotate": 14
+              "rotate": 2
             },
             {
               "t": 0.85,
-              "rotate": -4
+              "rotate": -14
             },
             {
               "t": 1,
@@ -323,11 +394,11 @@
             },
             {
               "t": 0.35,
-              "rotate": -68
+              "rotate": -78
             },
             {
               "t": 0.8,
-              "rotate": -68
+              "rotate": -78
             },
             {
               "t": 1,
@@ -371,11 +442,11 @@
             },
             {
               "t": 0.4,
-              "rotate": -52
+              "rotate": -46
             },
             {
               "t": 0.82,
-              "rotate": -52
+              "rotate": -46
             },
             {
               "t": 1,
@@ -392,11 +463,11 @@
             },
             {
               "t": 0.4,
-              "rotate": 42
+              "rotate": 58
             },
             {
               "t": 0.82,
-              "rotate": 42
+              "rotate": 58
             },
             {
               "t": 1,

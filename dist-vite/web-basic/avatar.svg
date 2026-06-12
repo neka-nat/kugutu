@@ -54,27 +54,27 @@
     outfit hem so nothing dangles below the body.
   -->
   <g id="upper_arm_l">
-    <circle data-kugutu-pivot cx="122" cy="242" r="0.01" fill="none" />
-    <line x1="122" y1="242" x2="78" y2="272" stroke="#FAD0B0" stroke-width="17" stroke-linecap="round" />
+    <circle data-kugutu-pivot cx="120" cy="240" r="0.01" fill="none" />
+    <line x1="120" y1="240" x2="82" y2="266" stroke="#FAD0B0" stroke-width="18" stroke-linecap="round" />
     <g id="forearm_l">
-      <circle data-kugutu-pivot cx="78" cy="272" r="0.01" fill="none" />
-      <line x1="78" y1="272" x2="68" y2="232" stroke="#FAD0B0" stroke-width="14" stroke-linecap="round" />
+      <circle data-kugutu-pivot cx="82" cy="266" r="0.01" fill="none" />
+      <line x1="82" y1="266" x2="90" y2="232" stroke="#FAD0B0" stroke-width="16" stroke-linecap="round" />
       <g id="hand_l">
-        <circle data-kugutu-pivot cx="68" cy="232" r="0.01" fill="none" />
-        <ellipse cx="66" cy="228" rx="11" ry="12" fill="#FAD0B0" />
+        <circle data-kugutu-pivot cx="90" cy="232" r="0.01" fill="none" />
+        <ellipse cx="88" cy="228" rx="13" ry="14" fill="#FAD0B0" />
       </g>
     </g>
   </g>
 
   <g id="upper_arm_r">
-    <circle data-kugutu-pivot cx="198" cy="242" r="0.01" fill="none" />
-    <line x1="198" y1="242" x2="242" y2="272" stroke="#FAD0B0" stroke-width="17" stroke-linecap="round" />
+    <circle data-kugutu-pivot cx="200" cy="240" r="0.01" fill="none" />
+    <line x1="200" y1="240" x2="238" y2="266" stroke="#FAD0B0" stroke-width="18" stroke-linecap="round" />
     <g id="forearm_r">
-      <circle data-kugutu-pivot cx="242" cy="272" r="0.01" fill="none" />
-      <line x1="242" y1="272" x2="252" y2="232" stroke="#FAD0B0" stroke-width="14" stroke-linecap="round" />
+      <circle data-kugutu-pivot cx="238" cy="266" r="0.01" fill="none" />
+      <line x1="238" y1="266" x2="230" y2="232" stroke="#FAD0B0" stroke-width="16" stroke-linecap="round" />
       <g id="hand_r">
-        <circle data-kugutu-pivot cx="252" cy="232" r="0.01" fill="none" />
-        <ellipse cx="254" cy="228" rx="11" ry="12" fill="#FAD0B0" />
+        <circle data-kugutu-pivot cx="230" cy="232" r="0.01" fill="none" />
+        <ellipse cx="232" cy="228" rx="13" ry="14" fill="#FAD0B0" />
       </g>
     </g>
   </g>
@@ -82,31 +82,32 @@
   <g id="torso_group">
     <g transform="translate(160 250)">
       <g data-kugutu-slot-mount="outfit"><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-tee"><g>
-  <path d="M-58 -18 Q-30 -34 0 -34 Q30 -34 58 -18 L70 32 Q0 44 -70 32 Z" fill="#FF8360" />
-  <!-- Short cap sleeves: the arms are drawn behind the outfit, so these drape
-       over the shoulder/upper-arm root and the arm emerges from under them
-       (instead of sprouting from a bare, sleeveless torso). -->
-  <path d="M38 -22 Q62 -26 71 -6 Q75 9 60 16 Q47 7 41 -9 Z" fill="#FF8360" />
-  <path d="M-38 -22 Q-62 -26 -71 -6 Q-75 9 -60 16 Q-47 7 -41 -9 Z" fill="#FF8360" />
-  <path d="M64 -2 Q70 9 59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
-  <path d="M-64 -2 Q-70 9 -59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
-  <path d="M-22 -30 Q0 -14 22 -30" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  <!-- Tee body: gently tapered, soft rounded hem. -->
+  <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
+  <!-- Neckline (a soft collar accent). -->
+  <path d="M-21 -31 Q0 -15 21 -31" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  <!-- Short cap sleeves: the arms are drawn behind the outfit and emerge from
+       under these. The darker cuff band marks the sleeve opening at the outer
+       edge where the arm exits, so it reads as a rolled sleeve, not a wrinkle. -->
+  <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
+  <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
+  <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
 </g></g><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-collar"><g>
-  <path d="M-58 -18 Q-30 -34 0 -34 Q30 -34 58 -18 L70 32 Q0 44 -70 32 Z" fill="#FF8360" />
-  <!-- Short cap sleeves (see outfit-tee.svg) so the arms emerge from the shirt. -->
-  <path d="M38 -22 Q62 -26 71 -6 Q75 9 60 16 Q47 7 41 -9 Z" fill="#FF8360" />
-  <path d="M-38 -22 Q-62 -26 -71 -6 Q-75 9 -60 16 Q-47 7 -41 -9 Z" fill="#FF8360" />
-  <path d="M64 -2 Q70 9 59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
-  <path d="M-64 -2 Q-70 9 -59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
+  <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
+  <!-- Short cap sleeves (see outfit-tee.svg): arms emerge from under the cuff. -->
+  <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
+  <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
+  <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
   <path d="M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z" fill="#FFFFFF" />
 </g></g><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-hoodie"><g>
-  <path d="M-62 -16 Q-30 -34 0 -34 Q30 -34 62 -16 L74 38 Q0 50 -74 38 Z" fill="#46C2A8" />
-  <!-- Baggier cap sleeves (hoodie), drawn over the arm root so the arms emerge
-       from the sleeves rather than the bare torso. -->
-  <path d="M44 -20 Q70 -24 80 -2 Q84 13 67 19 Q53 9 47 -7 Z" fill="#46C2A8" />
-  <path d="M-44 -20 Q-70 -24 -80 -2 Q-84 13 -67 19 Q-53 9 -47 -7 Z" fill="#46C2A8" />
-  <path d="M70 2 Q76 13 66 18" fill="none" stroke="#3AA890" stroke-width="3.5" stroke-linecap="round" />
-  <path d="M-70 2 Q-76 13 -66 18" fill="none" stroke="#3AA890" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M-62 -16 Q-32 -34 0 -34 Q32 -34 62 -16 L72 38 Q0 48 -72 38 Z" fill="#46C2A8" />
+  <!-- Baggier cap sleeves (hoodie): arms emerge from under the cuff. -->
+  <path d="M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z" fill="#46C2A8" />
+  <path d="M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z" fill="#46C2A8" />
+  <path d="M63 18 Q78 13 79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />
+  <path d="M-63 18 Q-78 13 -79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />
   <path d="M-28 -28 Q0 -12 28 -28 L23 -2 Q0 8 -23 -2 Z" fill="#3AA890" />
   <path d="M-10 -6 L-10 34" fill="none" stroke="#2E8B76" stroke-width="3.5" stroke-linecap="round" />
   <path d="M10 -6 L10 34" fill="none" stroke="#2E8B76" stroke-width="3.5" stroke-linecap="round" />
@@ -179,12 +180,21 @@
   <circle cx="0" cy="2" r="7.5" fill="#34344A" />
   <circle cx="-2.6" cy="-1.4" r="2.6" fill="#FFFFFF" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-wide"><g>
-  <ellipse cx="0" cy="0" rx="15" ry="17" fill="#FFFFFF" />
-  <circle cx="0" cy="2" r="9" fill="#34344A" />
-  <circle cx="-3" cy="-2.2" r="3" fill="#FFFFFF" />
+  <!-- Wide-awake eye: tall aperture so sclera shows above and below a
+       same-size pupil (not just a scaled-up round eye), two-tone iris and
+       a second sparkle for an alert, surprised look. -->
+  <ellipse cx="0" cy="-0.5" rx="15.5" ry="18.5" fill="#FFFFFF" />
+  <circle cx="0" cy="1.5" r="7.6" fill="#34344A" />
+  <circle cx="0" cy="1.5" r="3.6" fill="#566089" />
+  <circle cx="-2.8" cy="-1.6" r="3.1" fill="#FFFFFF" />
+  <circle cx="3.2" cy="3.6" r="1.6" fill="#FFFFFF" opacity="0.85" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sleepy"><g>
-  <path d="M-13 -1 Q0 9 13 -3" fill="none" stroke="#34344A" stroke-width="4.5" stroke-linecap="round" />
-  <circle cx="0" cy="1" r="4.5" fill="#34344A" />
+  <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,
+       with only the lower half of the iris peeking out beneath it and a faint
+       lower lash line. Reads as drowsy rather than a closed happy arc. -->
+  <path d="M-12 -1.5 Q-1 2 12 0.5" fill="none" stroke="#34344A" stroke-width="3.6" stroke-linecap="round" />
+  <path d="M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z" fill="#34344A" />
+  <path d="M-7 3.5 Q0 5.4 7 3.5" fill="none" stroke="#34344A" stroke-width="1.8" stroke-linecap="round" opacity="0.45" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sharp"><g>
   <path d="M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z" fill="#FFFFFF" />
   <circle cx="1" cy="-1" r="6.5" fill="#34344A" />
@@ -201,12 +211,21 @@
   <circle cx="0" cy="2" r="7.5" fill="#34344A" />
   <circle cx="-2.6" cy="-1.4" r="2.6" fill="#FFFFFF" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-wide"><g>
-  <ellipse cx="0" cy="0" rx="15" ry="17" fill="#FFFFFF" />
-  <circle cx="0" cy="2" r="9" fill="#34344A" />
-  <circle cx="-3" cy="-2.2" r="3" fill="#FFFFFF" />
+  <!-- Wide-awake eye: tall aperture so sclera shows above and below a
+       same-size pupil (not just a scaled-up round eye), two-tone iris and
+       a second sparkle for an alert, surprised look. -->
+  <ellipse cx="0" cy="-0.5" rx="15.5" ry="18.5" fill="#FFFFFF" />
+  <circle cx="0" cy="1.5" r="7.6" fill="#34344A" />
+  <circle cx="0" cy="1.5" r="3.6" fill="#566089" />
+  <circle cx="-2.8" cy="-1.6" r="3.1" fill="#FFFFFF" />
+  <circle cx="3.2" cy="3.6" r="1.6" fill="#FFFFFF" opacity="0.85" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sleepy"><g>
-  <path d="M-13 -1 Q0 9 13 -3" fill="none" stroke="#34344A" stroke-width="4.5" stroke-linecap="round" />
-  <circle cx="0" cy="1" r="4.5" fill="#34344A" />
+  <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,
+       with only the lower half of the iris peeking out beneath it and a faint
+       lower lash line. Reads as drowsy rather than a closed happy arc. -->
+  <path d="M-12 -1.5 Q-1 2 12 0.5" fill="none" stroke="#34344A" stroke-width="3.6" stroke-linecap="round" />
+  <path d="M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z" fill="#34344A" />
+  <path d="M-7 3.5 Q0 5.4 7 3.5" fill="none" stroke="#34344A" stroke-width="1.8" stroke-linecap="round" opacity="0.45" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sharp"><g>
   <path d="M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z" fill="#FFFFFF" />
   <circle cx="1" cy="-1" r="6.5" fill="#34344A" />
@@ -232,18 +251,53 @@
     <g transform="translate(160 170)">
       <g id="mouth_group">
         <g data-kugutu-slot-mount="mouth"><g data-kugutu-variant-slot="mouth" data-kugutu-variant-id="mouth-smile"><g>
-  <path d="M-14 -1 Q0 13 14 -1" fill="none" stroke="#34344A" stroke-width="4.5" stroke-linecap="round" />
+  <g data-kugutu-mouth-open>
+    <path d="M-12 -3 Q0 7 12 -3 Q13 13 0 15 Q-13 13 -12 -3 Z" fill="#7A2E3A" />
+    <path d="M-7 9 Q0 14 7 9 Q0 6 -7 9 Z" fill="#FF8E8E" />
+    <path d="M-12 -3 Q0 7 12 -3" fill="none" stroke="#34344A" stroke-width="2.6" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-12 -3 Q0 7 12 -3" fill="none" stroke="#34344A" stroke-width="3" stroke-linecap="round" />
+  </g>
 </g></g><g data-kugutu-variant-slot="mouth" data-kugutu-variant-id="mouth-grin"><g>
-  <path d="M-16 -3 Q0 5 16 -3 Q0 17 -16 -3 Z" fill="#7A2E3A" />
-  <path d="M-14 -2 Q0 4 14 -2 L13 2 Q0 7 -13 2 Z" fill="#FFFFFF" />
+  <g data-kugutu-mouth-open>
+    <path d="M-13 -3 Q0 7 13 -3 Q14 14 0 16 Q-14 14 -13 -3 Z" fill="#7A2E3A" />
+    <path d="M-12 -2 Q0 6 12 -2 L11 2 Q0 9 -11 2 Z" fill="#FFFFFF" />
+    <path d="M-7 11 Q0 15 7 11 Q0 8 -7 11 Z" fill="#FF8E8E" />
+    <path d="M-13 -3 Q0 7 13 -3" fill="none" stroke="#34344A" stroke-width="2.6" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-13 -3 Q0 7 13 -3" fill="none" stroke="#34344A" stroke-width="3" stroke-linecap="round" />
+  </g>
 </g></g><g data-kugutu-variant-slot="mouth" data-kugutu-variant-id="mouth-open"><g>
-  <path d="M-13 -3 Q0 3 13 -3 Q0 17 -13 -3 Z" fill="#7A2E3A" />
-  <path d="M-8 7 Q0 12 8 7 Q0 3 -8 7 Z" fill="#FF8E8E" />
-  <path d="M-13 -3 Q0 3 13 -3" fill="none" stroke="#34344A" stroke-width="3" stroke-linecap="round" />
+  <g data-kugutu-mouth-open>
+    <path d="M-11 -4 Q0 0 11 -4 Q13 10 0 13 Q-13 10 -11 -4 Z" fill="#7A2E3A" />
+    <path d="M-7 8 Q0 13 7 8 Q0 5 -7 8 Z" fill="#FF8E8E" />
+    <path d="M-11 -4 Q0 0 11 -4" fill="none" stroke="#34344A" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-8 0 Q0 2 8 0" fill="none" stroke="#34344A" stroke-width="2.8" stroke-linecap="round" />
+  </g>
 </g></g><g data-kugutu-variant-slot="mouth" data-kugutu-variant-id="mouth-neutral"><g>
-  <path d="M-11 0 L11 0" fill="none" stroke="#34344A" stroke-width="4" stroke-linecap="round" />
+  <!-- The runtime crossfades between the open and closed groups by the mouth
+       open amount, so each mouth has a real, distinct open state rather than a
+       stretched line. Open artwork is authored at full-open size. -->
+  <g data-kugutu-mouth-open>
+    <path d="M-9 -1 Q0 2 9 -1 Q11 9 0 12 Q-11 9 -9 -1 Z" fill="#7A2E3A" />
+    <path d="M-6 7 Q0 12 6 7 Q0 4 -6 7 Z" fill="#FF8E8E" />
+    <path d="M-9 -1 Q0 2 9 -1" fill="none" stroke="#34344A" stroke-width="2.8" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-10 0 Q0 1 10 0" fill="none" stroke="#34344A" stroke-width="2.8" stroke-linecap="round" />
+  </g>
 </g></g><g data-kugutu-variant-slot="mouth" data-kugutu-variant-id="mouth-frown"><g>
-  <path d="M-13 4 Q0 -6 13 4" fill="none" stroke="#34344A" stroke-width="4.5" stroke-linecap="round" />
+  <g data-kugutu-mouth-open>
+    <path d="M-11 2 Q0 -4 11 2 Q11 9 0 11 Q-11 9 -11 2 Z" fill="#7A2E3A" />
+    <path d="M-11 3 Q0 -5 11 3" fill="none" stroke="#34344A" stroke-width="2.8" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <path d="M-11 3 Q0 -5 11 3" fill="none" stroke="#34344A" stroke-width="3" stroke-linecap="round" />
+  </g>
 </g></g></g>
       </g>
     </g>

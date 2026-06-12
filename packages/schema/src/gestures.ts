@@ -87,10 +87,10 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
   },
   {
     // FK chain: forearm/hand rotations are RELATIVE to the parent joint (the
-    // shoulder lift propagates down the chain), so the forearm only needs a
-    // small bend to read as a wave. The upper arm lifts the V-rest arm up and
-    // out while the forearm swings side to side. Angles assume the bent V rest
-    // pose (upper arm already points slightly down-and-out).
+    // shoulder lift propagates down the chain). The upper arm lifts the resting
+    // arm up beside the face, then the forearm wags side to side for a friendly
+    // wave. Angles assume the relaxed open rest pose (upper arm points slightly
+    // down-and-out, forearm folds back up).
     id: "wave",
     durationMs: 1100,
     tracks: [
@@ -98,8 +98,8 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
         slot: "upperArm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.18, rotate: -60 },
-          { t: 0.85, rotate: -60 },
+          { t: 0.18, rotate: -74 },
+          { t: 0.85, rotate: -74 },
           { t: 1, rotate: 0 },
         ],
       },
@@ -107,18 +107,18 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
         slot: "forearm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.18, rotate: -18 },
-          { t: 0.36, rotate: 14 },
-          { t: 0.54, rotate: -18 },
-          { t: 0.72, rotate: 14 },
-          { t: 0.85, rotate: -4 },
+          { t: 0.18, rotate: -22 },
+          { t: 0.36, rotate: 2 },
+          { t: 0.54, rotate: -22 },
+          { t: 0.72, rotate: 2 },
+          { t: 0.85, rotate: -14 },
           { t: 1, rotate: 0 },
         ],
       },
     ],
   },
   {
-    // Right arm lifts up and out in a greeting; the elbow stays mostly straight.
+    // Right arm lifts straight up high beside the face in a clear greeting.
     id: "raise-hand",
     durationMs: 760,
     tracks: [
@@ -126,8 +126,8 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
         slot: "upperArm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.35, rotate: -68 },
-          { t: 0.8, rotate: -68 },
+          { t: 0.35, rotate: -78 },
+          { t: 0.8, rotate: -78 },
           { t: 1, rotate: 0 },
         ],
       },
@@ -143,8 +143,8 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     ],
   },
   {
-    // Right arm extends out to the side; the forearm straightens out of the V
-    // rest (positive delta cancels the resting elbow bend) for a pointing pose.
+    // Right arm extends up and out, the forearm straightening out of the rest
+    // fold (positive delta unfolds the elbow) for a presenting / pointing pose.
     id: "point",
     durationMs: 680,
     tracks: [
@@ -152,8 +152,8 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
         slot: "upperArm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.4, rotate: -52 },
-          { t: 0.82, rotate: -52 },
+          { t: 0.4, rotate: -46 },
+          { t: 0.82, rotate: -46 },
           { t: 1, rotate: 0 },
         ],
       },
@@ -161,8 +161,8 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
         slot: "forearm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.4, rotate: 42 },
-          { t: 0.82, rotate: 42 },
+          { t: 0.4, rotate: 58 },
+          { t: 0.82, rotate: 58 },
           { t: 1, rotate: 0 },
         ],
       },

@@ -1,9 +1,9 @@
 <g>
-  <path d="M-58 -18 Q-30 -34 0 -34 Q30 -34 58 -18 L70 32 Q0 44 -70 32 Z" fill="#FF8360" />
-  <!-- Short cap sleeves (see outfit-tee.svg) so the arms emerge from the shirt. -->
-  <path d="M38 -22 Q62 -26 71 -6 Q75 9 60 16 Q47 7 41 -9 Z" fill="#FF8360" />
-  <path d="M-38 -22 Q-62 -26 -71 -6 Q-75 9 -60 16 Q-47 7 -41 -9 Z" fill="#FF8360" />
-  <path d="M64 -2 Q70 9 59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
-  <path d="M-64 -2 Q-70 9 -59 14" fill="none" stroke="#E96A4A" stroke-width="3" stroke-linecap="round" />
+  <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
+  <!-- Short cap sleeves (see outfit-tee.svg): arms emerge from under the cuff. -->
+  <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
+  <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
+  <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
   <path d="M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z" fill="#FFFFFF" />
 </g>

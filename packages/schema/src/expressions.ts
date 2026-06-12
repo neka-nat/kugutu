@@ -28,33 +28,53 @@ export interface CharacterExpression {
  */
 export const DEFAULT_EXPRESSIONS: CharacterExpression[] = [
   {
+    // Lifted outer brows, cheek-raising eye squint, and a wider, slightly open
+    // smile — the squint is what really sells a genuine (Duchenne) smile.
     id: "happy",
     poses: [
-      { slot: "brow.l", rotate: -8 },
-      { slot: "brow.r", rotate: 8 },
-      { slot: "mouth", scaleY: 0.12 },
+      { slot: "brow.l", rotate: -5, translateY: -2 },
+      { slot: "brow.r", rotate: 5, translateY: -2 },
+      { slot: "eye.l", scaleY: -0.46, translateY: 1.5 },
+      { slot: "eye.r", scaleY: -0.46, translateY: 1.5 },
+      { slot: "mouth", scaleX: 0.18, scaleY: 0.2 },
     ],
   },
   {
+    // Inner brows pulled up and together, drooping eyes, head sinking and
+    // tilting — the classic dejected read without needing a frown mouth.
     id: "sad",
     poses: [
-      { slot: "brow.l", rotate: 6 },
-      { slot: "brow.r", rotate: -6 },
+      { slot: "brow.l", rotate: -14, translateY: 1 },
+      { slot: "brow.r", rotate: 14, translateY: 1 },
+      { slot: "eye.l", scaleY: -0.16, translateY: 2 },
+      { slot: "eye.r", scaleY: -0.16, translateY: 2 },
+      { slot: "mouth", scaleX: -0.12, translateY: 1.5 },
+      { slot: "head", rotate: 4, translateY: 3 },
     ],
   },
   {
+    // Brows driven down and angled into a hard V, eyes narrowed, chin pulled
+    // in for a glaring scowl.
     id: "angry",
     poses: [
-      { slot: "brow.l", rotate: 10 },
-      { slot: "brow.r", rotate: -10 },
+      { slot: "brow.l", rotate: 17, translateY: 4 },
+      { slot: "brow.r", rotate: -17, translateY: 4 },
+      { slot: "eye.l", scaleY: -0.12, scaleX: 0.06 },
+      { slot: "eye.r", scaleY: -0.12, scaleX: 0.06 },
+      { slot: "mouth", scaleX: -0.1, translateY: 0.5 },
+      { slot: "head", translateY: 2 },
     ],
   },
   {
+    // Brows shoot up, eyes pop wide, mouth rounds open, head recoils slightly.
     id: "surprised",
     poses: [
-      { slot: "brow.l", translateY: -6 },
-      { slot: "brow.r", translateY: -6 },
-      { slot: "mouth", scaleY: 0.25 },
+      { slot: "brow.l", translateY: -7 },
+      { slot: "brow.r", translateY: -7 },
+      { slot: "eye.l", scaleY: 0.24, scaleX: 0.12 },
+      { slot: "eye.r", scaleY: 0.24, scaleX: 0.12 },
+      { slot: "mouth", scaleY: 0.55, scaleX: -0.1 },
+      { slot: "head", translateY: -1.5 },
     ],
   },
 ];
