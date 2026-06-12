@@ -378,6 +378,17 @@ function renderEmotionButtons(): string {
   }).join("");
 }
 
+function renderGestureButtons(): string {
+  const gestures = buildCharacterBundle(state.character).gestures ?? [];
+  if (gestures.length === 0) {
+    return `<p class="gesture-empty">No gestures for this character.</p>`;
+  }
+
+  return gestures
+    .map((gesture) => `<button type="button" data-gesture="${gesture.id}">${gesture.id}</button>`)
+    .join("");
+}
+
 function renderExportButtons(): string {
   return `
     <button type="button" data-export="charpack">Export .charpack</button>
@@ -429,6 +440,12 @@ function renderApp(): void {
             <input type="range" min="0" max="1" step="0.01" value="${state.mouthOpen}" id="mouth-open" />
             <output>${state.mouthOpen.toFixed(2)}</output>
           </label>
+          <p class="panel-subhead">Gestures</p>
+          <div class="gesture-row">${renderGestureButtons()}</div>
+          <div class="word-row">
+            <input type="text" id="gesture-word" placeholder="言葉で再生 (例: ありがとう / 了解 / NG)" />
+            <button type="button" id="gesture-word-go">react</button>
+          </div>
         </section>
         <section class="export-panel">
           <header>
@@ -492,6 +509,38 @@ function bindEvents(): void {
       renderApp();
     });
   }
+
+  // Gesture buttons play on the live player without re-rendering (which would
+  // destroy and recreate the player, cutting the gesture short).
+  for (const button of Array.from(document.querySelectorAll<HTMLButtonElement>("[data-gesture]"))) {
+    button.addEventListener("click", () => {
+      const id = button.dataset.gesture;
+      if (id) {
+        player?.playGesture(id);
+      }
+    });
+  }
+
+  const wordInput = document.querySelector<HTMLInputElement>("#gesture-word");
+  const wordGo = document.querySelector<HTMLButtonElement>("#gesture-word-go");
+  const reactToWord = (): void => {
+    if (!wordInput) {
+      return;
+    }
+    const matched = player?.playGestureForText(wordInput.value) ?? null;
+    if (wordGo) {
+      wordGo.textContent = matched ? `▶ ${matched}` : "no match";
+      window.setTimeout(() => {
+        wordGo.textContent = "react";
+      }, 1200);
+    }
+  };
+  wordGo?.addEventListener("click", reactToWord);
+  wordInput?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      reactToWord();
+    }
+  });
 
   for (const button of Array.from(document.querySelectorAll<HTMLButtonElement>("[data-export]"))) {
     button.addEventListener("click", () => {

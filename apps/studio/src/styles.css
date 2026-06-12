@@ -330,6 +330,51 @@ button[aria-pressed="true"] {
   grid-column: 1 / -1;
 }
 
+.panel-subhead {
+  margin: 4px 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.gesture-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.gesture-row button {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+}
+
+.gesture-empty {
+  margin: 0 0 12px;
+  opacity: 0.6;
+}
+
+.word-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.word-row input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #24211d;
+  color: #f8efe0;
+}
+
+.word-row button {
+  flex: 0 0 auto;
+}
+
 #source-readout {
   display: block;
   width: calc(100% - 24px);

@@ -25,6 +25,12 @@ export interface CharacterGesture {
   durationMs: number;
   loop?: boolean;
   tracks: GestureTrack[];
+  /**
+   * Words/phrases this gesture answers to (any language). Lets an app or agent
+   * drive the character by intent — e.g. `playGestureForText("ありがとう")`
+   * finds the gesture whose keywords contain it. Matching is case-insensitive.
+   */
+  keywords?: string[];
 }
 
 /** Left/right counterpart for each mirrorable arm slot. */
@@ -105,6 +111,7 @@ const WAVE_RIGHT_TRACKS: GestureTrack[] = [
 export const DEFAULT_GESTURES: CharacterGesture[] = [
   {
     id: "nod",
+    keywords: ["はい", "うん", "そうだね", "yes", "yeah", "うなずく"],
     durationMs: 620,
     tracks: [
       {
@@ -119,6 +126,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
   },
   {
     id: "shake",
+    keywords: ["いいえ", "いや", "ちがう", "違う", "no", "nope"],
     durationMs: 640,
     tracks: [
       {
@@ -135,6 +143,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
   },
   {
     id: "bounce",
+    keywords: ["わーい", "うれしい", "嬉しい", "yay"],
     durationMs: 560,
     tracks: [
       {
@@ -162,6 +171,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     // wave. Angles assume the relaxed open rest pose (upper arm points slightly
     // down-and-out, forearm folds back up).
     id: "wave",
+    keywords: ["こんにちは", "こんにちわ", "hello", "hi", "やあ", "ハロー", "おはよう", "hey"],
     durationMs: 1100,
     tracks: WAVE_RIGHT_TRACKS,
   },
@@ -172,6 +182,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     // higher and the forearm wags *outward* (negative = away from the hair) so
     // the hand clears the silhouette and reads clearly. Tuned in headless Chrome.
     id: "wave-left",
+    keywords: ["バイバイ", "ばいばい", "bye", "またね", "see you", "じゃあね"],
     durationMs: 1100,
     tracks: [
       {
@@ -200,6 +211,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
   {
     // Right arm lifts straight up high beside the face in a clear greeting.
     id: "raise-hand",
+    keywords: ["挙手", "質問", "はーい", "ここ", "raise", "me"],
     durationMs: 760,
     tracks: [
       {
@@ -226,6 +238,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     // Right arm extends up and out, the forearm straightening out of the rest
     // fold (positive delta unfolds the elbow) for a presenting / pointing pose.
     id: "point",
+    keywords: ["指差し", "指さし", "あれ", "これ", "そこ", "point", "look"],
     durationMs: 680,
     tracks: [
       {
@@ -253,6 +266,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     // mirrored, so both raise together. Arm-only (no head/torso track) so it is
     // fully pruned for face-only characters.
     id: "cheer",
+    keywords: ["やったー", "やった", "万歳", "ばんざい", "おめでとう", "cheer", "hooray"],
     durationMs: 900,
     tracks: withMirroredArms([
       {
@@ -281,6 +295,7 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     // A shrug: shoulders lift a touch while the forearms unfold outward
     // (palms-up "who knows?"), held briefly then released. Both arms, mirrored.
     id: "shrug",
+    keywords: ["さあ", "わからない", "分からない", "しらない", "どうかな", "shrug", "dunno"],
     durationMs: 760,
     tracks: withMirroredArms([
       {
@@ -298,6 +313,92 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
           { t: 0, rotate: 0 },
           { t: 0.4, rotate: 34 },
           { t: 0.75, rotate: 34 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+    ]),
+  },
+  {
+    // "了解 / オッケー" — a quick, casual acknowledgment: the right hand pops up
+    // beside the head and settles back. Snappier than raise-hand. Arm-only.
+    id: "ok",
+    keywords: ["了解", "オッケー", "おっけー", "OK", "ok", "わかった", "承知", "ラジャー", "gotcha"],
+    durationMs: 640,
+    tracks: [
+      {
+        slot: "upperArm.r",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.3, rotate: -58 },
+          { t: 0.7, rotate: -58 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+      {
+        slot: "forearm.r",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.3, rotate: -34 },
+          { t: 0.7, rotate: -34 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    // "NG / ダメ" — both forearms swing up to the chest/chin and converge toward
+    // the center, then wag in a small "no-no" shake before releasing. (A true
+    // crossed-arm batsu X isn't reachable with these short, wide-set arms, so
+    // this is the readable stand-in.) Both arms, mirrored. Tuned in Chrome.
+    id: "ng",
+    keywords: ["NG", "ng", "だめ", "ダメ", "ばつ", "バツ", "×", "✕", "no good", "禁止"],
+    durationMs: 860,
+    tracks: withMirroredArms([
+      {
+        slot: "upperArm.r",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.25, rotate: -76 },
+          { t: 0.82, rotate: -76 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+      {
+        slot: "forearm.r",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.25, rotate: -26 },
+          { t: 0.45, rotate: -12 },
+          { t: 0.62, rotate: -26 },
+          { t: 0.8, rotate: -12 },
+          { t: 0.9, rotate: -22 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+    ]),
+  },
+  {
+    // "ありがとう" — both hands come together toward the center of the chest in a
+    // small thankful press, held briefly, then released. Both arms, mirrored.
+    id: "thank-you",
+    keywords: ["ありがとう", "ありがと", "あざす", "感謝", "thanks", "thank you", "どうも"],
+    durationMs: 860,
+    tracks: withMirroredArms([
+      {
+        slot: "upperArm.r",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.35, rotate: -28 },
+          { t: 0.72, rotate: -28 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+      {
+        slot: "forearm.r",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.35, rotate: -44 },
+          { t: 0.72, rotate: -44 },
           { t: 1, rotate: 0 },
         ],
       },

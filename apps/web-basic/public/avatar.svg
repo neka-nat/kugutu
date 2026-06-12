@@ -69,29 +69,48 @@
   <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
   <!-- Neckline (a soft collar accent). -->
   <path d="M-21 -31 Q0 -15 21 -31" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
-  <!-- Short cap sleeves = the shirt's shoulder. The arm now sits in FRONT of
-       the outfit and covers these at rest; when it lifts away they stay put as
-       the shoulder. The darker cuff band marks the sleeve opening so it reads as
-       a rolled sleeve, not a wrinkle. -->
-  <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
-  <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
-  <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
-  <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  <!-- Short cap sleeves = the shirt's shoulder. Each is wrapped in a follower
+       group so it rotates with its upper arm (data-kugutu-follow), pivoting at
+       the shoulder (outfit-local: root shoulder 200/120,240 minus the mount's
+       translate 160,250 = ±40,-10). amount<1 = fabric lag. The darker cuff band
+       marks the sleeve opening so it reads as a rolled sleeve, not a wrinkle. -->
+  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.55">
+    <circle data-kugutu-pivot cx="40" cy="-10" r="0.01" fill="none" />
+    <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
+    <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  </g>
+  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.55">
+    <circle data-kugutu-pivot cx="-40" cy="-10" r="0.01" fill="none" />
+    <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
+    <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  </g>
 </g></g><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-collar"><g>
   <path d="M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z" fill="#FF8360" />
-  <!-- Short cap sleeves = shirt shoulder (see outfit-tee.svg); the in-front arm covers them at rest. -->
-  <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
-  <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
-  <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
-  <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  <!-- Cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->
+  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.55">
+    <circle data-kugutu-pivot cx="40" cy="-10" r="0.01" fill="none" />
+    <path d="M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z" fill="#FF8360" />
+    <path d="M59 16 Q73 11 74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  </g>
+  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.55">
+    <circle data-kugutu-pivot cx="-40" cy="-10" r="0.01" fill="none" />
+    <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#FF8360" />
+    <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#E96A4A" stroke-width="4" stroke-linecap="round" />
+  </g>
   <path d="M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z" fill="#FFFFFF" />
 </g></g><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-hoodie"><g>
   <path d="M-62 -16 Q-32 -34 0 -34 Q32 -34 62 -16 L72 38 Q0 48 -72 38 Z" fill="#46C2A8" />
-  <!-- Baggier cap sleeves = hoodie shoulder; the in-front arm covers them at rest. -->
-  <path d="M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z" fill="#46C2A8" />
-  <path d="M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z" fill="#46C2A8" />
-  <path d="M63 18 Q78 13 79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />
-  <path d="M-63 18 Q-78 13 -79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />
+  <!-- Baggier cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->
+  <g data-kugutu-follow="upperArm.r" data-kugutu-follow-amount="0.55">
+    <circle data-kugutu-pivot cx="40" cy="-10" r="0.01" fill="none" />
+    <path d="M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z" fill="#46C2A8" />
+    <path d="M63 18 Q78 13 79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />
+  </g>
+  <g data-kugutu-follow="upperArm.l" data-kugutu-follow-amount="0.55">
+    <circle data-kugutu-pivot cx="-40" cy="-10" r="0.01" fill="none" />
+    <path d="M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z" fill="#46C2A8" />
+    <path d="M-63 18 Q-78 13 -79 0" fill="none" stroke="#3AA890" stroke-width="4" stroke-linecap="round" />
+  </g>
   <path d="M-28 -28 Q0 -12 28 -28 L23 -2 Q0 8 -23 -2 Z" fill="#3AA890" />
   <path d="M-10 -6 L-10 34" fill="none" stroke="#2E8B76" stroke-width="3.5" stroke-linecap="round" />
   <path d="M10 -6 L10 34" fill="none" stroke="#2E8B76" stroke-width="3.5" stroke-linecap="round" />

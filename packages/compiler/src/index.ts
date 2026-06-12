@@ -175,6 +175,7 @@ function compileGestures(document: CharacterDefinition): CharacterGesture[] {
         id: gesture.id,
         durationMs: gesture.durationMs,
         ...(gesture.loop !== undefined ? { loop: gesture.loop } : {}),
+        ...(gesture.keywords ? { keywords: gesture.keywords } : {}),
         tracks,
       });
     }

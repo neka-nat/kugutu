@@ -226,6 +226,14 @@
     {
       "id": "nod",
       "durationMs": 620,
+      "keywords": [
+        "はい",
+        "うん",
+        "そうだね",
+        "yes",
+        "yeah",
+        "うなずく"
+      ],
       "tracks": [
         {
           "slot": "head",
@@ -252,6 +260,14 @@
     {
       "id": "shake",
       "durationMs": 640,
+      "keywords": [
+        "いいえ",
+        "いや",
+        "ちがう",
+        "違う",
+        "no",
+        "nope"
+      ],
       "tracks": [
         {
           "slot": "head",
@@ -283,6 +299,12 @@
     {
       "id": "bounce",
       "durationMs": 560,
+      "keywords": [
+        "わーい",
+        "うれしい",
+        "嬉しい",
+        "yay"
+      ],
       "tracks": [
         {
           "slot": "torso",

@@ -132,6 +132,22 @@
           "slot": "mouth",
           "scaleX": 0.18,
           "scaleY": 0.2
+        },
+        {
+          "slot": "upperArm.l",
+          "rotate": 22
+        },
+        {
+          "slot": "upperArm.r",
+          "rotate": -22
+        },
+        {
+          "slot": "forearm.l",
+          "rotate": -16
+        },
+        {
+          "slot": "forearm.r",
+          "rotate": 16
         }
       ]
     },
@@ -167,6 +183,22 @@
           "slot": "head",
           "rotate": 4,
           "translateY": 3
+        },
+        {
+          "slot": "upperArm.l",
+          "rotate": -16
+        },
+        {
+          "slot": "upperArm.r",
+          "rotate": 16
+        },
+        {
+          "slot": "forearm.l",
+          "rotate": 12
+        },
+        {
+          "slot": "forearm.r",
+          "rotate": -12
         }
       ]
     },
@@ -201,6 +233,22 @@
         {
           "slot": "head",
           "translateY": 2
+        },
+        {
+          "slot": "upperArm.l",
+          "rotate": 10
+        },
+        {
+          "slot": "upperArm.r",
+          "rotate": -10
+        },
+        {
+          "slot": "forearm.l",
+          "rotate": -26
+        },
+        {
+          "slot": "forearm.r",
+          "rotate": 26
         }
       ]
     },
@@ -233,6 +281,22 @@
         {
           "slot": "head",
           "translateY": -1.5
+        },
+        {
+          "slot": "upperArm.l",
+          "rotate": 30
+        },
+        {
+          "slot": "upperArm.r",
+          "rotate": -30
+        },
+        {
+          "slot": "forearm.l",
+          "rotate": -10
+        },
+        {
+          "slot": "forearm.r",
+          "rotate": 10
         }
       ]
     }
@@ -241,6 +305,14 @@
     {
       "id": "nod",
       "durationMs": 620,
+      "keywords": [
+        "はい",
+        "うん",
+        "そうだね",
+        "yes",
+        "yeah",
+        "うなずく"
+      ],
       "tracks": [
         {
           "slot": "head",
@@ -267,6 +339,14 @@
     {
       "id": "shake",
       "durationMs": 640,
+      "keywords": [
+        "いいえ",
+        "いや",
+        "ちがう",
+        "違う",
+        "no",
+        "nope"
+      ],
       "tracks": [
         {
           "slot": "head",
@@ -298,6 +378,12 @@
     {
       "id": "bounce",
       "durationMs": 560,
+      "keywords": [
+        "わーい",
+        "うれしい",
+        "嬉しい",
+        "yay"
+      ],
       "tracks": [
         {
           "slot": "torso",
@@ -338,6 +424,16 @@
     {
       "id": "wave",
       "durationMs": 1100,
+      "keywords": [
+        "こんにちは",
+        "こんにちわ",
+        "hello",
+        "hi",
+        "やあ",
+        "ハロー",
+        "おはよう",
+        "hey"
+      ],
       "tracks": [
         {
           "slot": "upperArm.r",
@@ -398,6 +494,14 @@
     {
       "id": "wave-left",
       "durationMs": 1100,
+      "keywords": [
+        "バイバイ",
+        "ばいばい",
+        "bye",
+        "またね",
+        "see you",
+        "じゃあね"
+      ],
       "tracks": [
         {
           "slot": "upperArm.l",
@@ -458,6 +562,14 @@
     {
       "id": "raise-hand",
       "durationMs": 760,
+      "keywords": [
+        "挙手",
+        "質問",
+        "はーい",
+        "ここ",
+        "raise",
+        "me"
+      ],
       "tracks": [
         {
           "slot": "upperArm.r",
@@ -506,6 +618,15 @@
     {
       "id": "point",
       "durationMs": 680,
+      "keywords": [
+        "指差し",
+        "指さし",
+        "あれ",
+        "これ",
+        "そこ",
+        "point",
+        "look"
+      ],
       "tracks": [
         {
           "slot": "upperArm.r",
@@ -554,6 +675,15 @@
     {
       "id": "cheer",
       "durationMs": 900,
+      "keywords": [
+        "やったー",
+        "やった",
+        "万歳",
+        "ばんざい",
+        "おめでとう",
+        "cheer",
+        "hooray"
+      ],
       "tracks": [
         {
           "slot": "upperArm.r",
@@ -660,6 +790,15 @@
     {
       "id": "shrug",
       "durationMs": 760,
+      "keywords": [
+        "さあ",
+        "わからない",
+        "分からない",
+        "しらない",
+        "どうかな",
+        "shrug",
+        "dunno"
+      ],
       "tracks": [
         {
           "slot": "upperArm.r",
@@ -738,6 +877,290 @@
             {
               "t": 0.75,
               "rotate": -34
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ok",
+      "durationMs": 640,
+      "keywords": [
+        "了解",
+        "オッケー",
+        "おっけー",
+        "OK",
+        "ok",
+        "わかった",
+        "承知",
+        "ラジャー",
+        "gotcha"
+      ],
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.3,
+              "rotate": -58
+            },
+            {
+              "t": 0.7,
+              "rotate": -58
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.3,
+              "rotate": -34
+            },
+            {
+              "t": 0.7,
+              "rotate": -34
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ng",
+      "durationMs": 860,
+      "keywords": [
+        "NG",
+        "ng",
+        "だめ",
+        "ダメ",
+        "ばつ",
+        "バツ",
+        "×",
+        "✕",
+        "no good",
+        "禁止"
+      ],
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.25,
+              "rotate": -76
+            },
+            {
+              "t": 0.82,
+              "rotate": -76
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.25,
+              "rotate": -26
+            },
+            {
+              "t": 0.45,
+              "rotate": -12
+            },
+            {
+              "t": 0.62,
+              "rotate": -26
+            },
+            {
+              "t": 0.8,
+              "rotate": -12
+            },
+            {
+              "t": 0.9,
+              "rotate": -22
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "upperArm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.25,
+              "rotate": 76
+            },
+            {
+              "t": 0.82,
+              "rotate": 76
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.25,
+              "rotate": 26
+            },
+            {
+              "t": 0.45,
+              "rotate": 12
+            },
+            {
+              "t": 0.62,
+              "rotate": 26
+            },
+            {
+              "t": 0.8,
+              "rotate": 12
+            },
+            {
+              "t": 0.9,
+              "rotate": 22
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thank-you",
+      "durationMs": 860,
+      "keywords": [
+        "ありがとう",
+        "ありがと",
+        "あざす",
+        "感謝",
+        "thanks",
+        "thank you",
+        "どうも"
+      ],
+      "tracks": [
+        {
+          "slot": "upperArm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.35,
+              "rotate": -28
+            },
+            {
+              "t": 0.72,
+              "rotate": -28
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.r",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.35,
+              "rotate": -44
+            },
+            {
+              "t": 0.72,
+              "rotate": -44
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "upperArm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.35,
+              "rotate": 28
+            },
+            {
+              "t": 0.72,
+              "rotate": 28
+            },
+            {
+              "t": 1,
+              "rotate": 0
+            }
+          ]
+        },
+        {
+          "slot": "forearm.l",
+          "keyframes": [
+            {
+              "t": 0,
+              "rotate": 0
+            },
+            {
+              "t": 0.35,
+              "rotate": 44
+            },
+            {
+              "t": 0.72,
+              "rotate": 44
             },
             {
               "t": 1,

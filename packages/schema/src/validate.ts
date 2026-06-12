@@ -459,6 +459,15 @@ function validateGesture(value: unknown, path: string, errors: string[]): void {
     errors.push(`${path}.loop must be a boolean`);
   }
 
+  if (value.keywords !== undefined) {
+    if (
+      !Array.isArray(value.keywords) ||
+      !value.keywords.every((keyword) => isNonEmptyString(keyword))
+    ) {
+      errors.push(`${path}.keywords must be an array of non-empty strings`);
+    }
+  }
+
   if (!Array.isArray(value.tracks) || value.tracks.length === 0) {
     errors.push(`${path}.tracks must be a non-empty array`);
     return;

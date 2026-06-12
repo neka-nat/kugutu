@@ -37,6 +37,13 @@ export const DEFAULT_EXPRESSIONS: CharacterExpression[] = [
       { slot: "eye.l", scaleY: -0.46, translateY: 1.5 },
       { slot: "eye.r", scaleY: -0.46, translateY: 1.5 },
       { slot: "mouth", scaleX: 0.18, scaleY: 0.2 },
+      // Arms lift open and out — a bright, welcoming posture. Arm poses are
+      // rotation-only (composed into the FK chain) and prune away for armless
+      // characters, so the face-only examples are unaffected.
+      { slot: "upperArm.l", rotate: 22 },
+      { slot: "upperArm.r", rotate: -22 },
+      { slot: "forearm.l", rotate: -16 },
+      { slot: "forearm.r", rotate: 16 },
     ],
   },
   {
@@ -50,6 +57,11 @@ export const DEFAULT_EXPRESSIONS: CharacterExpression[] = [
       { slot: "eye.r", scaleY: -0.16, translateY: 2 },
       { slot: "mouth", scaleX: -0.12, translateY: 1.5 },
       { slot: "head", rotate: 4, translateY: 3 },
+      // Arms sink and fold limply inward — a dejected slump.
+      { slot: "upperArm.l", rotate: -16 },
+      { slot: "upperArm.r", rotate: 16 },
+      { slot: "forearm.l", rotate: 12 },
+      { slot: "forearm.r", rotate: -12 },
     ],
   },
   {
@@ -63,6 +75,11 @@ export const DEFAULT_EXPRESSIONS: CharacterExpression[] = [
       { slot: "eye.r", scaleY: -0.12, scaleX: 0.06 },
       { slot: "mouth", scaleX: -0.1, translateY: 0.5 },
       { slot: "head", translateY: 2 },
+      // Forearms clench up and inward — tense, fists-up posture.
+      { slot: "upperArm.l", rotate: 10 },
+      { slot: "upperArm.r", rotate: -10 },
+      { slot: "forearm.l", rotate: -26 },
+      { slot: "forearm.r", rotate: 26 },
     ],
   },
   {
@@ -75,6 +92,11 @@ export const DEFAULT_EXPRESSIONS: CharacterExpression[] = [
       { slot: "eye.r", scaleY: 0.24, scaleX: 0.12 },
       { slot: "mouth", scaleY: 0.55, scaleX: -0.1 },
       { slot: "head", translateY: -1.5 },
+      // Hands jolt up and out — a startled recoil.
+      { slot: "upperArm.l", rotate: 30 },
+      { slot: "upperArm.r", rotate: -30 },
+      { slot: "forearm.l", rotate: -10 },
+      { slot: "forearm.r", rotate: 10 },
     ],
   },
 ];

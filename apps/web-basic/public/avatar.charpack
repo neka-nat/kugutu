@@ -134,6 +134,22 @@
             "slot": "mouth",
             "scaleX": 0.18,
             "scaleY": 0.2
+          },
+          {
+            "slot": "upperArm.l",
+            "rotate": 22
+          },
+          {
+            "slot": "upperArm.r",
+            "rotate": -22
+          },
+          {
+            "slot": "forearm.l",
+            "rotate": -16
+          },
+          {
+            "slot": "forearm.r",
+            "rotate": 16
           }
         ]
       },
@@ -169,6 +185,22 @@
             "slot": "head",
             "rotate": 4,
             "translateY": 3
+          },
+          {
+            "slot": "upperArm.l",
+            "rotate": -16
+          },
+          {
+            "slot": "upperArm.r",
+            "rotate": 16
+          },
+          {
+            "slot": "forearm.l",
+            "rotate": 12
+          },
+          {
+            "slot": "forearm.r",
+            "rotate": -12
           }
         ]
       },
@@ -203,6 +235,22 @@
           {
             "slot": "head",
             "translateY": 2
+          },
+          {
+            "slot": "upperArm.l",
+            "rotate": 10
+          },
+          {
+            "slot": "upperArm.r",
+            "rotate": -10
+          },
+          {
+            "slot": "forearm.l",
+            "rotate": -26
+          },
+          {
+            "slot": "forearm.r",
+            "rotate": 26
           }
         ]
       },
@@ -235,6 +283,22 @@
           {
             "slot": "head",
             "translateY": -1.5
+          },
+          {
+            "slot": "upperArm.l",
+            "rotate": 30
+          },
+          {
+            "slot": "upperArm.r",
+            "rotate": -30
+          },
+          {
+            "slot": "forearm.l",
+            "rotate": -10
+          },
+          {
+            "slot": "forearm.r",
+            "rotate": 10
           }
         ]
       }
@@ -243,6 +307,14 @@
       {
         "id": "nod",
         "durationMs": 620,
+        "keywords": [
+          "はい",
+          "うん",
+          "そうだね",
+          "yes",
+          "yeah",
+          "うなずく"
+        ],
         "tracks": [
           {
             "slot": "head",
@@ -269,6 +341,14 @@
       {
         "id": "shake",
         "durationMs": 640,
+        "keywords": [
+          "いいえ",
+          "いや",
+          "ちがう",
+          "違う",
+          "no",
+          "nope"
+        ],
         "tracks": [
           {
             "slot": "head",
@@ -300,6 +380,12 @@
       {
         "id": "bounce",
         "durationMs": 560,
+        "keywords": [
+          "わーい",
+          "うれしい",
+          "嬉しい",
+          "yay"
+        ],
         "tracks": [
           {
             "slot": "torso",
@@ -340,6 +426,16 @@
       {
         "id": "wave",
         "durationMs": 1100,
+        "keywords": [
+          "こんにちは",
+          "こんにちわ",
+          "hello",
+          "hi",
+          "やあ",
+          "ハロー",
+          "おはよう",
+          "hey"
+        ],
         "tracks": [
           {
             "slot": "upperArm.r",
@@ -400,6 +496,14 @@
       {
         "id": "wave-left",
         "durationMs": 1100,
+        "keywords": [
+          "バイバイ",
+          "ばいばい",
+          "bye",
+          "またね",
+          "see you",
+          "じゃあね"
+        ],
         "tracks": [
           {
             "slot": "upperArm.l",
@@ -460,6 +564,14 @@
       {
         "id": "raise-hand",
         "durationMs": 760,
+        "keywords": [
+          "挙手",
+          "質問",
+          "はーい",
+          "ここ",
+          "raise",
+          "me"
+        ],
         "tracks": [
           {
             "slot": "upperArm.r",
@@ -508,6 +620,15 @@
       {
         "id": "point",
         "durationMs": 680,
+        "keywords": [
+          "指差し",
+          "指さし",
+          "あれ",
+          "これ",
+          "そこ",
+          "point",
+          "look"
+        ],
         "tracks": [
           {
             "slot": "upperArm.r",
@@ -556,6 +677,15 @@
       {
         "id": "cheer",
         "durationMs": 900,
+        "keywords": [
+          "やったー",
+          "やった",
+          "万歳",
+          "ばんざい",
+          "おめでとう",
+          "cheer",
+          "hooray"
+        ],
         "tracks": [
           {
             "slot": "upperArm.r",
@@ -662,6 +792,15 @@
       {
         "id": "shrug",
         "durationMs": 760,
+        "keywords": [
+          "さあ",
+          "わからない",
+          "分からない",
+          "しらない",
+          "どうかな",
+          "shrug",
+          "dunno"
+        ],
         "tracks": [
           {
             "slot": "upperArm.r",
@@ -740,6 +879,290 @@
               {
                 "t": 0.75,
                 "rotate": -34
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ok",
+        "durationMs": 640,
+        "keywords": [
+          "了解",
+          "オッケー",
+          "おっけー",
+          "OK",
+          "ok",
+          "わかった",
+          "承知",
+          "ラジャー",
+          "gotcha"
+        ],
+        "tracks": [
+          {
+            "slot": "upperArm.r",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.3,
+                "rotate": -58
+              },
+              {
+                "t": 0.7,
+                "rotate": -58
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          },
+          {
+            "slot": "forearm.r",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.3,
+                "rotate": -34
+              },
+              {
+                "t": 0.7,
+                "rotate": -34
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ng",
+        "durationMs": 860,
+        "keywords": [
+          "NG",
+          "ng",
+          "だめ",
+          "ダメ",
+          "ばつ",
+          "バツ",
+          "×",
+          "✕",
+          "no good",
+          "禁止"
+        ],
+        "tracks": [
+          {
+            "slot": "upperArm.r",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.25,
+                "rotate": -76
+              },
+              {
+                "t": 0.82,
+                "rotate": -76
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          },
+          {
+            "slot": "forearm.r",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.25,
+                "rotate": -26
+              },
+              {
+                "t": 0.45,
+                "rotate": -12
+              },
+              {
+                "t": 0.62,
+                "rotate": -26
+              },
+              {
+                "t": 0.8,
+                "rotate": -12
+              },
+              {
+                "t": 0.9,
+                "rotate": -22
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          },
+          {
+            "slot": "upperArm.l",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.25,
+                "rotate": 76
+              },
+              {
+                "t": 0.82,
+                "rotate": 76
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          },
+          {
+            "slot": "forearm.l",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.25,
+                "rotate": 26
+              },
+              {
+                "t": 0.45,
+                "rotate": 12
+              },
+              {
+                "t": 0.62,
+                "rotate": 26
+              },
+              {
+                "t": 0.8,
+                "rotate": 12
+              },
+              {
+                "t": 0.9,
+                "rotate": 22
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "thank-you",
+        "durationMs": 860,
+        "keywords": [
+          "ありがとう",
+          "ありがと",
+          "あざす",
+          "感謝",
+          "thanks",
+          "thank you",
+          "どうも"
+        ],
+        "tracks": [
+          {
+            "slot": "upperArm.r",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.35,
+                "rotate": -28
+              },
+              {
+                "t": 0.72,
+                "rotate": -28
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          },
+          {
+            "slot": "forearm.r",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.35,
+                "rotate": -44
+              },
+              {
+                "t": 0.72,
+                "rotate": -44
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          },
+          {
+            "slot": "upperArm.l",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.35,
+                "rotate": 28
+              },
+              {
+                "t": 0.72,
+                "rotate": 28
+              },
+              {
+                "t": 1,
+                "rotate": 0
+              }
+            ]
+          },
+          {
+            "slot": "forearm.l",
+            "keyframes": [
+              {
+                "t": 0,
+                "rotate": 0
+              },
+              {
+                "t": 0.35,
+                "rotate": 44
+              },
+              {
+                "t": 0.72,
+                "rotate": 44
               },
               {
                 "t": 1,
@@ -1298,7 +1721,7 @@
     {
       "id": "primary-svg",
       "type": "svg",
-      "content": "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  viewBox=\"0 0 320 320\"\n  fill=\"none\"\n  role=\"img\"\n>\n  <style id=\"kugutu-parts-style\">\n[data-kugutu-variant-slot=\"face\"] { display: none; }\n[data-kugutu-variant-slot=\"face\"][data-kugutu-variant-id=\"face-round\"] { display: inline; }\n[data-kugutu-variant-slot=\"hair.back\"] { display: none; }\n[data-kugutu-variant-slot=\"hair.back\"][data-kugutu-variant-id=\"hair-back-bob\"] { display: inline; }\n[data-kugutu-variant-slot=\"hair.front\"] { display: none; }\n[data-kugutu-variant-slot=\"hair.front\"][data-kugutu-variant-id=\"hair-front-bangs\"] { display: inline; }\n[data-kugutu-variant-slot=\"eye\"] { display: none; }\n[data-kugutu-variant-slot=\"eye\"][data-kugutu-variant-id=\"eye-round\"] { display: inline; }\n[data-kugutu-variant-slot=\"brow\"] { display: none; }\n[data-kugutu-variant-slot=\"brow\"][data-kugutu-variant-id=\"brow-soft\"] { display: inline; }\n[data-kugutu-variant-slot=\"nose\"] { display: none; }\n[data-kugutu-variant-slot=\"nose\"][data-kugutu-variant-id=\"nose-dot\"] { display: inline; }\n[data-kugutu-variant-slot=\"mouth\"] { display: none; }\n[data-kugutu-variant-slot=\"mouth\"][data-kugutu-variant-id=\"mouth-smile\"] { display: inline; }\n[data-kugutu-variant-slot=\"outfit\"] { display: none; }\n[data-kugutu-variant-slot=\"outfit\"][data-kugutu-variant-id=\"outfit-tee\"] { display: inline; }\n</style>\n  <title>Kugutu Mascot Rig</title>\n  <!--\n    Unified-art-direction rig. Face/hair/feature parts are file fragments drawn\n    around their own local origin and injected at the anchor mounts below\n    (data-kugutu-slot-mount). Paired slots (eye, brow) have a left mount and a\n    mirrored right mount, so a single part fragment fills both sides.\n\n    Palette tokens (apply consistently across all part fragments):\n      skin        #FAD0B0    skin-shade  #F3B591\n      ink         #34344A    blush       #FF9E9E\n      hair        #7C6CF0    hair-shade  #6253D6\n      accent      #FF8360    accent-2    #46C2A8\n      white       #FFFFFF\n  -->\n\n  <ellipse cx=\"160\" cy=\"296\" rx=\"92\" ry=\"15\" fill=\"#34344A\" opacity=\"0.10\" />\n\n  <!--\n    Arms are FK joint chains, but the joints are NOT DOM-nested: the runtime\n    composes each joint's transform from its <circle data-kugutu-pivot> marker\n    (shoulder/elbow/wrist, in root coords) and the slot parent chain. That lets\n    the joints live at different z-layers: the UPPER ARMS are drawn BEFORE the\n    torso (behind the shirt) while the FOREARMS + HANDS are drawn AFTER it (in\n    front). So the shoulder/upper-arm tucks behind the clothes and the forearm\n    reads in front — without breaking the shoulder→elbow→wrist bend.\n\n    Single-tone skin capsules (round-capped <line>s overlapping at the elbow so\n    they read as one soft, bendable arm) with mitten hands. Rest pose is a\n    relaxed V bend with the hands held up at the sides, kept above the outfit\n    hem so nothing dangles below the body.\n  -->\n  <g id=\"upper_arm_l\">\n    <circle data-kugutu-pivot cx=\"120\" cy=\"240\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"120\" y1=\"240\" x2=\"82\" y2=\"266\" stroke=\"#FAD0B0\" stroke-width=\"18\" stroke-linecap=\"round\" />\n  </g>\n  <g id=\"upper_arm_r\">\n    <circle data-kugutu-pivot cx=\"200\" cy=\"240\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"200\" y1=\"240\" x2=\"238\" y2=\"266\" stroke=\"#FAD0B0\" stroke-width=\"18\" stroke-linecap=\"round\" />\n  </g>\n\n  <g id=\"torso_group\">\n    <g transform=\"translate(160 250)\">\n      <g data-kugutu-slot-mount=\"outfit\"><g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-tee\"><g>\n  <!-- Tee body: gently tapered, soft rounded hem. -->\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Neckline (a soft collar accent). -->\n  <path d=\"M-21 -31 Q0 -15 21 -31\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <!-- Short cap sleeves = the shirt's shoulder. The arm now sits in FRONT of\n       the outfit and covers these at rest; when it lifts away they stay put as\n       the shoulder. The darker cuff band marks the sleeve opening so it reads as\n       a rolled sleeve, not a wrinkle. -->\n  <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-collar\"><g>\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Short cap sleeves = shirt shoulder (see outfit-tee.svg); the in-front arm covers them at rest. -->\n  <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-hoodie\"><g>\n  <path d=\"M-62 -16 Q-32 -34 0 -34 Q32 -34 62 -16 L72 38 Q0 48 -72 38 Z\" fill=\"#46C2A8\" />\n  <!-- Baggier cap sleeves = hoodie shoulder; the in-front arm covers them at rest. -->\n  <path d=\"M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z\" fill=\"#46C2A8\" />\n  <path d=\"M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z\" fill=\"#46C2A8\" />\n  <path d=\"M63 18 Q78 13 79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-63 18 Q-78 13 -79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-28 -28 Q0 -12 28 -28 L23 -2 Q0 8 -23 -2 Z\" fill=\"#3AA890\" />\n  <path d=\"M-10 -6 L-10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n  <path d=\"M10 -6 L10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n</g></g></g>\n    </g>\n  </g>\n\n  <g id=\"forearm_l\">\n    <circle data-kugutu-pivot cx=\"82\" cy=\"266\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"82\" y1=\"266\" x2=\"90\" y2=\"232\" stroke=\"#FAD0B0\" stroke-width=\"16\" stroke-linecap=\"round\" />\n  </g>\n  <g id=\"hand_l\">\n    <circle data-kugutu-pivot cx=\"90\" cy=\"232\" r=\"0.01\" fill=\"none\" />\n    <ellipse cx=\"88\" cy=\"228\" rx=\"13\" ry=\"14\" fill=\"#FAD0B0\" />\n  </g>\n  <g id=\"forearm_r\">\n    <circle data-kugutu-pivot cx=\"238\" cy=\"266\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"238\" y1=\"266\" x2=\"230\" y2=\"232\" stroke=\"#FAD0B0\" stroke-width=\"16\" stroke-linecap=\"round\" />\n  </g>\n  <g id=\"hand_r\">\n    <circle data-kugutu-pivot cx=\"230\" cy=\"232\" r=\"0.01\" fill=\"none\" />\n    <ellipse cx=\"232\" cy=\"228\" rx=\"13\" ry=\"14\" fill=\"#FAD0B0\" />\n  </g>\n\n  <g id=\"neck_group\">\n    <rect x=\"146\" y=\"192\" width=\"28\" height=\"30\" rx=\"12\" fill=\"#F3B591\" />\n  </g>\n\n  <g id=\"head_group\">\n    <g transform=\"translate(160 126)\">\n      <g id=\"hair_back\">\n        <g data-kugutu-slot-mount=\"hair.back\"><g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-bob\"><g>\n  <path d=\"M-80 -14 Q-90 64 -52 92 Q-58 60 -56 30 Q-72 -58 0 -48 Q72 -58 56 30 Q58 60 52 92 Q90 64 80 -14 Q80 -88 0 -88 Q-80 -88 -80 -14 Z\" fill=\"#6253D6\" />\n</g></g><g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-long\"><g>\n  <path d=\"M-80 -14 Q-92 92 -60 122 Q-66 60 -58 28 Q-72 -58 0 -48 Q72 -58 58 28 Q66 60 60 122 Q92 92 80 -14 Q80 -88 0 -88 Q-80 -88 -80 -14 Z\" fill=\"#6253D6\" />\n</g></g><g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-none\"><g><!-- no back hair --></g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 126)\">\n      <g data-kugutu-slot-mount=\"face\"><g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-round\"><g>\n  <circle cx=\"-78\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <circle cx=\"78\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <circle cx=\"0\" cy=\"0\" r=\"80\" fill=\"#FAD0B0\" />\n  <ellipse cx=\"-46\" cy=\"26\" rx=\"13\" ry=\"8.5\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n  <ellipse cx=\"46\" cy=\"26\" rx=\"13\" ry=\"8.5\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n</g></g><g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-oval\"><g>\n  <circle cx=\"-76\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <circle cx=\"76\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <ellipse cx=\"0\" cy=\"0\" rx=\"76\" ry=\"84\" fill=\"#FAD0B0\" />\n  <ellipse cx=\"-44\" cy=\"30\" rx=\"12\" ry=\"8\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n  <ellipse cx=\"44\" cy=\"30\" rx=\"12\" ry=\"8\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n</g></g></g>\n    </g>\n\n    <g transform=\"translate(132 104)\">\n      <g id=\"brow_left\">\n        <g data-kugutu-slot-mount=\"brow\"><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft\"><g>\n  <path d=\"M-13 2 Q0 -5 13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-raised\"><g>\n  <path d=\"M-13 3 Q0 -10 13 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-flat\"><g>\n  <path d=\"M-13 0 L13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-angry\"><g>\n  <path d=\"M-13 -4 Q0 -2 13 4\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n    <g transform=\"translate(188 104)\">\n      <g id=\"brow_right\">\n        <g data-kugutu-slot-mount=\"brow\" transform=\"scale(-1 1)\"><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft\"><g>\n  <path d=\"M-13 2 Q0 -5 13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-raised\"><g>\n  <path d=\"M-13 3 Q0 -10 13 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-flat\"><g>\n  <path d=\"M-13 0 L13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-angry\"><g>\n  <path d=\"M-13 -4 Q0 -2 13 4\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(132 132)\">\n      <g id=\"eye_left\">\n        <g data-kugutu-slot-mount=\"eye\"><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round\"><g>\n  <ellipse cx=\"0\" cy=\"0\" rx=\"13\" ry=\"15\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"2\" r=\"7.5\" fill=\"#34344A\" />\n  <circle cx=\"-2.6\" cy=\"-1.4\" r=\"2.6\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-wide\"><g>\n  <!-- Wide-awake eye: tall aperture so sclera shows above and below a\n       same-size pupil (not just a scaled-up round eye), two-tone iris and\n       a second sparkle for an alert, surprised look. -->\n  <ellipse cx=\"0\" cy=\"-0.5\" rx=\"15.5\" ry=\"18.5\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"7.6\" fill=\"#34344A\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"3.6\" fill=\"#566089\" />\n  <circle cx=\"-2.8\" cy=\"-1.6\" r=\"3.1\" fill=\"#FFFFFF\" />\n  <circle cx=\"3.2\" cy=\"3.6\" r=\"1.6\" fill=\"#FFFFFF\" opacity=\"0.85\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sleepy\"><g>\n  <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,\n       with only the lower half of the iris peeking out beneath it and a faint\n       lower lash line. Reads as drowsy rather than a closed happy arc. -->\n  <path d=\"M-12 -1.5 Q-1 2 12 0.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3.6\" stroke-linecap=\"round\" />\n  <path d=\"M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z\" fill=\"#34344A\" />\n  <path d=\"M-7 3.5 Q0 5.4 7 3.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\"0.45\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sharp\"><g>\n  <path d=\"M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z\" fill=\"#FFFFFF\" />\n  <circle cx=\"1\" cy=\"-1\" r=\"6.5\" fill=\"#34344A\" />\n  <circle cx=\"-1.6\" cy=\"-3.4\" r=\"2.2\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-happy\"><g>\n  <path d=\"M-12 -2 Q0 8 12 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n    <g transform=\"translate(188 132)\">\n      <g id=\"eye_right\">\n        <g data-kugutu-slot-mount=\"eye\" transform=\"scale(-1 1)\"><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round\"><g>\n  <ellipse cx=\"0\" cy=\"0\" rx=\"13\" ry=\"15\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"2\" r=\"7.5\" fill=\"#34344A\" />\n  <circle cx=\"-2.6\" cy=\"-1.4\" r=\"2.6\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-wide\"><g>\n  <!-- Wide-awake eye: tall aperture so sclera shows above and below a\n       same-size pupil (not just a scaled-up round eye), two-tone iris and\n       a second sparkle for an alert, surprised look. -->\n  <ellipse cx=\"0\" cy=\"-0.5\" rx=\"15.5\" ry=\"18.5\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"7.6\" fill=\"#34344A\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"3.6\" fill=\"#566089\" />\n  <circle cx=\"-2.8\" cy=\"-1.6\" r=\"3.1\" fill=\"#FFFFFF\" />\n  <circle cx=\"3.2\" cy=\"3.6\" r=\"1.6\" fill=\"#FFFFFF\" opacity=\"0.85\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sleepy\"><g>\n  <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,\n       with only the lower half of the iris peeking out beneath it and a faint\n       lower lash line. Reads as drowsy rather than a closed happy arc. -->\n  <path d=\"M-12 -1.5 Q-1 2 12 0.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3.6\" stroke-linecap=\"round\" />\n  <path d=\"M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z\" fill=\"#34344A\" />\n  <path d=\"M-7 3.5 Q0 5.4 7 3.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\"0.45\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sharp\"><g>\n  <path d=\"M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z\" fill=\"#FFFFFF\" />\n  <circle cx=\"1\" cy=\"-1\" r=\"6.5\" fill=\"#34344A\" />\n  <circle cx=\"-1.6\" cy=\"-3.4\" r=\"2.2\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-happy\"><g>\n  <path d=\"M-12 -2 Q0 8 12 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 142)\">\n      <g id=\"nose_node\">\n        <g data-kugutu-slot-mount=\"nose\"><g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-dot\"><g>\n  <circle cx=\"0\" cy=\"0\" r=\"3.4\" fill=\"#F3B591\" />\n</g></g><g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-button\"><g>\n  <path d=\"M-5 -3 Q0 6 5 -3\" fill=\"none\" stroke=\"#E0916F\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-line\"><g>\n  <path d=\"M1 -4 Q-2 3 -4 4\" fill=\"none\" stroke=\"#E0916F\" stroke-width=\"3.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 170)\">\n      <g id=\"mouth_group\">\n        <g data-kugutu-slot-mount=\"mouth\"><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-smile\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-12 -3 Q0 7 12 -3 Q13 13 0 15 Q-13 13 -12 -3 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-7 9 Q0 14 7 9 Q0 6 -7 9 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-12 -3 Q0 7 12 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.6\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-12 -3 Q0 7 12 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-grin\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-13 -3 Q0 7 13 -3 Q14 14 0 16 Q-14 14 -13 -3 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-12 -2 Q0 6 12 -2 L11 2 Q0 9 -11 2 Z\" fill=\"#FFFFFF\" />\n    <path d=\"M-7 11 Q0 15 7 11 Q0 8 -7 11 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-13 -3 Q0 7 13 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.6\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-13 -3 Q0 7 13 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-open\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-11 -4 Q0 0 11 -4 Q13 10 0 13 Q-13 10 -11 -4 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-7 8 Q0 13 7 8 Q0 5 -7 8 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-11 -4 Q0 0 11 -4\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.4\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-8 0 Q0 2 8 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-neutral\"><g>\n  <!-- The runtime crossfades between the open and closed groups by the mouth\n       open amount, so each mouth has a real, distinct open state rather than a\n       stretched line. Open artwork is authored at full-open size. -->\n  <g data-kugutu-mouth-open>\n    <path d=\"M-9 -1 Q0 2 9 -1 Q11 9 0 12 Q-11 9 -9 -1 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-6 7 Q0 12 6 7 Q0 4 -6 7 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-9 -1 Q0 2 9 -1\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-10 0 Q0 1 10 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-frown\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-11 2 Q0 -4 11 2 Q11 9 0 11 Q-11 9 -11 2 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-11 3 Q0 -5 11 3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-11 3 Q0 -5 11 3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3\" stroke-linecap=\"round\" />\n  </g>\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 126)\">\n      <g id=\"hair_front\">\n        <g data-kugutu-slot-mount=\"hair.front\"><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-bangs\"><g>\n  <path d=\"M-80 -6 Q-82 -78 0 -82 Q82 -78 80 -6 Q58 -40 30 -36 Q34 -19 14 -25 Q18 -42 -6 -42 Q-4 -21 -24 -27 Q-22 -43 -48 -35 Q-62 -38 -80 -6 Z\" fill=\"#7C6CF0\" />\n  <path d=\"M-80 -6 Q-82 -78 0 -82 Q-40 -70 -56 -34 Q-70 -22 -80 -6 Z\" fill=\"#8A7BF5\" />\n</g></g><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-side\"><g>\n  <path d=\"M-80 -8 Q-78 -80 6 -82 Q72 -80 80 -20 Q58 -50 16 -45 Q-12 -43 -36 -33 Q-58 -27 -80 -8 Z\" fill=\"#7C6CF0\" />\n  <path d=\"M62 -64 Q80 -44 80 -20 Q60 -40 40 -42 Q54 -54 62 -64 Z\" fill=\"#6253D6\" />\n</g></g><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-spiky\"><g>\n  <path d=\"M-80 -8 Q-82 -78 0 -82 Q82 -78 80 -8 L62 -34 L50 -14 L34 -36 L22 -14 L6 -38 L-8 -14 L-24 -36 L-40 -14 L-54 -34 L-80 -8 Z\" fill=\"#7C6CF0\" />\n</g></g><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-none\"><g><!-- no front hair --></g></g></g>\n      </g>\n    </g>\n  </g>\n</svg>\n"
+      "content": "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  viewBox=\"0 0 320 320\"\n  fill=\"none\"\n  role=\"img\"\n>\n  <style id=\"kugutu-parts-style\">\n[data-kugutu-variant-slot=\"face\"] { display: none; }\n[data-kugutu-variant-slot=\"face\"][data-kugutu-variant-id=\"face-round\"] { display: inline; }\n[data-kugutu-variant-slot=\"hair.back\"] { display: none; }\n[data-kugutu-variant-slot=\"hair.back\"][data-kugutu-variant-id=\"hair-back-bob\"] { display: inline; }\n[data-kugutu-variant-slot=\"hair.front\"] { display: none; }\n[data-kugutu-variant-slot=\"hair.front\"][data-kugutu-variant-id=\"hair-front-bangs\"] { display: inline; }\n[data-kugutu-variant-slot=\"eye\"] { display: none; }\n[data-kugutu-variant-slot=\"eye\"][data-kugutu-variant-id=\"eye-round\"] { display: inline; }\n[data-kugutu-variant-slot=\"brow\"] { display: none; }\n[data-kugutu-variant-slot=\"brow\"][data-kugutu-variant-id=\"brow-soft\"] { display: inline; }\n[data-kugutu-variant-slot=\"nose\"] { display: none; }\n[data-kugutu-variant-slot=\"nose\"][data-kugutu-variant-id=\"nose-dot\"] { display: inline; }\n[data-kugutu-variant-slot=\"mouth\"] { display: none; }\n[data-kugutu-variant-slot=\"mouth\"][data-kugutu-variant-id=\"mouth-smile\"] { display: inline; }\n[data-kugutu-variant-slot=\"outfit\"] { display: none; }\n[data-kugutu-variant-slot=\"outfit\"][data-kugutu-variant-id=\"outfit-tee\"] { display: inline; }\n</style>\n  <title>Kugutu Mascot Rig</title>\n  <!--\n    Unified-art-direction rig. Face/hair/feature parts are file fragments drawn\n    around their own local origin and injected at the anchor mounts below\n    (data-kugutu-slot-mount). Paired slots (eye, brow) have a left mount and a\n    mirrored right mount, so a single part fragment fills both sides.\n\n    Palette tokens (apply consistently across all part fragments):\n      skin        #FAD0B0    skin-shade  #F3B591\n      ink         #34344A    blush       #FF9E9E\n      hair        #7C6CF0    hair-shade  #6253D6\n      accent      #FF8360    accent-2    #46C2A8\n      white       #FFFFFF\n  -->\n\n  <ellipse cx=\"160\" cy=\"296\" rx=\"92\" ry=\"15\" fill=\"#34344A\" opacity=\"0.10\" />\n\n  <!--\n    Arms are FK joint chains, but the joints are NOT DOM-nested: the runtime\n    composes each joint's transform from its <circle data-kugutu-pivot> marker\n    (shoulder/elbow/wrist, in root coords) and the slot parent chain. That lets\n    the joints live at different z-layers: the UPPER ARMS are drawn BEFORE the\n    torso (behind the shirt) while the FOREARMS + HANDS are drawn AFTER it (in\n    front). So the shoulder/upper-arm tucks behind the clothes and the forearm\n    reads in front — without breaking the shoulder→elbow→wrist bend.\n\n    Single-tone skin capsules (round-capped <line>s overlapping at the elbow so\n    they read as one soft, bendable arm) with mitten hands. Rest pose is a\n    relaxed V bend with the hands held up at the sides, kept above the outfit\n    hem so nothing dangles below the body.\n  -->\n  <g id=\"upper_arm_l\">\n    <circle data-kugutu-pivot cx=\"120\" cy=\"240\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"120\" y1=\"240\" x2=\"82\" y2=\"266\" stroke=\"#FAD0B0\" stroke-width=\"18\" stroke-linecap=\"round\" />\n  </g>\n  <g id=\"upper_arm_r\">\n    <circle data-kugutu-pivot cx=\"200\" cy=\"240\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"200\" y1=\"240\" x2=\"238\" y2=\"266\" stroke=\"#FAD0B0\" stroke-width=\"18\" stroke-linecap=\"round\" />\n  </g>\n\n  <g id=\"torso_group\">\n    <g transform=\"translate(160 250)\">\n      <g data-kugutu-slot-mount=\"outfit\"><g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-tee\"><g>\n  <!-- Tee body: gently tapered, soft rounded hem. -->\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Neckline (a soft collar accent). -->\n  <path d=\"M-21 -31 Q0 -15 21 -31\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <!-- Short cap sleeves = the shirt's shoulder. Each is wrapped in a follower\n       group so it rotates with its upper arm (data-kugutu-follow), pivoting at\n       the shoulder (outfit-local: root shoulder 200/120,240 minus the mount's\n       translate 160,250 = ±40,-10). amount<1 = fabric lag. The darker cuff band\n       marks the sleeve opening so it reads as a rolled sleeve, not a wrinkle. -->\n  <g data-kugutu-follow=\"upperArm.r\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <g data-kugutu-follow=\"upperArm.l\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"-40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-collar\"><g>\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->\n  <g data-kugutu-follow=\"upperArm.r\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <g data-kugutu-follow=\"upperArm.l\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"-40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <path d=\"M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"outfit\" data-kugutu-variant-id=\"outfit-hoodie\"><g>\n  <path d=\"M-62 -16 Q-32 -34 0 -34 Q32 -34 62 -16 L72 38 Q0 48 -72 38 Z\" fill=\"#46C2A8\" />\n  <!-- Baggier cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->\n  <g data-kugutu-follow=\"upperArm.r\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z\" fill=\"#46C2A8\" />\n    <path d=\"M63 18 Q78 13 79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <g data-kugutu-follow=\"upperArm.l\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"-40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z\" fill=\"#46C2A8\" />\n    <path d=\"M-63 18 Q-78 13 -79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <path d=\"M-28 -28 Q0 -12 28 -28 L23 -2 Q0 8 -23 -2 Z\" fill=\"#3AA890\" />\n  <path d=\"M-10 -6 L-10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n  <path d=\"M10 -6 L10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n</g></g></g>\n    </g>\n  </g>\n\n  <g id=\"forearm_l\">\n    <circle data-kugutu-pivot cx=\"82\" cy=\"266\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"82\" y1=\"266\" x2=\"90\" y2=\"232\" stroke=\"#FAD0B0\" stroke-width=\"16\" stroke-linecap=\"round\" />\n  </g>\n  <g id=\"hand_l\">\n    <circle data-kugutu-pivot cx=\"90\" cy=\"232\" r=\"0.01\" fill=\"none\" />\n    <ellipse cx=\"88\" cy=\"228\" rx=\"13\" ry=\"14\" fill=\"#FAD0B0\" />\n  </g>\n  <g id=\"forearm_r\">\n    <circle data-kugutu-pivot cx=\"238\" cy=\"266\" r=\"0.01\" fill=\"none\" />\n    <line x1=\"238\" y1=\"266\" x2=\"230\" y2=\"232\" stroke=\"#FAD0B0\" stroke-width=\"16\" stroke-linecap=\"round\" />\n  </g>\n  <g id=\"hand_r\">\n    <circle data-kugutu-pivot cx=\"230\" cy=\"232\" r=\"0.01\" fill=\"none\" />\n    <ellipse cx=\"232\" cy=\"228\" rx=\"13\" ry=\"14\" fill=\"#FAD0B0\" />\n  </g>\n\n  <g id=\"neck_group\">\n    <rect x=\"146\" y=\"192\" width=\"28\" height=\"30\" rx=\"12\" fill=\"#F3B591\" />\n  </g>\n\n  <g id=\"head_group\">\n    <g transform=\"translate(160 126)\">\n      <g id=\"hair_back\">\n        <g data-kugutu-slot-mount=\"hair.back\"><g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-bob\"><g>\n  <path d=\"M-80 -14 Q-90 64 -52 92 Q-58 60 -56 30 Q-72 -58 0 -48 Q72 -58 56 30 Q58 60 52 92 Q90 64 80 -14 Q80 -88 0 -88 Q-80 -88 -80 -14 Z\" fill=\"#6253D6\" />\n</g></g><g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-long\"><g>\n  <path d=\"M-80 -14 Q-92 92 -60 122 Q-66 60 -58 28 Q-72 -58 0 -48 Q72 -58 58 28 Q66 60 60 122 Q92 92 80 -14 Q80 -88 0 -88 Q-80 -88 -80 -14 Z\" fill=\"#6253D6\" />\n</g></g><g data-kugutu-variant-slot=\"hair.back\" data-kugutu-variant-id=\"hair-back-none\"><g><!-- no back hair --></g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 126)\">\n      <g data-kugutu-slot-mount=\"face\"><g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-round\"><g>\n  <circle cx=\"-78\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <circle cx=\"78\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <circle cx=\"0\" cy=\"0\" r=\"80\" fill=\"#FAD0B0\" />\n  <ellipse cx=\"-46\" cy=\"26\" rx=\"13\" ry=\"8.5\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n  <ellipse cx=\"46\" cy=\"26\" rx=\"13\" ry=\"8.5\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n</g></g><g data-kugutu-variant-slot=\"face\" data-kugutu-variant-id=\"face-oval\"><g>\n  <circle cx=\"-76\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <circle cx=\"76\" cy=\"6\" r=\"13\" fill=\"#FAD0B0\" />\n  <ellipse cx=\"0\" cy=\"0\" rx=\"76\" ry=\"84\" fill=\"#FAD0B0\" />\n  <ellipse cx=\"-44\" cy=\"30\" rx=\"12\" ry=\"8\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n  <ellipse cx=\"44\" cy=\"30\" rx=\"12\" ry=\"8\" fill=\"#FF9E9E\" opacity=\"0.45\" />\n</g></g></g>\n    </g>\n\n    <g transform=\"translate(132 104)\">\n      <g id=\"brow_left\">\n        <g data-kugutu-slot-mount=\"brow\"><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft\"><g>\n  <path d=\"M-13 2 Q0 -5 13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-raised\"><g>\n  <path d=\"M-13 3 Q0 -10 13 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-flat\"><g>\n  <path d=\"M-13 0 L13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-angry\"><g>\n  <path d=\"M-13 -4 Q0 -2 13 4\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n    <g transform=\"translate(188 104)\">\n      <g id=\"brow_right\">\n        <g data-kugutu-slot-mount=\"brow\" transform=\"scale(-1 1)\"><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-soft\"><g>\n  <path d=\"M-13 2 Q0 -5 13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-raised\"><g>\n  <path d=\"M-13 3 Q0 -10 13 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-flat\"><g>\n  <path d=\"M-13 0 L13 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"brow\" data-kugutu-variant-id=\"brow-angry\"><g>\n  <path d=\"M-13 -4 Q0 -2 13 4\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(132 132)\">\n      <g id=\"eye_left\">\n        <g data-kugutu-slot-mount=\"eye\"><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round\"><g>\n  <ellipse cx=\"0\" cy=\"0\" rx=\"13\" ry=\"15\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"2\" r=\"7.5\" fill=\"#34344A\" />\n  <circle cx=\"-2.6\" cy=\"-1.4\" r=\"2.6\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-wide\"><g>\n  <!-- Wide-awake eye: tall aperture so sclera shows above and below a\n       same-size pupil (not just a scaled-up round eye), two-tone iris and\n       a second sparkle for an alert, surprised look. -->\n  <ellipse cx=\"0\" cy=\"-0.5\" rx=\"15.5\" ry=\"18.5\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"7.6\" fill=\"#34344A\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"3.6\" fill=\"#566089\" />\n  <circle cx=\"-2.8\" cy=\"-1.6\" r=\"3.1\" fill=\"#FFFFFF\" />\n  <circle cx=\"3.2\" cy=\"3.6\" r=\"1.6\" fill=\"#FFFFFF\" opacity=\"0.85\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sleepy\"><g>\n  <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,\n       with only the lower half of the iris peeking out beneath it and a faint\n       lower lash line. Reads as drowsy rather than a closed happy arc. -->\n  <path d=\"M-12 -1.5 Q-1 2 12 0.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3.6\" stroke-linecap=\"round\" />\n  <path d=\"M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z\" fill=\"#34344A\" />\n  <path d=\"M-7 3.5 Q0 5.4 7 3.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\"0.45\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sharp\"><g>\n  <path d=\"M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z\" fill=\"#FFFFFF\" />\n  <circle cx=\"1\" cy=\"-1\" r=\"6.5\" fill=\"#34344A\" />\n  <circle cx=\"-1.6\" cy=\"-3.4\" r=\"2.2\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-happy\"><g>\n  <path d=\"M-12 -2 Q0 8 12 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n    <g transform=\"translate(188 132)\">\n      <g id=\"eye_right\">\n        <g data-kugutu-slot-mount=\"eye\" transform=\"scale(-1 1)\"><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-round\"><g>\n  <ellipse cx=\"0\" cy=\"0\" rx=\"13\" ry=\"15\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"2\" r=\"7.5\" fill=\"#34344A\" />\n  <circle cx=\"-2.6\" cy=\"-1.4\" r=\"2.6\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-wide\"><g>\n  <!-- Wide-awake eye: tall aperture so sclera shows above and below a\n       same-size pupil (not just a scaled-up round eye), two-tone iris and\n       a second sparkle for an alert, surprised look. -->\n  <ellipse cx=\"0\" cy=\"-0.5\" rx=\"15.5\" ry=\"18.5\" fill=\"#FFFFFF\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"7.6\" fill=\"#34344A\" />\n  <circle cx=\"0\" cy=\"1.5\" r=\"3.6\" fill=\"#566089\" />\n  <circle cx=\"-2.8\" cy=\"-1.6\" r=\"3.1\" fill=\"#FFFFFF\" />\n  <circle cx=\"3.2\" cy=\"3.6\" r=\"1.6\" fill=\"#FFFFFF\" opacity=\"0.85\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sleepy\"><g>\n  <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,\n       with only the lower half of the iris peeking out beneath it and a faint\n       lower lash line. Reads as drowsy rather than a closed happy arc. -->\n  <path d=\"M-12 -1.5 Q-1 2 12 0.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3.6\" stroke-linecap=\"round\" />\n  <path d=\"M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z\" fill=\"#34344A\" />\n  <path d=\"M-7 3.5 Q0 5.4 7 3.5\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"1.8\" stroke-linecap=\"round\" opacity=\"0.45\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-sharp\"><g>\n  <path d=\"M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z\" fill=\"#FFFFFF\" />\n  <circle cx=\"1\" cy=\"-1\" r=\"6.5\" fill=\"#34344A\" />\n  <circle cx=\"-1.6\" cy=\"-3.4\" r=\"2.2\" fill=\"#FFFFFF\" />\n</g></g><g data-kugutu-variant-slot=\"eye\" data-kugutu-variant-id=\"eye-happy\"><g>\n  <path d=\"M-12 -2 Q0 8 12 -2\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"4.5\" stroke-linecap=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 142)\">\n      <g id=\"nose_node\">\n        <g data-kugutu-slot-mount=\"nose\"><g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-dot\"><g>\n  <circle cx=\"0\" cy=\"0\" r=\"3.4\" fill=\"#F3B591\" />\n</g></g><g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-button\"><g>\n  <path d=\"M-5 -3 Q0 6 5 -3\" fill=\"none\" stroke=\"#E0916F\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</g></g><g data-kugutu-variant-slot=\"nose\" data-kugutu-variant-id=\"nose-line\"><g>\n  <path d=\"M1 -4 Q-2 3 -4 4\" fill=\"none\" stroke=\"#E0916F\" stroke-width=\"3.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" />\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 170)\">\n      <g id=\"mouth_group\">\n        <g data-kugutu-slot-mount=\"mouth\"><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-smile\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-12 -3 Q0 7 12 -3 Q13 13 0 15 Q-13 13 -12 -3 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-7 9 Q0 14 7 9 Q0 6 -7 9 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-12 -3 Q0 7 12 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.6\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-12 -3 Q0 7 12 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-grin\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-13 -3 Q0 7 13 -3 Q14 14 0 16 Q-14 14 -13 -3 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-12 -2 Q0 6 12 -2 L11 2 Q0 9 -11 2 Z\" fill=\"#FFFFFF\" />\n    <path d=\"M-7 11 Q0 15 7 11 Q0 8 -7 11 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-13 -3 Q0 7 13 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.6\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-13 -3 Q0 7 13 -3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-open\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-11 -4 Q0 0 11 -4 Q13 10 0 13 Q-13 10 -11 -4 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-7 8 Q0 13 7 8 Q0 5 -7 8 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-11 -4 Q0 0 11 -4\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.4\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-8 0 Q0 2 8 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-neutral\"><g>\n  <!-- The runtime crossfades between the open and closed groups by the mouth\n       open amount, so each mouth has a real, distinct open state rather than a\n       stretched line. Open artwork is authored at full-open size. -->\n  <g data-kugutu-mouth-open>\n    <path d=\"M-9 -1 Q0 2 9 -1 Q11 9 0 12 Q-11 9 -9 -1 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-6 7 Q0 12 6 7 Q0 4 -6 7 Z\" fill=\"#FF8E8E\" />\n    <path d=\"M-9 -1 Q0 2 9 -1\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-10 0 Q0 1 10 0\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" />\n  </g>\n</g></g><g data-kugutu-variant-slot=\"mouth\" data-kugutu-variant-id=\"mouth-frown\"><g>\n  <g data-kugutu-mouth-open>\n    <path d=\"M-11 2 Q0 -4 11 2 Q11 9 0 11 Q-11 9 -11 2 Z\" fill=\"#7A2E3A\" />\n    <path d=\"M-11 3 Q0 -5 11 3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"2.8\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\" />\n  </g>\n  <g data-kugutu-mouth-closed>\n    <path d=\"M-11 3 Q0 -5 11 3\" fill=\"none\" stroke=\"#34344A\" stroke-width=\"3\" stroke-linecap=\"round\" />\n  </g>\n</g></g></g>\n      </g>\n    </g>\n\n    <g transform=\"translate(160 126)\">\n      <g id=\"hair_front\">\n        <g data-kugutu-slot-mount=\"hair.front\"><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-bangs\"><g>\n  <path d=\"M-80 -6 Q-82 -78 0 -82 Q82 -78 80 -6 Q58 -40 30 -36 Q34 -19 14 -25 Q18 -42 -6 -42 Q-4 -21 -24 -27 Q-22 -43 -48 -35 Q-62 -38 -80 -6 Z\" fill=\"#7C6CF0\" />\n  <path d=\"M-80 -6 Q-82 -78 0 -82 Q-40 -70 -56 -34 Q-70 -22 -80 -6 Z\" fill=\"#8A7BF5\" />\n</g></g><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-side\"><g>\n  <path d=\"M-80 -8 Q-78 -80 6 -82 Q72 -80 80 -20 Q58 -50 16 -45 Q-12 -43 -36 -33 Q-58 -27 -80 -8 Z\" fill=\"#7C6CF0\" />\n  <path d=\"M62 -64 Q80 -44 80 -20 Q60 -40 40 -42 Q54 -54 62 -64 Z\" fill=\"#6253D6\" />\n</g></g><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-spiky\"><g>\n  <path d=\"M-80 -8 Q-82 -78 0 -82 Q82 -78 80 -8 L62 -34 L50 -14 L34 -36 L22 -14 L6 -38 L-8 -14 L-24 -36 L-40 -14 L-54 -34 L-80 -8 Z\" fill=\"#7C6CF0\" />\n</g></g><g data-kugutu-variant-slot=\"hair.front\" data-kugutu-variant-id=\"hair-front-none\"><g><!-- no front hair --></g></g></g>\n      </g>\n    </g>\n  </g>\n</svg>\n"
     },
     {
       "id": "source-svg",
@@ -1903,8 +2326,8 @@
     "hair-back-bob": "<g>\n  <path d=\"M-80 -14 Q-90 64 -52 92 Q-58 60 -56 30 Q-72 -58 0 -48 Q72 -58 56 30 Q58 60 52 92 Q90 64 80 -14 Q80 -88 0 -88 Q-80 -88 -80 -14 Z\" fill=\"#6253D6\" />\n</g>\n",
     "hair-back-long": "<g>\n  <path d=\"M-80 -14 Q-92 92 -60 122 Q-66 60 -58 28 Q-72 -58 0 -48 Q72 -58 58 28 Q66 60 60 122 Q92 92 80 -14 Q80 -88 0 -88 Q-80 -88 -80 -14 Z\" fill=\"#6253D6\" />\n</g>\n",
     "hair-back-none": "<g><!-- no back hair --></g>\n",
-    "outfit-tee": "<g>\n  <!-- Tee body: gently tapered, soft rounded hem. -->\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Neckline (a soft collar accent). -->\n  <path d=\"M-21 -31 Q0 -15 21 -31\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <!-- Short cap sleeves = the shirt's shoulder. The arm now sits in FRONT of\n       the outfit and covers these at rest; when it lifts away they stay put as\n       the shoulder. The darker cuff band marks the sleeve opening so it reads as\n       a rolled sleeve, not a wrinkle. -->\n  <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n</g>\n",
-    "outfit-collar": "<g>\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Short cap sleeves = shirt shoulder (see outfit-tee.svg); the in-front arm covers them at rest. -->\n  <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n  <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z\" fill=\"#FFFFFF\" />\n</g>\n",
-    "outfit-hoodie": "<g>\n  <path d=\"M-62 -16 Q-32 -34 0 -34 Q32 -34 62 -16 L72 38 Q0 48 -72 38 Z\" fill=\"#46C2A8\" />\n  <!-- Baggier cap sleeves = hoodie shoulder; the in-front arm covers them at rest. -->\n  <path d=\"M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z\" fill=\"#46C2A8\" />\n  <path d=\"M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z\" fill=\"#46C2A8\" />\n  <path d=\"M63 18 Q78 13 79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-63 18 Q-78 13 -79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <path d=\"M-28 -28 Q0 -12 28 -28 L23 -2 Q0 8 -23 -2 Z\" fill=\"#3AA890\" />\n  <path d=\"M-10 -6 L-10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n  <path d=\"M10 -6 L10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n</g>\n"
+    "outfit-tee": "<g>\n  <!-- Tee body: gently tapered, soft rounded hem. -->\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Neckline (a soft collar accent). -->\n  <path d=\"M-21 -31 Q0 -15 21 -31\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  <!-- Short cap sleeves = the shirt's shoulder. Each is wrapped in a follower\n       group so it rotates with its upper arm (data-kugutu-follow), pivoting at\n       the shoulder (outfit-local: root shoulder 200/120,240 minus the mount's\n       translate 160,250 = ±40,-10). amount<1 = fabric lag. The darker cuff band\n       marks the sleeve opening so it reads as a rolled sleeve, not a wrinkle. -->\n  <g data-kugutu-follow=\"upperArm.r\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <g data-kugutu-follow=\"upperArm.l\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"-40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n</g>\n",
+    "outfit-collar": "<g>\n  <path d=\"M-60 -18 Q-32 -34 0 -34 Q32 -34 60 -18 L68 36 Q0 46 -68 36 Z\" fill=\"#FF8360\" />\n  <!-- Cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->\n  <g data-kugutu-follow=\"upperArm.r\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M40 -22 Q66 -24 74 -2 Q76 13 59 17 Q46 7 42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M59 16 Q73 11 74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <g data-kugutu-follow=\"upperArm.l\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"-40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z\" fill=\"#FF8360\" />\n    <path d=\"M-59 16 Q-73 11 -74 -2\" fill=\"none\" stroke=\"#E96A4A\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <path d=\"M-20 -30 L0 -8 L20 -30 L12 -34 L0 -20 L-12 -34 Z\" fill=\"#FFFFFF\" />\n</g>\n",
+    "outfit-hoodie": "<g>\n  <path d=\"M-62 -16 Q-32 -34 0 -34 Q32 -34 62 -16 L72 38 Q0 48 -72 38 Z\" fill=\"#46C2A8\" />\n  <!-- Baggier cap sleeves follow the upper arms (see outfit-tee.svg for the rig). -->\n  <g data-kugutu-follow=\"upperArm.r\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M42 -20 Q70 -23 79 0 Q81 15 63 19 Q50 9 45 -8 Z\" fill=\"#46C2A8\" />\n    <path d=\"M63 18 Q78 13 79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <g data-kugutu-follow=\"upperArm.l\" data-kugutu-follow-amount=\"0.55\">\n    <circle data-kugutu-pivot cx=\"-40\" cy=\"-10\" r=\"0.01\" fill=\"none\" />\n    <path d=\"M-42 -20 Q-70 -23 -79 0 Q-81 15 -63 19 Q-50 9 -45 -8 Z\" fill=\"#46C2A8\" />\n    <path d=\"M-63 18 Q-78 13 -79 0\" fill=\"none\" stroke=\"#3AA890\" stroke-width=\"4\" stroke-linecap=\"round\" />\n  </g>\n  <path d=\"M-28 -28 Q0 -12 28 -28 L23 -2 Q0 8 -23 -2 Z\" fill=\"#3AA890\" />\n  <path d=\"M-10 -6 L-10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n  <path d=\"M10 -6 L10 34\" fill=\"none\" stroke=\"#2E8B76\" stroke-width=\"3.5\" stroke-linecap=\"round\" />\n</g>\n"
   }
 }

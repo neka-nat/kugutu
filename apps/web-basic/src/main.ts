@@ -129,6 +129,32 @@ async function main(): Promise<void> {
     gesturePanel.append(button);
   }
 
+  // Word → gesture: type a word/phrase (e.g. ありがとう, 了解, NG, こんにちは) and
+  // the matching gesture plays via keyword lookup.
+  const wordRow = document.createElement("div");
+  wordRow.className = "row";
+  const wordInput = document.createElement("input");
+  wordInput.type = "text";
+  wordInput.placeholder = "言葉でジェスチャー (例: ありがとう / 了解 / NG)";
+  const wordButton = document.createElement("button");
+  wordButton.type = "button";
+  wordButton.textContent = "react";
+  const reactToWord = (): void => {
+    const matched = player.playGestureForText(wordInput.value);
+    wordButton.textContent = matched ? `▶ ${matched}` : "no match";
+    window.setTimeout(() => {
+      wordButton.textContent = "react";
+    }, 1200);
+  };
+  wordButton.addEventListener("click", reactToWord);
+  wordInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      reactToWord();
+    }
+  });
+  wordRow.append(wordInput, wordButton);
+  gesturePanel.append(wordRow);
+
   setActiveEmotion(emotionButtons, "neutral");
   player.setEmotion("neutral", 0);
   player.setMouthOpen(Number(mouthOpenInput.value));

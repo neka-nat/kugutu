@@ -50,6 +50,12 @@ export interface CharacterPlayer {
   playBehavior(id: string): void;
   /** Play a named, time-based gesture once (or looped if the gesture sets `loop`). */
   playGesture(id: string): void;
+  /**
+   * Plays the first gesture whose `keywords` appear in `text` (case-insensitive
+   * substring match) and returns its id, or null if nothing matched. Lets an app
+   * or agent drive the character by intent, e.g. `playGestureForText("ありがとう")`.
+   */
+  playGestureForText(text: string): string | null;
   setEmotion(name: string, intensity: number): void;
   setMouthOpen(value: number): void;
   /** Drive viseme-based lip-sync from a sequence of timed cues. */
@@ -356,6 +362,33 @@ export function createCharacterPlayer(
     if (pivot) {
       armPivots.set(slotKey, pivot);
     }
+  }
+
+  // Followers let a non-rigged element (e.g. a shirt sleeve) partly track a
+  // slot's rotation so the clothes move with the limb instead of staying stiff.
+  // `data-kugutu-follow="upperArm.r"` + optional `data-kugutu-follow-amount`
+  // (0..1, default 1) rotate the element by that fraction of the slot's rotation
+  // about its own `data-kugutu-pivot` marker (in the element's local coords).
+  const followers: {
+    node: SVGGraphicsElement;
+    slot: SlotKey;
+    amount: number;
+    pivot: { x: number; y: number };
+  }[] = [];
+  for (const node of svgRoot.querySelectorAll<SVGGraphicsElement>(
+    "[data-kugutu-follow]"
+  )) {
+    const slot = node.getAttribute("data-kugutu-follow") as SlotKey | null;
+    if (!slot || !(slot in SLOT_DEFINITIONS)) {
+      continue;
+    }
+    const pivot = readArmPivot(node);
+    if (!pivot) {
+      continue;
+    }
+    const rawAmount = Number(node.getAttribute("data-kugutu-follow-amount"));
+    const amount = Number.isFinite(rawAmount) ? rawAmount : 1;
+    followers.push({ node, slot, amount, pivot });
   }
 
   // The mouth opens by crossfading between distinct closed and open artwork
@@ -954,6 +987,18 @@ export function createCharacterPlayer(
     }
   }
 
+  // Rotates each follower (e.g. a sleeve) by a fraction of the slot it tracks,
+  // about its own pivot, so the clothes deform with the limb.
+  function applyFollowers(): void {
+    for (const follower of followers) {
+      const deg = (transforms.get(follower.slot)?.rotateDeg ?? 0) * follower.amount;
+      follower.node.setAttribute(
+        "transform",
+        `rotate(${deg} ${follower.pivot.x} ${follower.pivot.y})`
+      );
+    }
+  }
+
   function render(): void {
     for (const [slotKey, node] of nodes.entries()) {
       if (isArmSlot(slotKey)) {
@@ -963,6 +1008,7 @@ export function createCharacterPlayer(
       const transform = transforms.get(slotKey) ?? createNeutralTransform();
       applyCssTransform(node, transform);
     }
+    applyFollowers();
   }
 
   function step(deltaMs: number): void {
@@ -1013,6 +1059,21 @@ export function createCharacterPlayer(
       }
       state.gesture = { id, elapsedMs: 0 };
       step(0);
+    },
+    playGestureForText(text: string): string | null {
+      if (typeof text !== "string" || text.length === 0) {
+        return null;
+      }
+      const haystack = text.toLowerCase();
+      for (const gesture of bundle.gestures ?? []) {
+        for (const keyword of gesture.keywords ?? []) {
+          if (keyword && haystack.includes(keyword.toLowerCase())) {
+            this.playGesture(gesture.id);
+            return gesture.id;
+          }
+        }
+      }
+      return null;
     },
     setEmotion(name: string, intensity: number): void {
       state.emotion = { name, intensity: clamp(intensity, 0, 1) };
@@ -1115,6 +1176,9 @@ export function createCharacterPlayer(
         if (isArmSlot(slotKey)) {
           node.removeAttribute("transform");
         }
+      }
+      for (const follower of followers) {
+        follower.node.removeAttribute("transform");
       }
     },
   };
