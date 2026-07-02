@@ -3,6 +3,7 @@ export const CHARBUNDLE_VERSION = "0.1.0" as const;
 export const CHARPACK_VERSION = "0.1.0" as const;
 
 export const CHARBUNDLE_API_METHODS = [
+  "applyPreset",
   "lookAt",
   "playBehavior",
   "playGesture",

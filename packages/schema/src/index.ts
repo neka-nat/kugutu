@@ -92,6 +92,7 @@ export type {
   CharacterPartCatalogItem,
   CharacterPartSelection,
   CharacterParts,
+  CharacterPreset,
   CompiledBehavior,
   PartTransform,
   SlotBindingMap,

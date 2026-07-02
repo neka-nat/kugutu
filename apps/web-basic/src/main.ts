@@ -89,6 +89,7 @@ async function main(): Promise<void> {
   const mouthOpenValue = document.querySelector<HTMLElement>("#mouth-open-value");
   const speakButton = document.querySelector<HTMLButtonElement>("#speak-sample");
   const bundleReadout = document.querySelector<HTMLElement>("#bundle-readout");
+  const presetPanel = document.querySelector<HTMLElement>("#preset-panel");
   const partsPanel = document.querySelector<HTMLElement>("#parts-panel");
   const gesturePanel = document.querySelector<HTMLElement>("#gesture-panel");
   const emotionButtons = Array.from(
@@ -103,6 +104,7 @@ async function main(): Promise<void> {
     !mouthOpenInput ||
     !mouthOpenValue ||
     !bundleReadout ||
+    !presetPanel ||
     !partsPanel ||
     !gesturePanel ||
     !speakButton
@@ -114,12 +116,37 @@ async function main(): Promise<void> {
   const player = await Kugutu.load(`${import.meta.env.BASE_URL}avatar.charpack`, frame);
 
   bundleReadout.textContent = formatRuntimeSummary(player.bundle);
-  renderPartsPanel(
-    partsPanel,
-    player.bundle,
-    (slot) => player.getPart(slot),
-    (slot, partId) => player.setPart(slot, partId)
-  );
+
+  const refreshPartsPanel = (): void => {
+    renderPartsPanel(
+      partsPanel,
+      player.bundle,
+      (slot) => player.getPart(slot),
+      (slot, partId) => player.setPart(slot, partId)
+    );
+  };
+  refreshPartsPanel();
+
+  // Presets swap a whole curated look (parts + palette) in one call; re-render
+  // the parts panel afterwards so its active markers reflect the new selection.
+  const presetButtons: HTMLButtonElement[] = [];
+  for (const preset of player.bundle.presets ?? []) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = preset.displayName ?? preset.id;
+    if (preset.description) {
+      button.title = preset.description;
+    }
+    button.addEventListener("click", () => {
+      player.applyPreset(preset.id);
+      for (const sibling of presetButtons) {
+        sibling.classList.toggle("active", sibling === button);
+      }
+      refreshPartsPanel();
+    });
+    presetButtons.push(button);
+    presetPanel.append(button);
+  }
 
   for (const gesture of player.bundle.gestures) {
     const button = document.createElement("button");

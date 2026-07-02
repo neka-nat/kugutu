@@ -93,7 +93,12 @@ function compileBehavior(
 
 function deriveRuntimeApi(
   behaviors: CharacterBehavior[],
-  options: { hasParts: boolean; hasGestures: boolean; hasMouth: boolean }
+  options: {
+    hasParts: boolean;
+    hasGestures: boolean;
+    hasMouth: boolean;
+    hasPresets: boolean;
+  }
 ): CharBundleRuntimeApiMethod[] {
   const api = new Set<CharBundleRuntimeApiMethod>(["playBehavior", "setEmotion"]);
 
@@ -111,6 +116,10 @@ function deriveRuntimeApi(
     api.add("setPart");
     api.add("setVariant");
     api.add("tunePart");
+  }
+
+  if (options.hasParts && options.hasPresets) {
+    api.add("applyPreset");
   }
 
   if (options.hasGestures) {
@@ -849,6 +858,7 @@ export function buildCharacterBundle(document: CharacterDefinition): CharBundle 
   const visemes = compileVisemes(document);
   const hasParts = Object.keys(document.parts?.catalog ?? {}).length > 0;
   const hasMouth = Boolean(document.slots?.mouth);
+  const hasPresets = (document.presets?.length ?? 0) > 0;
 
   const bundle: CharBundle = {
     bundleVersion: CHARBUNDLE_VERSION,
@@ -878,6 +888,7 @@ export function buildCharacterBundle(document: CharacterDefinition): CharBundle 
         hasParts,
         hasGestures: gestures.length > 0,
         hasMouth,
+        hasPresets,
       }),
     },
   };
@@ -885,6 +896,10 @@ export function buildCharacterBundle(document: CharacterDefinition): CharBundle 
   const parts = cloneParts(document.parts);
   if (parts) {
     bundle.parts = parts;
+  }
+
+  if (document.presets && document.presets.length > 0) {
+    bundle.presets = JSON.parse(JSON.stringify(document.presets));
   }
 
   return bundle;

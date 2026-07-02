@@ -70,6 +70,12 @@ export interface CharacterPlayer {
   tunePart(partSlot: PartSlotKey, transform: PartTransform): void;
   /** Returns the part id currently selected for a part slot. */
   getPart(partSlot: PartSlotKey): string | undefined;
+  /**
+   * Applies a named preset from the bundle — swaps every part the preset names
+   * (with its transform/color) in one call. Returns the preset id, or null if no
+   * preset with that id exists.
+   */
+  applyPreset(presetId: string): string | null;
   step(deltaMs: number): void;
   start(): void;
   stop(): void;
@@ -391,11 +397,15 @@ export function createCharacterPlayer(
     followers.push({ node, slot, amount, pivot });
   }
 
-  // The mouth opens by crossfading between distinct closed and open artwork
-  // (a blend-shape pair) rather than vertically stretching a single shape, so
-  // every mouth — even a flat neutral line — has a real, visibly different open
-  // state. All variants are pre-rendered into the SVG; we collect every
-  // variant's pair once and drive them together (hidden variants are inert).
+  // The mouth has distinct closed and open artwork (a blend-shape pair); every
+  // mouth — even a flat neutral line — thus has a real, visibly different open
+  // state. The open cavity grows via scaleY, but anchored at the mouth's VERTICAL
+  // CENTER (roughly the lip line) rather than its top: when shut it collapses
+  // onto the lip line and coincides with the closed artwork, so it opens as a
+  // real jaw drop without the doubled-mouth artifact that anchoring at the top
+  // caused (that floated the cavity's dipping edge above the lip line at small
+  // open amounts). All variants are pre-rendered into the SVG; hidden variants
+  // are inert.
   const mouthClosedGroups: SVGGraphicsElement[] = [];
   const mouthOpenGroups: SVGGraphicsElement[] = [];
   {
@@ -408,7 +418,7 @@ export function createCharacterPlayer(
         .querySelectorAll<SVGGraphicsElement>("[data-kugutu-mouth-open]")
         .forEach((group) => {
           group.style.transformBox = "fill-box";
-          group.style.transformOrigin = "center top";
+          group.style.transformOrigin = "center";
           mouthOpenGroups.push(group);
         });
     }
@@ -796,18 +806,30 @@ export function createCharacterPlayer(
     return clamp(state.mouthOpen, 0, 1) * maxOpen;
   }
 
-  // Crossfades the closed and open mouth artwork by the open amount and gives
-  // the open shape a little growth so it reads as the jaw dropping, not just a
-  // fade. Driven once per frame after the slot transforms are committed.
+  // Opens the mouth as a real jaw drop: the open cavity's scaleY grows from ~0
+  // (collapsed onto the lip line, anchored at its vertical center) to 1 (full
+  // open). The closed lips fade out gradually so they read as the resting mouth
+  // and hand off to the cavity — because the cavity collapses onto the same lip
+  // line when shut, the two never separate into a doubled mouth. Driven once per
+  // frame after slot transforms.
   function applyMouthShape(openAmount: number): void {
     const open = clamp(openAmount, 0, 1);
-    const t = open * open * (3 - 2 * open); // smoothstep for a snappier open
+    const t = open * open * (3 - 2 * open); // smoothstep for a snappier jaw drop
+    // A scaled cavity collapses to a flat bar at small scale, which can't match
+    // the curved closed lips and reads as a second line. Two guards keep the
+    // crossover clean: (1) the cavity keeps a real minimum height whenever it is
+    // shown (never a bar), and (2) it stays hidden until open≈0.12 and fades in,
+    // while the closed lips carry the near-shut mouth and fade out — so the two
+    // never both read at full strength.
+    const scaleY = 0.4 + 0.6 * t;
+    const closedOpacity = 1 - clamp((open - 0.08) / 0.16, 0, 1);
+    const openOpacity = clamp((open - 0.12) / 0.1, 0, 1);
     for (const group of mouthClosedGroups) {
-      group.style.opacity = String(1 - t);
+      group.style.opacity = String(closedOpacity);
     }
     for (const group of mouthOpenGroups) {
-      group.style.opacity = String(t);
-      group.style.transform = `scaleY(${0.7 + 0.3 * open})`;
+      group.style.opacity = String(openOpacity);
+      group.style.transform = `scaleY(${scaleY})`;
     }
   }
 
@@ -1153,6 +1175,36 @@ export function createCharacterPlayer(
     },
     getPart(partSlot: PartSlotKey): string | undefined {
       return partSelections[partSlot]?.partId;
+    },
+    applyPreset(presetId: string): string | null {
+      const preset = (bundle.presets ?? []).find((entry) => entry.id === presetId);
+      if (!preset) {
+        console.warn(`applyPreset: no preset "${presetId}" in the bundle`);
+        return null;
+      }
+
+      for (const [slotValue, selection] of Object.entries(preset.selections)) {
+        if (!selection) {
+          continue;
+        }
+
+        const partSlot = slotValue as PartSlotKey;
+        this.setPart(partSlot, selection.partId);
+
+        // Replace (not merge) the transform so a preset is deterministic: it must
+        // not inherit a prior preset's tuning on the same slot.
+        const current = partSelections[partSlot];
+        if (current && current.partId === selection.partId) {
+          if (selection.transform) {
+            current.transform = { ...selection.transform };
+          } else {
+            delete current.transform;
+          }
+          applyPartAppearance(partSlot);
+        }
+      }
+
+      return preset.id;
     },
     step,
     start(): void {

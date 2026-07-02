@@ -315,6 +315,101 @@ function validateParts(partsValue: unknown, path: string, errors: string[]): voi
   }
 }
 
+/** Best-effort catalog extraction so presets can be checked against known parts. */
+function extractCatalog(
+  partsValue: unknown
+): Record<string, CharacterPartCatalogItem> {
+  const catalog: Record<string, CharacterPartCatalogItem> = {};
+
+  if (!isPlainObject(partsValue) || !isPlainObject(partsValue.catalog)) {
+    return catalog;
+  }
+
+  for (const [partId, itemValue] of Object.entries(partsValue.catalog)) {
+    if (
+      isPlainObject(itemValue) &&
+      isKnownPartSlot(String((itemValue as { slot?: unknown }).slot))
+    ) {
+      catalog[partId] = itemValue as unknown as CharacterPartCatalogItem;
+    }
+  }
+
+  return catalog;
+}
+
+function validatePreset(
+  presetValue: unknown,
+  catalog: Record<string, CharacterPartCatalogItem>,
+  path: string,
+  errors: string[]
+): void {
+  if (!isPlainObject(presetValue)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  validateIdentifier(presetValue.id, `${path}.id`, errors);
+
+  if (presetValue.displayName !== undefined && !isNonEmptyString(presetValue.displayName)) {
+    errors.push(`${path}.displayName must be a non-empty string`);
+  }
+
+  if (presetValue.description !== undefined && !isNonEmptyString(presetValue.description)) {
+    errors.push(`${path}.description must be a non-empty string`);
+  }
+
+  if (!isPlainObject(presetValue.selections)) {
+    errors.push(`${path}.selections must be an object`);
+    return;
+  }
+
+  let selectionCount = 0;
+  for (const [slotKey, selectionValue] of Object.entries(presetValue.selections)) {
+    if (!isKnownPartSlot(slotKey)) {
+      errors.push(`${path}.selections.${slotKey} is not a supported part slot`);
+      continue;
+    }
+
+    validatePartSelection(
+      selectionValue,
+      slotKey,
+      catalog,
+      `${path}.selections.${slotKey}`,
+      errors
+    );
+    selectionCount += 1;
+  }
+
+  if (selectionCount === 0) {
+    errors.push(`${path}.selections must select at least one part`);
+  }
+}
+
+function validatePresets(
+  value: unknown,
+  catalog: Record<string, CharacterPartCatalogItem>,
+  path: string,
+  errors: string[]
+): void {
+  if (!Array.isArray(value)) {
+    errors.push(`${path} must be an array`);
+    return;
+  }
+
+  const seen = new Set<string>();
+  for (let index = 0; index < value.length; index += 1) {
+    const preset = value[index];
+    validatePreset(preset, catalog, `${path}[${index}]`, errors);
+
+    if (isPlainObject(preset) && typeof preset.id === "string") {
+      if (seen.has(preset.id)) {
+        errors.push(`${path}[${index}].id "${preset.id}" is duplicated`);
+      }
+      seen.add(preset.id);
+    }
+  }
+}
+
 function validateFiniteNumber(
   value: unknown,
   path: string,
@@ -675,6 +770,10 @@ export function validateCharacterDefinition(document: unknown): ValidationResult
     validateParts(document.parts, "parts", errors);
   }
 
+  if (document.presets !== undefined) {
+    validatePresets(document.presets, extractCatalog(document.parts), "presets", errors);
+  }
+
   if (document.expressions !== undefined) {
     validateExpressions(document.expressions, "expressions", errors);
   }
@@ -778,6 +877,10 @@ export function validateCharBundle(bundle: unknown): ValidationResult {
 
   if (bundle.parts !== undefined) {
     validateParts(bundle.parts, "parts", errors);
+  }
+
+  if (bundle.presets !== undefined) {
+    validatePresets(bundle.presets, extractCatalog(bundle.parts), "presets", errors);
   }
 
   if (bundle.expressions !== undefined) {

@@ -1,0 +1,10 @@
+<g>
+  <g data-kugutu-mouth-open>
+    <ellipse cx="0" cy="4" rx="7" ry="9" fill="#7A2E3A" />
+    <ellipse cx="0" cy="8" rx="4.4" ry="4" fill="#FF8E8E" />
+    <ellipse cx="0" cy="2" rx="7" ry="6.5" fill="none" stroke="#34344A" stroke-width="2.6" vector-effect="non-scaling-stroke" />
+  </g>
+  <g data-kugutu-mouth-closed>
+    <ellipse cx="0" cy="2" rx="4.6" ry="5.6" fill="none" stroke="#34344A" stroke-width="3" />
+  </g>
+</g>

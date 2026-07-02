@@ -203,6 +203,46 @@ async function main(): Promise<void> {
       },
     },
     {
+      label: "presets are baked into the bundle and expose applyPreset",
+      validate: () => {
+        const fixture = buildPartFixture();
+        fixture.document.presets = [
+          {
+            id: "alt-look",
+            displayName: "Alt look",
+            selections: {
+              eye: { partId: "eye-test-01", transform: { scale: 1.2 } },
+            },
+          },
+        ];
+        const bundle = buildCharacterBundle(fixture.document);
+        assert.ok(
+          bundle.presets?.some((preset) => preset.id === "alt-look"),
+          "preset baked into the bundle"
+        );
+        assert.ok(
+          bundle.runtime.api.includes("applyPreset" as never),
+          "applyPreset exposed when a character has presets"
+        );
+
+        const withoutPresets = buildCharacterBundle(buildPartFixture().document);
+        assert.ok(
+          !withoutPresets.runtime.api.includes("applyPreset" as never),
+          "applyPreset omitted when there are no presets"
+        );
+
+        const bad = buildPartFixture();
+        bad.document.presets = [
+          { id: "bad", selections: { eye: { partId: "missing-part" } } },
+        ];
+        assert.throws(
+          () => buildCharacterBundle(bad.document),
+          "preset referencing an unknown part is rejected"
+        );
+        return { valid: true, errors: [] };
+      },
+    },
+    {
       label: "default visemes are baked in and speak is exposed for mouthed characters",
       validate: () => {
         const bundle = buildCharacterBundle(characterExample);

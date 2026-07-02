@@ -63,6 +63,19 @@ export interface CharacterParts {
   selections: Partial<Record<PartSlotKey, CharacterPartSelection>>;
 }
 
+/**
+ * A named, ready-made character look: a set of part selections (each with an
+ * optional transform/color) applied together via `player.applyPreset(id)`.
+ * Presets reference parts already in the catalog, so they add no assets — they
+ * are curated combinations plus palette tweaks.
+ */
+export interface CharacterPreset {
+  id: string;
+  displayName?: string;
+  description?: string;
+  selections: Partial<Record<PartSlotKey, CharacterPartSelection>>;
+}
+
 export interface CharacterBehavior<T extends BehaviorType = BehaviorType> {
   id: string;
   type: T;
@@ -77,6 +90,7 @@ export interface CharacterDefinition {
   assets: CharacterAssets;
   slots: SlotBindingMap;
   parts?: CharacterParts;
+  presets?: CharacterPreset[];
   behaviors: CharacterBehavior[];
   expressions?: CharacterExpression[];
   gestures?: CharacterGesture[];
@@ -118,6 +132,7 @@ export interface CharBundle {
   assets: CharBundleAsset[];
   bindings: CharBundleBindings;
   parts?: CharacterParts;
+  presets?: CharacterPreset[];
   behaviors: CompiledBehavior[];
   expressions: CharacterExpression[];
   gestures: CharacterGesture[];

@@ -444,11 +444,11 @@
             },
             {
               "t": 0.18,
-              "rotate": -74
+              "rotate": -64
             },
             {
               "t": 0.85,
-              "rotate": -74
+              "rotate": -64
             },
             {
               "t": 1,
@@ -465,23 +465,23 @@
             },
             {
               "t": 0.18,
-              "rotate": -22
+              "rotate": 12
             },
             {
               "t": 0.36,
-              "rotate": 2
+              "rotate": 0
             },
             {
               "t": 0.54,
-              "rotate": -22
+              "rotate": 12
             },
             {
               "t": 0.72,
-              "rotate": 2
+              "rotate": 0
             },
             {
               "t": 0.85,
-              "rotate": -14
+              "rotate": 6
             },
             {
               "t": 1,
@@ -512,11 +512,11 @@
             },
             {
               "t": 0.18,
-              "rotate": 84
+              "rotate": 76
             },
             {
               "t": 0.85,
-              "rotate": 84
+              "rotate": 76
             },
             {
               "t": 1,
@@ -537,7 +537,7 @@
             },
             {
               "t": 0.36,
-              "rotate": -10
+              "rotate": -14
             },
             {
               "t": 0.54,
@@ -545,7 +545,7 @@
             },
             {
               "t": 0.72,
-              "rotate": -10
+              "rotate": -14
             },
             {
               "t": 0.85,
@@ -580,11 +580,11 @@
             },
             {
               "t": 0.35,
-              "rotate": -78
+              "rotate": -80
             },
             {
               "t": 0.8,
-              "rotate": -78
+              "rotate": -80
             },
             {
               "t": 1,
@@ -601,11 +601,11 @@
             },
             {
               "t": 0.35,
-              "rotate": -8
+              "rotate": 58
             },
             {
               "t": 0.8,
-              "rotate": -8
+              "rotate": 58
             },
             {
               "t": 1,
@@ -658,11 +658,11 @@
             },
             {
               "t": 0.4,
-              "rotate": 58
+              "rotate": 68
             },
             {
               "t": 0.82,
-              "rotate": 58
+              "rotate": 68
             },
             {
               "t": 1,
@@ -694,19 +694,19 @@
             },
             {
               "t": 0.3,
-              "rotate": -84
+              "rotate": -76
             },
             {
               "t": 0.5,
-              "rotate": -74
+              "rotate": -66
             },
             {
               "t": 0.7,
-              "rotate": -84
+              "rotate": -76
             },
             {
               "t": 0.85,
-              "rotate": -74
+              "rotate": -66
             },
             {
               "t": 1,
@@ -723,11 +723,11 @@
             },
             {
               "t": 0.3,
-              "rotate": -12
+              "rotate": 6
             },
             {
               "t": 0.85,
-              "rotate": -12
+              "rotate": 6
             },
             {
               "t": 1,
@@ -744,19 +744,19 @@
             },
             {
               "t": 0.3,
-              "rotate": 84
+              "rotate": 76
             },
             {
               "t": 0.5,
-              "rotate": 74
+              "rotate": 66
             },
             {
               "t": 0.7,
-              "rotate": 84
+              "rotate": 76
             },
             {
               "t": 0.85,
-              "rotate": 74
+              "rotate": 66
             },
             {
               "t": 1,
@@ -773,11 +773,11 @@
             },
             {
               "t": 0.3,
-              "rotate": 12
+              "rotate": -6
             },
             {
               "t": 0.85,
-              "rotate": 12
+              "rotate": -6
             },
             {
               "t": 1,
@@ -910,11 +910,11 @@
             },
             {
               "t": 0.3,
-              "rotate": -58
+              "rotate": -54
             },
             {
               "t": 0.7,
-              "rotate": -58
+              "rotate": -54
             },
             {
               "t": 1,
@@ -931,11 +931,11 @@
             },
             {
               "t": 0.3,
-              "rotate": -34
+              "rotate": -4
             },
             {
               "t": 0.7,
-              "rotate": -34
+              "rotate": -4
             },
             {
               "t": 1,
@@ -970,11 +970,11 @@
             },
             {
               "t": 0.25,
-              "rotate": -76
+              "rotate": -68
             },
             {
               "t": 0.82,
-              "rotate": -76
+              "rotate": -68
             },
             {
               "t": 1,
@@ -991,23 +991,23 @@
             },
             {
               "t": 0.25,
-              "rotate": -26
+              "rotate": -8
             },
             {
               "t": 0.45,
-              "rotate": -12
+              "rotate": -2
             },
             {
               "t": 0.62,
-              "rotate": -26
+              "rotate": -8
             },
             {
               "t": 0.8,
-              "rotate": -12
+              "rotate": -2
             },
             {
               "t": 0.9,
-              "rotate": -22
+              "rotate": -6
             },
             {
               "t": 1,
@@ -1024,11 +1024,11 @@
             },
             {
               "t": 0.25,
-              "rotate": 76
+              "rotate": 68
             },
             {
               "t": 0.82,
-              "rotate": 76
+              "rotate": 68
             },
             {
               "t": 1,
@@ -1045,23 +1045,23 @@
             },
             {
               "t": 0.25,
-              "rotate": 26
+              "rotate": 8
             },
             {
               "t": 0.45,
-              "rotate": 12
+              "rotate": 2
             },
             {
               "t": 0.62,
-              "rotate": 26
+              "rotate": 8
             },
             {
               "t": 0.8,
-              "rotate": 12
+              "rotate": 2
             },
             {
               "t": 0.9,
-              "rotate": 22
+              "rotate": 6
             },
             {
               "t": 1,
@@ -1114,11 +1114,11 @@
             },
             {
               "t": 0.35,
-              "rotate": -44
+              "rotate": -20
             },
             {
               "t": 0.72,
-              "rotate": -44
+              "rotate": -20
             },
             {
               "t": 1,
@@ -1156,11 +1156,11 @@
             },
             {
               "t": 0.35,
-              "rotate": 44
+              "rotate": 20
             },
             {
               "t": 0.72,
-              "rotate": 44
+              "rotate": 20
             },
             {
               "t": 1,
@@ -1235,6 +1235,7 @@
   },
   "runtime": {
     "api": [
+      "applyPreset",
       "lookAt",
       "playBehavior",
       "playGesture",
@@ -1355,6 +1356,22 @@
           "spacing": 0
         }
       },
+      "eye-sparkle": {
+        "id": "eye-sparkle",
+        "slot": "eye",
+        "displayName": "Sparkle eyes",
+        "asset": "parts/eye/eye-sparkle.svg",
+        "editable": [
+          "scale",
+          "spacing",
+          "rotation",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1,
+          "spacing": 0
+        }
+      },
       "brow-soft": {
         "id": "brow-soft",
         "slot": "brow",
@@ -1408,6 +1425,22 @@
         "slot": "brow",
         "displayName": "Angry brows",
         "asset": "parts/brow/brow-angry.svg",
+        "editable": [
+          "scale",
+          "rotation",
+          "spacing",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1,
+          "spacing": 0
+        }
+      },
+      "brow-worried": {
+        "id": "brow-worried",
+        "slot": "brow",
+        "displayName": "Worried brows",
+        "asset": "parts/brow/brow-worried.svg",
         "editable": [
           "scale",
           "rotation",
@@ -1539,6 +1572,36 @@
           "scale": 1
         }
       },
+      "mouth-cat": {
+        "id": "mouth-cat",
+        "slot": "mouth",
+        "displayName": "Cat mouth",
+        "asset": "parts/mouth/mouth-cat.svg",
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
+        }
+      },
+      "mouth-o": {
+        "id": "mouth-o",
+        "slot": "mouth",
+        "displayName": "Small o",
+        "asset": "parts/mouth/mouth-o.svg",
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
+        }
+      },
       "hair-front-bangs": {
         "id": "hair-front-bangs",
         "slot": "hair.front",
@@ -1599,6 +1662,21 @@
           "scale": 1
         }
       },
+      "hair-front-center": {
+        "id": "hair-front-center",
+        "slot": "hair.front",
+        "displayName": "Center part",
+        "asset": "parts/hair.front/hair-front-center.svg",
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
+        }
+      },
       "hair-back-bob": {
         "id": "hair-back-bob",
         "slot": "hair.back",
@@ -1634,6 +1712,21 @@
         "slot": "hair.back",
         "displayName": "None",
         "asset": "parts/hair.back/hair-back-none.svg",
+        "editable": [
+          "position",
+          "scale",
+          "rotation",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
+        }
+      },
+      "hair-back-ponytail": {
+        "id": "hair-back-ponytail",
+        "slot": "hair.back",
+        "displayName": "Ponytail",
+        "asset": "parts/hair.back/hair-back-ponytail.svg",
         "editable": [
           "position",
           "scale",
@@ -1685,6 +1778,20 @@
         "defaults": {
           "scale": 1
         }
+      },
+      "outfit-turtleneck": {
+        "id": "outfit-turtleneck",
+        "slot": "outfit",
+        "displayName": "Turtleneck",
+        "asset": "parts/outfit/outfit-turtleneck.svg",
+        "editable": [
+          "position",
+          "scale",
+          "color"
+        ],
+        "defaults": {
+          "scale": 1
+        }
       }
     },
     "selections": {
@@ -1713,5 +1820,143 @@
         "partId": "outfit-tee"
       }
     }
-  }
+  },
+  "presets": [
+    {
+      "id": "friendly-guide",
+      "displayName": "Friendly Guide",
+      "description": "Calm, approachable helper — cool blue turtleneck harmonized with the purple hair.",
+      "selections": {
+        "face": {
+          "partId": "face-round"
+        },
+        "hair.back": {
+          "partId": "hair-back-bob"
+        },
+        "hair.front": {
+          "partId": "hair-front-center"
+        },
+        "eye": {
+          "partId": "eye-round"
+        },
+        "brow": {
+          "partId": "brow-soft"
+        },
+        "nose": {
+          "partId": "nose-dot"
+        },
+        "mouth": {
+          "partId": "mouth-smile"
+        },
+        "outfit": {
+          "partId": "outfit-turtleneck"
+        }
+      }
+    },
+    {
+      "id": "genki-mascot",
+      "displayName": "Genki Mascot",
+      "description": "High-energy mascot — sunny hair + coral tee for a warm, cheerful scheme.",
+      "selections": {
+        "face": {
+          "partId": "face-round"
+        },
+        "hair.back": {
+          "partId": "hair-back-ponytail",
+          "transform": {
+            "color": "#F6B23C"
+          }
+        },
+        "hair.front": {
+          "partId": "hair-front-spiky",
+          "transform": {
+            "color": "#F6B23C"
+          }
+        },
+        "eye": {
+          "partId": "eye-sparkle"
+        },
+        "brow": {
+          "partId": "brow-raised"
+        },
+        "nose": {
+          "partId": "nose-dot"
+        },
+        "mouth": {
+          "partId": "mouth-grin"
+        },
+        "outfit": {
+          "partId": "outfit-tee"
+        }
+      }
+    },
+    {
+      "id": "cool-type",
+      "displayName": "Cool Type",
+      "description": "Composed and sharp — steel-blue hair and a slate turtleneck, monochrome cool palette.",
+      "selections": {
+        "face": {
+          "partId": "face-oval"
+        },
+        "hair.back": {
+          "partId": "hair-back-long",
+          "transform": {
+            "color": "#5468C6"
+          }
+        },
+        "hair.front": {
+          "partId": "hair-front-side",
+          "transform": {
+            "color": "#5468C6"
+          }
+        },
+        "eye": {
+          "partId": "eye-sharp"
+        },
+        "brow": {
+          "partId": "brow-flat"
+        },
+        "nose": {
+          "partId": "nose-line"
+        },
+        "mouth": {
+          "partId": "mouth-neutral"
+        },
+        "outfit": {
+          "partId": "outfit-turtleneck"
+        }
+      }
+    },
+    {
+      "id": "sleepy-soft",
+      "displayName": "Sleepy Soft",
+      "description": "Cozy and laid-back — droopy eyes, cat mouth, and a soft teal hoodie.",
+      "selections": {
+        "face": {
+          "partId": "face-round"
+        },
+        "hair.back": {
+          "partId": "hair-back-bob"
+        },
+        "hair.front": {
+          "partId": "hair-front-bangs"
+        },
+        "eye": {
+          "partId": "eye-sleepy"
+        },
+        "brow": {
+          "partId": "brow-worried"
+        },
+        "nose": {
+          "partId": "nose-button"
+        },
+        "mouth": {
+          "partId": "mouth-cat"
+        },
+        "outfit": {
+          "partId": "outfit-hoodie"
+        }
+      }
+    }
+  ]
 }
