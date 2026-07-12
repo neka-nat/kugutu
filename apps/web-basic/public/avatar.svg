@@ -414,8 +414,8 @@
 </g></g><g data-kugutu-variant-slot="hair.front" data-kugutu-variant-id="hair-front-spiky"><g>
   <path d="M-80 -8 Q-82 -78 0 -82 Q82 -78 80 -8 L62 -34 L50 -14 L34 -36 L22 -14 L6 -38 L-8 -14 L-24 -36 L-40 -14 L-54 -34 L-80 -8 Z" fill="#7C6CF0" />
 </g></g><g data-kugutu-variant-slot="hair.front" data-kugutu-variant-id="hair-front-none"><g><!-- no front hair --></g></g><g data-kugutu-variant-slot="hair.front" data-kugutu-variant-id="hair-front-center"><g>
-  <path d="M-80 -6 Q-82 -78 0 -82 Q82 -78 80 -6 Q58 -34 30 -34 Q10 -34 0 -14 Q-10 -34 -30 -34 Q-58 -34 -80 -6 Z" fill="#7C6CF0" />
-  <path d="M-80 -6 Q-82 -78 0 -82 Q-40 -70 -56 -34 Q-70 -22 -80 -6 Z" fill="#8A7BF5" />
+  <path d="M-80 -6 Q-82 -78 0 -82 Q82 -78 80 -6 Q76 -26 60 -26 Q30 -30 4 -62 Q0 -66 -4 -62 Q-30 -30 -60 -26 Q-76 -26 -80 -6 Z" fill="#7C6CF0" />
+  <path d="M-80 -6 Q-82 -78 0 -82 Q-44 -74 -58 -40 Q-72 -26 -80 -6 Z" fill="#8A7BF5" />
 </g></g></g>
       </g>
     </g>
@@ -465,8 +465,8 @@
   <circle cx="-37.4" cy="-64.8" r="6" fill="#FF9E9E" />
   <circle cx="-46" cy="-62" r="4.5" fill="#F6D365" data-kugutu-color-preserve />
 </g></g><g data-kugutu-variant-slot="hair.accessory" data-kugutu-variant-id="hair-accessory-hairpin"><g>
-  <line x1="-60" y1="-30" x2="-40" y2="-16" stroke="#46C2A8" stroke-width="4" stroke-linecap="round" />
-  <line x1="-42" y1="-30" x2="-60" y2="-17" stroke="#46C2A8" stroke-width="4" stroke-linecap="round" />
+  <line x1="-60" y1="-55" x2="-40" y2="-41" stroke="#46C2A8" stroke-width="4" stroke-linecap="round" />
+  <line x1="-42" y1="-55" x2="-60" y2="-42" stroke="#46C2A8" stroke-width="4" stroke-linecap="round" />
 </g></g><g data-kugutu-variant-slot="hair.accessory" data-kugutu-variant-id="hair-accessory-none"><g><!-- no hair accessory --></g></g></g>
     </g>
   </g>
