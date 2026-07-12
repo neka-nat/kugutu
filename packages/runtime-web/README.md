@@ -36,6 +36,16 @@ actor.tunePart("eye", { scale: 1.1, spacing: 8 });
 `Kugutu.load(source, target, options?)` accepts a URL or a `CharPack` object,
 and a CSS selector or an `HTMLElement`.
 
+No character yet? [`@kugutu/schema`](https://www.npmjs.com/package/@kugutu/schema)
+ships a ready-made sample you can load immediately:
+
+```ts
+import type { CharPack } from "@kugutu/schema";
+import samplePack from "@kugutu/schema/examples/mascot.charpack.json";
+
+const actor = await Kugutu.load(samplePack as CharPack, "#stage");
+```
+
 ## Player API
 
 - `lookAt({ x, y })` — gaze/head tracking (−1..1)

@@ -88,6 +88,26 @@ actor.tunePart("eye", { scale: 1.1, spacing: 8 });
 (`createCharacterPlayer(bundle, svgRoot)`,
 `createCharacterPlayerFromPack(pack, container)`) remain available.
 
+### Try it with the bundled sample
+
+`@kugutu/schema` ships a ready-made sample character (the demo mascot above),
+so the snippet works before you author anything. Either copy it into your
+static assets:
+
+```bash
+npm install @kugutu/schema
+cp node_modules/@kugutu/schema/examples/mascot.charpack.json public/mascot.charpack
+```
+
+or import it directly through your bundler:
+
+```ts
+import type { CharPack } from "@kugutu/schema";
+import samplePack from "@kugutu/schema/examples/mascot.charpack.json";
+
+const actor = await Kugutu.load(samplePack as CharPack, "#stage");
+```
+
 ### React
 
 ```bash

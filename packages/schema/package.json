@@ -32,7 +32,8 @@
       "import": "./dist/index.js"
     },
     "./character.schema.json": "./character.schema.json",
-    "./charbundle.schema.json": "./charbundle.schema.json"
+    "./charbundle.schema.json": "./charbundle.schema.json",
+    "./examples/*": "./examples/*"
   },
   "files": [
     "dist",

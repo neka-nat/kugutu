@@ -18,7 +18,10 @@ npm install @kugutu/schema
 - JSON Schemas, importable as
   `@kugutu/schema/character.schema.json` and
   `@kugutu/schema/charbundle.schema.json`
-- Example documents in [`examples/`](./examples)
+- Example documents in [`examples/`](./examples), including a ready-to-run
+  sample character: `@kugutu/schema/examples/mascot.charpack.json` (load it
+  with `Kugutu.load` from
+  [`@kugutu/runtime-web`](https://www.npmjs.com/package/@kugutu/runtime-web))
 
 Format specs live in the
 [project docs](https://github.com/neka-nat/kugutu/tree/main/docs).
