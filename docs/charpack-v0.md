@@ -43,6 +43,17 @@ player.setMouthOpen(0.4);
 `HTMLElement`. The lower-level
 `createCharacterPlayerFromPack(pack, container, options?)` is also available.
 
+### `parts.selections` is the source of truth for the initial look
+
+At player creation the runtime applies `bundle.parts.selections` to the SVG
+(variant visibility, per-part transform, color). So a pack whose selections
+were edited *after* compose — a generated charpack, a hand-tuned JSON, an
+agent picking parts — renders its selected parts from `Kugutu.load()` alone;
+no replayed `setPart()` calls are needed. For a normally compiled pack (SVG
+already matches the selections) this is an idempotent no-op. A selection
+naming a part that has no variant group in the SVG (composed against an older
+catalog) logs a console warning and keeps the baked look for that slot.
+
 ## Build
 
 ```bash

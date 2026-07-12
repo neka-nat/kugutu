@@ -1,6 +1,6 @@
 {
   "name": "@kugutu/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Command-line interface for authoring and building Kugutu characters.",
   "keywords": [
     "kugutu",
@@ -42,7 +42,7 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "dependencies": {
-    "@kugutu/compiler": "workspace:*",
-    "@kugutu/schema": "workspace:*"
+    "@kugutu/compiler": "workspace:^",
+    "@kugutu/schema": "workspace:^"
   }
 }

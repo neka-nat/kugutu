@@ -1,6 +1,6 @@
 {
   "name": "@kugutu/compiler",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Compiles Kugutu character definitions into runtime CharBundles and CharPacks.",
   "keywords": [
     "kugutu",
@@ -41,6 +41,6 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "dependencies": {
-    "@kugutu/schema": "workspace:*"
+    "@kugutu/schema": "workspace:^"
   }
 }

@@ -33,6 +33,12 @@ If a selected part has neither, the character would render nothing. `kugutu lint
 (and the compiler) flag this instead of silently producing an invisible
 character.
 
+At runtime, `parts.selections` is the source of truth for the initial look:
+the player re-applies every selection (visibility, transform, color) to the
+SVG on creation, so packs whose selections were edited after compose render
+correctly from load alone (see
+[`charpack-v0.md`](./charpack-v0.md#partsselections-is-the-source-of-truth-for-the-initial-look)).
+
 ## Art direction
 
 The demo mascot (`apps/web-basic/source/rig.svg` + `parts/**`) is authored in a

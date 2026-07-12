@@ -698,6 +698,31 @@ export function createCharacterPlayer(
     }
   }
 
+  // The bundle's `parts.selections` are the source of truth for the initial
+  // look: apply them to the SVG up front, so a pack whose selections were
+  // edited after compose (e.g. a generated or hand-tuned charpack) renders its
+  // selected parts from Kugutu.load() alone — no replayed setPart() calls.
+  // When the SVG already matches (the normal compiled case) this is an
+  // idempotent no-op: the inline visibility toggle mirrors the baked style
+  // rules, and transform/color overwrite the baked values with identical ones.
+  for (const [partSlotValue, selection] of Object.entries(partSelections)) {
+    const partSlot = partSlotValue as PartSlotKey;
+    const item = partCatalog[selection.partId];
+    if (!item || item.slot !== partSlot) {
+      console.warn(
+        `createCharacterPlayer: parts.selections["${partSlot}"] names "${selection.partId}", which is not a ${partSlot} part in the catalog`
+      );
+      continue;
+    }
+    if (!item.nodes && !applyVariantVisibility(partSlot, selection.partId)) {
+      console.warn(
+        `createCharacterPlayer: no variant group for selected part "${selection.partId}" in the SVG (was the charpack composed with an older catalog?)`
+      );
+      continue;
+    }
+    applyPartAppearance(partSlot);
+  }
+
   function ensureTransform(slotKey: SlotKey): TransformState {
     const existing = transforms.get(slotKey);
     if (existing) {

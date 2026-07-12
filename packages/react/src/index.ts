@@ -15,6 +15,20 @@ import {
 import type { CharBundle, CharPack } from "@kugutu/schema";
 
 export type { CharacterPlayer, LookAtPoint } from "@kugutu/runtime-web";
+// Lip-sync toolkit, re-exported so React apps don't need a direct dependency
+// on @kugutu/runtime-web (see docs/lipsync-v0.md).
+export {
+  attachAudioLipSync,
+  mouthCurveFromAudioBuffer,
+  mouthCurveFromSamples,
+  visemesFromText,
+  type AudioLipSyncHandle,
+  type AudioLipSyncOptions,
+  type LipSyncEnvelopeOptions,
+  type MouthCurveOptions,
+  type VisemeCue,
+  type VisemesFromTextOptions,
+} from "@kugutu/runtime-web";
 
 export interface KugutuCharacterProps {
   bundle: CharBundle;
@@ -23,6 +37,13 @@ export interface KugutuCharacterProps {
   autoStart?: boolean;
   className?: string;
   style?: CSSProperties;
+  /**
+   * Random source for idle-behavior variation (see
+   * `CreateCharacterPlayerOptions.random` in @kugutu/runtime-web). Omit for
+   * deterministic playback; pass `Math.random` for natural blink jitter.
+   * Read live on each draw, so it may be an inline function.
+   */
+  random?: () => number;
   onPlayerReady?: (player: CharacterPlayer | null) => void;
 }
 
@@ -31,6 +52,8 @@ export interface KugutuCharacterPackProps {
   autoStart?: boolean;
   className?: string;
   style?: CSSProperties;
+  /** See {@link KugutuCharacterProps.random}. */
+  random?: () => number;
   onPlayerReady?: (player: CharacterPlayer | null) => void;
 }
 
@@ -50,17 +73,23 @@ export function KugutuCharacter({
   autoStart = true,
   className,
   style,
+  random,
   onPlayerReady,
 }: KugutuCharacterProps): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<CharacterPlayer | null>(null);
   const onPlayerReadyRef = useRef(onPlayerReady);
+  const randomRef = useRef(random);
   const [resolvedSvgText, setResolvedSvgText] = useState(svgText ?? "");
   const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     onPlayerReadyRef.current = onPlayerReady;
   }, [onPlayerReady]);
+
+  useEffect(() => {
+    randomRef.current = random;
+  }, [random]);
 
   useEffect(() => {
     let cancelled = false;
@@ -118,7 +147,11 @@ export function KugutuCharacter({
       return undefined;
     }
 
-    const player = createCharacterPlayer(bundle, svgRoot);
+    // The stable wrapper keeps the player unaffected by `random` prop identity
+    // changes (inline functions are fine) while reading the latest value.
+    const player = createCharacterPlayer(bundle, svgRoot, {
+      random: () => randomRef.current?.() ?? 0.5,
+    });
     playerRef.current = player;
     onPlayerReadyRef.current?.(player);
 
@@ -148,16 +181,22 @@ export function KugutuCharacterPack({
   autoStart = true,
   className,
   style,
+  random,
   onPlayerReady,
 }: KugutuCharacterPackProps): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<CharacterPlayer | null>(null);
   const onPlayerReadyRef = useRef(onPlayerReady);
+  const randomRef = useRef(random);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     onPlayerReadyRef.current = onPlayerReady;
   }, [onPlayerReady]);
+
+  useEffect(() => {
+    randomRef.current = random;
+  }, [random]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -170,7 +209,10 @@ export function KugutuCharacterPack({
     onPlayerReadyRef.current?.(null);
 
     try {
-      const player = createCharacterPlayerFromPack(pack, container, { autoStart });
+      const player = createCharacterPlayerFromPack(pack, container, {
+        autoStart,
+        random: () => randomRef.current?.() ?? 0.5,
+      });
       playerRef.current = player;
       setLoadError(null);
       onPlayerReadyRef.current?.(player);

@@ -45,7 +45,7 @@
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "dependencies": {
-    "@kugutu/schema": "workspace:*"
+    "@kugutu/schema": "workspace:^"
   },
   "devDependencies": {
     "esbuild": "^0.25.0"
