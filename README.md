@@ -2,6 +2,8 @@
 
 Kugutu is a programmable 2D character platform for apps and AI interfaces.
 
+https://github.com/user-attachments/assets/f4635eea-4198-4834-bb54-b9cec2b97019
+
 Current status:
 
 - `schema v0` is defined in [`@kugutu/schema`](./packages/schema)
