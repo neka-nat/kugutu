@@ -2,6 +2,8 @@
 
 Programmable 2D characters for apps and AI interfaces.
 
+Studio Demo: https://kugutu-studio.vercel.app/
+
 https://github.com/user-attachments/assets/f4635eea-4198-4834-bb54-b9cec2b97019
 
 Kugutu (傀儡, "puppet") is a code-first alternative to Rive / Spine / Live2D for

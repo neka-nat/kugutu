@@ -8,6 +8,12 @@ importers:
 
   .:
     devDependencies:
+      '@kugutu/compiler':
+        specifier: workspace:*
+        version: link:packages/compiler
+      '@kugutu/schema':
+        specifier: workspace:*
+        version: link:packages/schema
       '@types/node':
         specifier: ^25.5.0
         version: 25.6.2

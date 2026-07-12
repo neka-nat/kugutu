@@ -24,6 +24,8 @@
     "preview:studio": "vite preview --config apps/studio/vite.config.ts --host 0.0.0.0 --port 4175"
   },
   "devDependencies": {
+    "@kugutu/compiler": "workspace:*",
+    "@kugutu/schema": "workspace:*",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/node": "^25.5.0",
