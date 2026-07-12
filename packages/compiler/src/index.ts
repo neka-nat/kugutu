@@ -318,6 +318,9 @@ function findAllElementRangesByAttribute(
 const PART_VARIANT_SLOT_ATTR = "data-kugutu-variant-slot";
 const PART_VARIANT_ID_ATTR = "data-kugutu-variant-id";
 const PART_SLOT_MOUNT_ATTR = "data-kugutu-slot-mount";
+const PART_LAYER_ATTR = "data-kugutu-part-layer";
+const SLOT_LAYER_ATTR = "data-kugutu-slot-layer";
+const PART_COLOR_PRESERVE_ATTR = "data-kugutu-color-preserve";
 
 export interface ComposeCharacterSvgOptions {
   /**
@@ -352,6 +355,85 @@ function hasSlotMount(svgText: string, partSlot: PartSlotKey): boolean {
 function extractPartFragment(asset: string): string {
   const match = /<svg\b[^>]*>([\s\S]*)<\/svg\s*>/i.exec(asset);
   return (match?.[1] ?? asset).trim();
+}
+
+interface PartSlotMount {
+  range: SvgElementRange;
+  layer: string;
+}
+
+function readAttributeValue(markup: string, attrName: string): string | undefined {
+  const namePattern = escapeRegExp(attrName);
+  const match = new RegExp(
+    `\\b${namePattern}\\s*=\\s*(["'])([^"']*)\\1`,
+    "i"
+  ).exec(markup);
+  return match?.[2];
+}
+
+function collectPartSlotMounts(
+  svgText: string,
+  partSlot: PartSlotKey
+): PartSlotMount[] {
+  return findAllElementRangesByAttribute(
+    svgText,
+    PART_SLOT_MOUNT_ATTR,
+    partSlot
+  ).map((range) => {
+    const openingEnd = svgText.indexOf(">", range.start);
+    const openingTag = svgText.slice(
+      range.start,
+      openingEnd === -1 ? range.end : openingEnd + 1
+    );
+    return {
+      range,
+      layer: readAttributeValue(openingTag, SLOT_LAYER_ATTR) ?? "",
+    };
+  });
+}
+
+/**
+ * Splits explicitly layered artwork only when the rig has a matching mount.
+ * Without that mount the authored fragment stays intact in the default layer,
+ * preserving the appearance of layered assets on older rigs.
+ */
+function splitPartFragmentByLayer(
+  asset: string,
+  availableLayers: ReadonlySet<string>
+): Map<string, string> {
+  const fragment = extractPartFragment(asset);
+  const fragments = new Map<string, string>();
+  const extracted: SvgElementRange[] = [];
+
+  for (const layer of availableLayers) {
+    if (!layer) {
+      continue;
+    }
+
+    const ranges = findAllElementRangesByAttribute(fragment, PART_LAYER_ATTR, layer);
+    if (ranges.length === 0) {
+      continue;
+    }
+
+    fragments.set(
+      layer,
+      ranges.map((range) => fragment.slice(range.start, range.end)).join("")
+    );
+    extracted.push(...ranges);
+  }
+
+  let base = fragment;
+  extracted.sort((a, b) => b.start - a.start);
+  for (const range of extracted) {
+    base = `${base.slice(0, range.start)}${base.slice(range.end)}`;
+  }
+
+  const normalizedBase = base.replace(/^[ \t]+$/gm, "").trim();
+  if (normalizedBase) {
+    fragments.set("", normalizedBase);
+  }
+
+  return fragments;
 }
 
 /** The baked transform/color of a selected anchor part (no `nodes`). */
@@ -431,8 +513,12 @@ function buildAnchorColorStyle(
     }
 
     const selector = `[data-kugutu-part-color="${escapeAttribute(selection.partId)}"]`;
-    rules.push(`${selector} [fill]:not([fill="none"]) { fill: ${selection.color}; }`);
-    rules.push(`${selector} [stroke]:not([stroke="none"]) { stroke: ${selection.color}; }`);
+    rules.push(
+      `${selector} [fill]:not([fill="none"]):not([${PART_COLOR_PRESERVE_ATTR}]) { fill: ${selection.color}; }`
+    );
+    rules.push(
+      `${selector} [stroke]:not([stroke="none"]):not([${PART_COLOR_PRESERVE_ATTR}]) { stroke: ${selection.color}; }`
+    );
   }
 
   return rules.length > 0 ? rules.join("\n") : undefined;
@@ -460,7 +546,19 @@ function injectPartAssets(
   }
 
   const anchors = collectAnchorSelections(document);
-  const groupsBySlot = new Map<PartSlotKey, string[]>();
+  const groupsBySlot = new Map<PartSlotKey, Map<string, string[]>>();
+  const mountsBySlot = new Map<PartSlotKey, PartSlotMount[]>();
+
+  const mountsForSlot = (partSlot: PartSlotKey): PartSlotMount[] => {
+    const existing = mountsBySlot.get(partSlot);
+    if (existing) {
+      return existing;
+    }
+
+    const mounts = collectPartSlotMounts(svgText, partSlot);
+    mountsBySlot.set(partSlot, mounts);
+    return mounts;
+  };
 
   for (const [partId, item] of Object.entries(document.parts.catalog)) {
     const fragment = partAssets[partId];
@@ -468,16 +566,29 @@ function injectPartAssets(
       continue;
     }
 
-    const groups = groupsBySlot.get(item.slot) ?? [];
-    groups.push(
-      buildVariantGroup(
-        item.slot,
-        partId,
-        extractPartFragment(fragment),
-        anchors.get(partId)
-      )
+    const groupsByLayer =
+      groupsBySlot.get(item.slot) ?? new Map<string, string[]>();
+    const availableLayers = new Set(
+      mountsForSlot(item.slot).map((mount) => mount.layer)
     );
-    groupsBySlot.set(item.slot, groups);
+
+    for (const [layer, layerFragment] of splitPartFragmentByLayer(
+      fragment,
+      availableLayers
+    )) {
+      const groups = groupsByLayer.get(layer) ?? [];
+      groups.push(
+        buildVariantGroup(
+          item.slot,
+          partId,
+          layerFragment,
+          anchors.get(partId)
+        )
+      );
+      groupsByLayer.set(layer, groups);
+    }
+
+    groupsBySlot.set(item.slot, groupsByLayer);
   }
 
   if (groupsBySlot.size === 0) {
@@ -486,12 +597,8 @@ function injectPartAssets(
 
   const replacements: SvgReplacement[] = [];
 
-  for (const [partSlot, groups] of groupsBySlot.entries()) {
-    const mounts = findAllElementRangesByAttribute(
-      svgText,
-      PART_SLOT_MOUNT_ATTR,
-      partSlot
-    );
+  for (const [partSlot, groupsByLayer] of groupsBySlot.entries()) {
+    const mounts = mountsForSlot(partSlot);
 
     if (mounts.length === 0) {
       throw new Error(
@@ -499,22 +606,26 @@ function injectPartAssets(
       );
     }
 
-    const injected = groups.join("");
-
     for (const mount of mounts) {
-      const element = svgText.slice(mount.start, mount.end);
+      const groups = groupsByLayer.get(mount.layer);
+      if (!groups || groups.length === 0) {
+        continue;
+      }
+
+      const injected = groups.join("");
+      const element = svgText.slice(mount.range.start, mount.range.end);
 
       if (/\/\s*>$/.test(element)) {
         const openOnly = element.replace(/\/\s*>$/, ">");
         replacements.push({
-          start: mount.start,
-          end: mount.end,
-          text: `${openOnly}${injected}</${mount.tagName}>`,
+          start: mount.range.start,
+          end: mount.range.end,
+          text: `${openOnly}${injected}</${mount.range.tagName}>`,
         });
       } else {
-        const closeTag = `</${mount.tagName}>`;
-        const insertAt = svgText.lastIndexOf(closeTag, mount.end);
-        const position = insertAt === -1 ? mount.end : insertAt;
+        const closeTag = `</${mount.range.tagName}>`;
+        const insertAt = svgText.lastIndexOf(closeTag, mount.range.end);
+        const position = insertAt === -1 ? mount.range.end : insertAt;
         replacements.push({ start: position, end: position, text: injected });
       }
     }
@@ -668,8 +779,12 @@ function buildPartColorStyle(instructions: PartNodeInstruction[]): string | unde
 
     seen.add(instruction.nodeId);
     const selector = `[data-kugutu-part-color="${escapeAttribute(instruction.nodeId)}"]`;
-    rules.push(`${selector} [fill]:not([fill="none"]) { fill: ${instruction.color}; }`);
-    rules.push(`${selector} [stroke]:not([stroke="none"]) { stroke: ${instruction.color}; }`);
+    rules.push(
+      `${selector} [fill]:not([fill="none"]):not([${PART_COLOR_PRESERVE_ATTR}]) { fill: ${instruction.color}; }`
+    );
+    rules.push(
+      `${selector} [stroke]:not([stroke="none"]):not([${PART_COLOR_PRESERVE_ATTR}]) { stroke: ${instruction.color}; }`
+    );
   }
 
   if (rules.length === 0) {

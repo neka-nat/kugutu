@@ -17,6 +17,8 @@ import {
   type SlotKey,
 } from "@kugutu/schema";
 
+const PART_COLOR_PRESERVE_ATTR = "data-kugutu-color-preserve";
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export interface LookAtPoint {
@@ -445,6 +447,60 @@ export function createCharacterPlayer(
     lastFrameMs: null,
   };
 
+  /**
+   * Returns how strongly the active gesture owns an arm slot at this frame.
+   * Ownership eases in over the first authored segment and eases out over the
+   * last, so an expression arm pose hands off without a one-frame pop.
+   */
+  function activeGestureArmWeight(slotKey: SlotKey): number {
+    const active = state.gesture;
+    if (!active || !isArmSlot(slotKey)) {
+      return 0;
+    }
+
+    const gesture = bundle.gestures?.find((item) => item.id === active.id);
+    const track = gesture?.tracks.find((item) => item.slot === slotKey);
+    if (!gesture || !track || track.keyframes.length === 0) {
+      return 0;
+    }
+
+    let progress =
+      gesture.durationMs > 0 ? active.elapsedMs / gesture.durationMs : 1;
+    if (gesture.loop) {
+      progress -= Math.floor(progress);
+    } else {
+      progress = clamp(progress, 0, 1);
+    }
+
+    const keyframes = track.keyframes;
+    const first = keyframes[0]!;
+    const last = keyframes[keyframes.length - 1]!;
+    if (keyframes.length === 1) {
+      return 1;
+    }
+
+    if (keyframes.length === 2) {
+      const span = last.t - first.t;
+      if (span <= 0) {
+        return 1;
+      }
+      const local = clamp((progress - first.t) / span, 0, 1);
+      return 1 - Math.abs(local * 2 - 1);
+    }
+
+    const fadeInEnd = keyframes[1]!.t;
+    const fadeOutStart = keyframes[keyframes.length - 2]!.t;
+    const fadeIn =
+      fadeInEnd > first.t
+        ? clamp((progress - first.t) / (fadeInEnd - first.t), 0, 1)
+        : 1;
+    const fadeOut =
+      last.t > fadeOutStart
+        ? clamp((last.t - progress) / (last.t - fadeOutStart), 0, 1)
+        : 1;
+    return Math.min(fadeIn, fadeOut);
+  }
+
   const partSelections: Record<string, CharacterPartSelection> = bundle.parts
     ? (JSON.parse(JSON.stringify(bundle.parts.selections)) as Record<
         string,
@@ -517,8 +573,12 @@ export function createCharacterPlayer(
     const rules: string[] = [];
     for (const [nodeId, color] of runtimeColors.entries()) {
       const selector = `[data-kugutu-part-color="${escapeCssAttrValue(nodeId)}"]`;
-      rules.push(`${selector} [fill]:not([fill="none"]) { fill: ${color}; }`);
-      rules.push(`${selector} [stroke]:not([stroke="none"]) { stroke: ${color}; }`);
+      rules.push(
+        `${selector} [fill]:not([fill="none"]):not([${PART_COLOR_PRESERVE_ATTR}]) { fill: ${color}; }`
+      );
+      rules.push(
+        `${selector} [stroke]:not([stroke="none"]):not([${PART_COLOR_PRESERVE_ATTR}]) { stroke: ${color}; }`
+      );
     }
 
     style.textContent = rules.join("\n");
@@ -912,24 +972,30 @@ export function createCharacterPlayer(
         continue;
       }
 
-      const tx = (pose.translateX ?? 0) * intensity;
-      const ty = (pose.translateY ?? 0) * intensity;
+      // A gesture that animates this arm joint temporarily owns it. Fade the
+      // expression contribution with the authored lift and release segments;
+      // face and untargeted arm poses remain fully active.
+      const poseIntensity =
+        intensity * (1 - activeGestureArmWeight(pose.slot));
+
+      const tx = (pose.translateX ?? 0) * poseIntensity;
+      const ty = (pose.translateY ?? 0) * poseIntensity;
       if (tx !== 0 || ty !== 0) {
         translate(pose.slot, tx, ty);
       }
       if (pose.rotate) {
-        rotate(pose.slot, pose.rotate * intensity);
+        rotate(pose.slot, pose.rotate * poseIntensity);
       }
       if (pose.scaleX) {
-        scaleX(pose.slot, 1 + pose.scaleX * intensity);
+        scaleX(pose.slot, 1 + pose.scaleX * poseIntensity);
       }
       if (pose.scaleY) {
         // For the mouth, "scaleY" means open the mouth — route it through the
         // crossfade open channel instead of vertically stretching the shape.
         if (pose.slot === "mouth") {
-          frameExpressionMouthOpen += pose.scaleY * intensity;
+          frameExpressionMouthOpen += pose.scaleY * poseIntensity;
         } else {
-          scaleY(pose.slot, 1 + pose.scaleY * intensity);
+          scaleY(pose.slot, 1 + pose.scaleY * poseIntensity);
         }
       }
     }
@@ -1087,15 +1153,24 @@ export function createCharacterPlayer(
         return null;
       }
       const haystack = text.toLowerCase();
+      let bestMatch: { id: string; keywordLength: number } | null = null;
       for (const gesture of bundle.gestures ?? []) {
         for (const keyword of gesture.keywords ?? []) {
-          if (keyword && haystack.includes(keyword.toLowerCase())) {
-            this.playGesture(gesture.id);
-            return gesture.id;
+          const normalized = keyword.toLowerCase();
+          if (
+            normalized &&
+            haystack.includes(normalized) &&
+            normalized.length > (bestMatch?.keywordLength ?? 0)
+          ) {
+            bestMatch = { id: gesture.id, keywordLength: normalized.length };
           }
         }
       }
-      return null;
+      if (!bestMatch) {
+        return null;
+      }
+      this.playGesture(bestMatch.id);
+      return bestMatch.id;
     },
     setEmotion(name: string, intensity: number): void {
       state.emotion = { name, intensity: clamp(intensity, 0, 1) };

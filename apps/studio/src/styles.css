@@ -119,6 +119,7 @@ button[aria-pressed="true"] {
 
 .sidebar header,
 .inspector header,
+.preset-panel header,
 .runtime-panel header,
 .export-panel header {
   display: flex;
@@ -132,6 +133,7 @@ button[aria-pressed="true"] {
 
 .sidebar header strong,
 .inspector header strong,
+.preset-panel header strong,
 .runtime-panel header strong,
 .export-panel header strong {
   min-width: 0;
@@ -144,6 +146,7 @@ button[aria-pressed="true"] {
 .slot-list,
 .part-options,
 .control-stack,
+.preset-panel,
 .runtime-panel,
 .export-panel,
 #source-readout {
@@ -366,10 +369,12 @@ button[aria-pressed="true"] {
   box-shadow: 0 0 0 2px var(--ink);
 }
 
+.preset-panel,
 .runtime-panel {
   border-bottom: 1px solid var(--line);
 }
 
+.preset-panel header,
 .runtime-panel header,
 .export-panel header {
   margin: -12px -12px 12px;

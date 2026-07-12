@@ -50,6 +50,15 @@
     </g>
   </g>
 
+  <!-- The neck is sandwiched between an outfit's base/rear artwork and its
+       optional front layer, so collars can wrap around it naturally. -->
+  <g id="neck_group">
+    <rect x="146" y="192" width="28" height="30" rx="12" fill="#F3B591" />
+    <g transform="translate(160 250)">
+      <g data-kugutu-slot-mount="outfit" data-kugutu-slot-layer="front"></g>
+    </g>
+  </g>
+
   <g id="forearm_l">
     <circle data-kugutu-pivot cx="82" cy="266" r="0.01" fill="none" />
     <line x1="82" y1="266" x2="90" y2="232" stroke="#FAD0B0" stroke-width="16" stroke-linecap="round" />
@@ -65,10 +74,6 @@
   <g id="hand_r">
     <circle data-kugutu-pivot cx="230" cy="232" r="0.01" fill="none" />
     <ellipse cx="232" cy="228" rx="13" ry="14" fill="#FAD0B0" />
-  </g>
-
-  <g id="neck_group">
-    <rect x="146" y="192" width="28" height="30" rx="12" fill="#F3B591" />
   </g>
 
   <g id="head_group">
@@ -110,6 +115,12 @@
       </g>
     </g>
 
+    <!-- Beard sits under the mouth so lips/teeth stay readable on top of it.
+         Anchored at the mouth origin: mustaches draw above y=0, chin beards below. -->
+    <g transform="translate(160 170)">
+      <g data-kugutu-slot-mount="beard"></g>
+    </g>
+
     <g transform="translate(160 170)">
       <g id="mouth_group">
         <g data-kugutu-slot-mount="mouth"></g>
@@ -120,6 +131,17 @@
       <g id="hair_front">
         <g data-kugutu-slot-mount="hair.front"></g>
       </g>
+    </g>
+
+    <!-- Accessories render above the front hair (Mii-style) so they never get
+         buried under bangs. Glasses are anchored at the eye line midpoint;
+         hair accessories share the head origin like the hair mounts. -->
+    <g transform="translate(160 132)">
+      <g data-kugutu-slot-mount="glasses"></g>
+    </g>
+
+    <g transform="translate(160 126)">
+      <g data-kugutu-slot-mount="hair.accessory"></g>
     </g>
   </g>
 </svg>

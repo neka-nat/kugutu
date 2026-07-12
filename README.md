@@ -57,7 +57,18 @@ A selected part renders only if the SVG can represent it. There are two ways:
    (`eye`, `brow`) have a left mount and a mirrored right mount, so one fragment
    fills both sides. The selected part's transform (position/scale/rotation/
    spacing) and color are baked onto its variant group, and the runtime
-   `setPart`/`tunePart` adjust the same groups live.
+   `setPart`/`tunePart` adjust the same groups live. Add
+   `data-kugutu-color-preserve` directly to any painted SVG element whose
+   authored fill/stroke must survive a color override, such as an eye's white
+   sclera or highlight.
+
+   A part that must wrap around another rig element can place its foreground
+   subtree on `data-kugutu-part-layer="front"`; a matching mount combines
+   `data-kugutu-slot-mount="<part-slot>"` with
+   `data-kugutu-slot-layer="front"`. The compiler keeps unmarked artwork in the
+   default mount and injects only the marked subtree into the named layer. If an
+   older rig has no matching layer mount, the original fragment stays intact in
+   its default mount.
 
 If a selected part has neither, the character would render nothing. `kugutu lint`
 (and the compiler) flag this instead of silently producing an invisible
@@ -127,9 +138,11 @@ hard-coded runtime logic. Each is a set of per-slot offsets:
 - **Gesture** — a timed keyframe animation played once or looped (e.g. `nod`,
   `shake`, `bounce`, `wave`).
 
-A built-in library (`happy`/`sad`/`angry`/`surprised`, `nod`/`shake`/`bounce`/`wave`)
-is compiled into every bundle, pruned to the slots a character actually binds
-(so `wave` is dropped when there are no arm slots). Authors override or extend
+A built-in library (`happy`/`sad`/`angry`/`surprised`, plus gestures including
+`wave`/`wave-left`, `raise-hand`/`raise-hand-left`, `point`/`point-left`, and
+`ok`/`ok-left`) is compiled into every bundle, pruned to the slots a character
+actually binds (so `wave` is dropped when there are no arm slots). Authors
+override or extend
 them by id in the source `expressions` / `gestures` arrays, or pull a built-in
 into the source to tune:
 

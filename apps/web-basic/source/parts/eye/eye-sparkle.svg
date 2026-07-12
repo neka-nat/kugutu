@@ -1,6 +1,6 @@
 <g>
-  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" />
+  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="0" cy="2" r="7.5" fill="#34344A" />
-  <circle cx="-2.6" cy="-1.4" r="2.8" fill="#FFFFFF" />
-  <circle cx="2.6" cy="4.4" r="1.7" fill="#FFFFFF" />
+  <circle cx="-2.6" cy="-1.4" r="2.8" fill="#FFFFFF" data-kugutu-color-preserve />
+  <circle cx="2.6" cy="4.4" r="1.7" fill="#FFFFFF" data-kugutu-color-preserve />
 </g>

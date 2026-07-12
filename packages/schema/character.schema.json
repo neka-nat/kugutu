@@ -292,10 +292,13 @@
         "face",
         "hair.front",
         "hair.back",
+        "hair.accessory",
         "eye",
         "brow",
         "nose",
         "mouth",
+        "glasses",
+        "beard",
         "outfit"
       ]
     }

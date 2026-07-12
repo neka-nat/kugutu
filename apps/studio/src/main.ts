@@ -70,7 +70,10 @@ const COLOR_PALETTES: Partial<Record<PartSlotKey, string[]>> = {
   nose: SKIN_PALETTE,
   "hair.front": HAIR_PALETTE,
   "hair.back": HAIR_PALETTE,
+  "hair.accessory": DEFAULT_PALETTE,
   brow: HAIR_PALETTE,
+  beard: HAIR_PALETTE,
+  glasses: ["#34344A", "#6b4423", "#8a8d91", "#3a5fb0", "#2e7d4f", "#7d5fb2", "#c0392b", "#b88319"],
   eye: ["#3b2a20", "#6b4423", "#1f6f78", "#2e7d4f", "#3a5fb0", "#7d3fb2", "#8a8d91", "#1c1a18"],
   mouth: ["#c0392b", "#d65b4a", "#e08a7a", "#b8556b", "#9c4f57", "#7a3b3b"],
   outfit: [
@@ -263,6 +266,47 @@ function clearTransformKey(slot: PartSlotKey, key: keyof PartTransform): void {
   }
 }
 
+// Applies a named preset from the source: replaces (not merges) each named
+// slot's selection + transform so the preset is deterministic, matching the
+// runtime's applyPreset semantics.
+function applyPreset(presetId: string): void {
+  const preset = state.character.presets?.find((entry) => entry.id === presetId);
+  const parts = state.character.parts;
+  if (!preset || !parts) {
+    return;
+  }
+
+  for (const [slotValue, selection] of Object.entries(preset.selections)) {
+    if (!selection) {
+      continue;
+    }
+    const slot = slotValue as PartSlotKey;
+    const item = parts.catalog[selection.partId];
+    if (!item || item.slot !== slot) {
+      continue;
+    }
+    parts.selections[slot] = selection.transform
+      ? { partId: selection.partId, transform: { ...selection.transform } }
+      : { partId: selection.partId };
+  }
+}
+
+// A preset is "active" when every slot it names currently holds its part, so the
+// button can reflect the applied look.
+function matchActivePreset(): string | undefined {
+  const selections = state.character.parts?.selections;
+  if (!selections) {
+    return undefined;
+  }
+
+  return state.character.presets?.find((preset) =>
+    Object.entries(preset.selections).every(
+      ([slot, selection]) =>
+        !selection || selections[slot as PartSlotKey]?.partId === selection.partId
+    )
+  )?.id;
+}
+
 function emotionIntensity(emotion: string): number {
   const intensities: Record<string, number> = {
     neutral: 0,
@@ -341,10 +385,13 @@ const PART_PREVIEW_VIEWBOX: Record<PartSlotKey, string> = {
   face: "-96 -96 192 192",
   "hair.front": "-96 -96 192 150",
   "hair.back": "-96 -96 192 230",
+  "hair.accessory": "-88 -92 176 88",
   eye: "-22 -22 44 44",
   brow: "-20 -18 40 32",
   nose: "-13 -14 26 28",
   mouth: "-20 -16 40 36",
+  glasses: "-82 -26 164 52",
+  beard: "-74 -26 148 72",
   outfit: "-80 -40 160 90",
 };
 
@@ -477,6 +524,25 @@ function renderGestureButtons(): string {
     .join("");
 }
 
+function renderPresetButtons(): string {
+  const presets = state.character.presets ?? [];
+  if (presets.length === 0) {
+    return `<p class="gesture-empty">No presets for this character.</p>`;
+  }
+
+  const activeId = matchActivePreset();
+  return presets
+    .map((preset) => {
+      const active = preset.id === activeId ? "true" : "false";
+      const label = preset.displayName ?? preset.id;
+      const title = preset.description
+        ? ` title="${preset.description.replace(/"/g, "&quot;")}"`
+        : "";
+      return `<button type="button" data-preset="${preset.id}" aria-pressed="${active}"${title}>${label}</button>`;
+    })
+    .join("");
+}
+
 function renderExportButtons(): string {
   return `
     <button type="button" data-export="charpack">Export .charpack</button>
@@ -517,6 +583,13 @@ function renderApp(): void {
         </header>
         <div class="part-options">${renderPartOptions(state.activeSlot)}</div>
         ${renderControls(state.activeSlot)}
+        <section class="preset-panel">
+          <header>
+            <span>Presets</span>
+            <strong>${(state.character.presets ?? []).length}</strong>
+          </header>
+          <div class="gesture-row">${renderPresetButtons()}</div>
+        </section>
         <section class="runtime-panel">
           <header>
             <span>Runtime</span>
@@ -612,6 +685,17 @@ function bindEvents(): void {
   colorPicker?.addEventListener("change", () => {
     renderApp();
   });
+
+  for (const button of Array.from(document.querySelectorAll<HTMLButtonElement>("[data-preset]"))) {
+    button.addEventListener("click", () => {
+      const presetId = button.dataset.preset;
+      if (!presetId) {
+        return;
+      }
+      applyPreset(presetId);
+      renderApp();
+    });
+  }
 
   for (const button of Array.from(document.querySelectorAll<HTMLButtonElement>("[data-emotion]"))) {
     button.addEventListener("click", () => {

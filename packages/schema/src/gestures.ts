@@ -78,14 +78,14 @@ function withMirroredArms(tracks: GestureTrack[]): GestureTrack[] {
   return [...tracks, ...mirrored];
 }
 
-/** Right-arm wave tracks, reused (mirrored) for the left-hand variant. */
+/** Face-clear right-arm wave tracks, mirrored for wave-left below. */
 const WAVE_RIGHT_TRACKS: GestureTrack[] = [
   {
     slot: "upperArm.r",
     keyframes: [
       { t: 0, rotate: 0 },
-      { t: 0.18, rotate: -64 },
-      { t: 0.85, rotate: -64 },
+      { t: 0.18, rotate: -60 },
+      { t: 0.85, rotate: -60 },
       { t: 1, rotate: 0 },
     ],
   },
@@ -93,11 +93,11 @@ const WAVE_RIGHT_TRACKS: GestureTrack[] = [
     slot: "forearm.r",
     keyframes: [
       { t: 0, rotate: 0 },
-      { t: 0.18, rotate: 12 },
-      { t: 0.36, rotate: 0 },
-      { t: 0.54, rotate: 12 },
-      { t: 0.72, rotate: 0 },
-      { t: 0.85, rotate: 6 },
+      { t: 0.18, rotate: 94 },
+      { t: 0.36, rotate: 82 },
+      { t: 0.54, rotate: 94 },
+      { t: 0.72, rotate: 82 },
+      { t: 0.85, rotate: 88 },
       { t: 1, rotate: 0 },
     ],
   },
@@ -167,59 +167,43 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
   {
     // FK chain: forearm/hand rotations are RELATIVE to the parent joint (the
     // shoulder lift propagates down the chain). The upper arm lifts the resting
-    // arm up beside the face, then the forearm wags side to side for a friendly
-    // wave. Angles assume the relaxed open rest pose (upper arm points slightly
-    // down-and-out, forearm folds back up).
+    // arm up beside the face, then unfolds the elbow enough to keep the hand
+    // outside the face silhouette while the forearm wags side to side.
     id: "wave",
-    keywords: ["こんにちは", "こんにちわ", "hello", "hi", "やあ", "ハロー", "おはよう", "hey"],
+    keywords: [
+      "こんにちは", "こんにちわ", "hello", "hi", "やあ", "ハロー", "おはよう", "hey",
+      "右手を振る", "右手で手を振る", "wave right",
+    ],
     durationMs: 1100,
     tracks: WAVE_RIGHT_TRACKS,
   },
   {
-    // The left-hand wave. NOT a pure mirror of the right wave: this character's
-    // hair is asymmetric (a longer strand falls over the character's left), so a
-    // mirrored wave hides the hand behind it. Instead the left arm lifts a touch
-    // higher and the forearm wags *outward* (negative = away from the hair) so
-    // the hand clears the silhouette and reads clearly. Tuned in headless Chrome.
+    // Exact mirror of wave, generated from the same source tracks so future
+    // tuning cannot make the two sides drift apart.
     id: "wave-left",
-    keywords: ["バイバイ", "ばいばい", "bye", "またね", "see you", "じゃあね"],
-    durationMs: 1100,
-    tracks: [
-      {
-        slot: "upperArm.l",
-        keyframes: [
-          { t: 0, rotate: 0 },
-          { t: 0.18, rotate: 76 },
-          { t: 0.85, rotate: 76 },
-          { t: 1, rotate: 0 },
-        ],
-      },
-      {
-        slot: "forearm.l",
-        keyframes: [
-          { t: 0, rotate: 0 },
-          { t: 0.18, rotate: -26 },
-          { t: 0.36, rotate: -14 },
-          { t: 0.54, rotate: -26 },
-          { t: 0.72, rotate: -14 },
-          { t: 0.85, rotate: -20 },
-          { t: 1, rotate: 0 },
-        ],
-      },
+    keywords: [
+      "バイバイ", "ばいばい", "bye", "またね", "see you", "じゃあね",
+      "左手を振る", "左手で手を振る", "wave left",
     ],
+    durationMs: 1100,
+    tracks: WAVE_RIGHT_TRACKS.map(mirrorTrack),
   },
   {
-    // Right arm lifts straight up high beside the face in a clear greeting.
+    // Right arm lifts straight up high beside the face in a clear greeting. The
+    // elbow stays nearly open so the forearm and hand clear the face silhouette.
     id: "raise-hand",
-    keywords: ["挙手", "質問", "はーい", "ここ", "raise", "me"],
+    keywords: [
+      "挙手", "質問", "はーい", "ここ", "raise", "me",
+      "右手を挙げる", "右手を上げる", "右手で挙手", "raise right hand",
+    ],
     durationMs: 760,
     tracks: [
       {
         slot: "upperArm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.35, rotate: -80 },
-          { t: 0.8, rotate: -80 },
+          { t: 0.35, rotate: -76 },
+          { t: 0.8, rotate: -76 },
           { t: 1, rotate: 0 },
         ],
       },
@@ -227,8 +211,36 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
         slot: "forearm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.35, rotate: 58 },
-          { t: 0.8, rotate: 58 },
+          { t: 0.35, rotate: 112 },
+          { t: 0.8, rotate: 112 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    // Left-hand counterpart of raise-hand.
+    id: "raise-hand-left",
+    keywords: [
+      "左手を挙げる", "左手を上げる", "左手で挙手", "raise left hand",
+    ],
+    durationMs: 760,
+    tracks: [
+      {
+        slot: "upperArm.l",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.35, rotate: 76 },
+          { t: 0.8, rotate: 76 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+      {
+        slot: "forearm.l",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.35, rotate: -112 },
+          { t: 0.8, rotate: -112 },
           { t: 1, rotate: 0 },
         ],
       },
@@ -238,7 +250,10 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     // Right arm extends up and out, the forearm straightening out of the rest
     // fold (positive delta unfolds the elbow) for a presenting / pointing pose.
     id: "point",
-    keywords: ["指差し", "指さし", "あれ", "これ", "そこ", "point", "look"],
+    keywords: [
+      "指差し", "指さし", "あれ", "これ", "そこ", "point", "look",
+      "右を指す", "右を指して", "右側を指す", "point right",
+    ],
     durationMs: 680,
     tracks: [
       {
@@ -256,6 +271,32 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
           { t: 0, rotate: 0 },
           { t: 0.4, rotate: 68 },
           { t: 0.82, rotate: 68 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    // Left-hand counterpart of point.
+    id: "point-left",
+    keywords: ["左を指す", "左を指して", "左側を指す", "point left"],
+    durationMs: 680,
+    tracks: [
+      {
+        slot: "upperArm.l",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.4, rotate: 46 },
+          { t: 0.82, rotate: 46 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+      {
+        slot: "forearm.l",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.4, rotate: -68 },
+          { t: 0.82, rotate: -68 },
           { t: 1, rotate: 0 },
         ],
       },
@@ -322,7 +363,10 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
     // "了解 / オッケー" — a quick, casual acknowledgment: the right hand pops up
     // beside the head and settles back. Snappier than raise-hand. Arm-only.
     id: "ok",
-    keywords: ["了解", "オッケー", "おっけー", "OK", "ok", "わかった", "承知", "ラジャー", "gotcha"],
+    keywords: [
+      "了解", "オッケー", "おっけー", "OK", "ok", "わかった", "承知", "ラジャー", "gotcha",
+      "右手で了解", "右手でオッケー", "右手でOK", "right hand ok", "ok right",
+    ],
     durationMs: 640,
     tracks: [
       {
@@ -340,6 +384,34 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
           { t: 0, rotate: 0 },
           { t: 0.3, rotate: -4 },
           { t: 0.7, rotate: -4 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    // Left-hand counterpart of ok.
+    id: "ok-left",
+    keywords: [
+      "左手で了解", "左手でオッケー", "左手でOK", "left hand ok", "ok left",
+    ],
+    durationMs: 640,
+    tracks: [
+      {
+        slot: "upperArm.l",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.3, rotate: 54 },
+          { t: 0.7, rotate: 54 },
+          { t: 1, rotate: 0 },
+        ],
+      },
+      {
+        slot: "forearm.l",
+        keyframes: [
+          { t: 0, rotate: 0 },
+          { t: 0.3, rotate: 4 },
+          { t: 0.7, rotate: 4 },
           { t: 1, rotate: 0 },
         ],
       },
@@ -397,8 +469,8 @@ export const DEFAULT_GESTURES: CharacterGesture[] = [
         slot: "forearm.r",
         keyframes: [
           { t: 0, rotate: 0 },
-          { t: 0.35, rotate: -20 },
-          { t: 0.72, rotate: -20 },
+          { t: 0.35, rotate: -10 },
+          { t: 0.72, rotate: -10 },
           { t: 1, rotate: 0 },
         ],
       },

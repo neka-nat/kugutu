@@ -10,10 +10,12 @@ import {
 } from "@kugutu/compiler";
 import {
   CHARACTER_SCHEMA_VERSION,
+  DEFAULT_GESTURES,
   validateCharBundle,
   validateCharacterDefinition,
   type CharBundle,
   type CharacterDefinition,
+  type GestureTrack,
 } from "@kugutu/schema";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
@@ -68,6 +70,58 @@ function buildPartFixture(): PartFixture {
     document,
     svg,
     partAssets: { "eye-test-01": '<circle cx="50" cy="50" r="10" />' },
+  };
+}
+
+function buildLayeredOutfitFixture(
+  layeredAsset: boolean,
+  layeredRig: boolean
+): PartFixture {
+  const document: CharacterDefinition = {
+    schemaVersion: CHARACTER_SCHEMA_VERSION,
+    character: { id: "layered-outfit-fixture", template: "avatar-lite" },
+    assets: { primary: "rig.svg" },
+    slots: {
+      head: "head_group",
+      "eye.l": "eye_left",
+      "eye.r": "eye_right",
+      mouth: "mouth_group",
+      torso: "torso_group",
+    },
+    parts: {
+      catalog: {
+        "outfit-test-01": {
+          id: "outfit-test-01",
+          slot: "outfit",
+          asset: "parts/outfit-test-01.svg",
+          editable: ["color"],
+        },
+      },
+      selections: {
+        outfit: { partId: "outfit-test-01" },
+      },
+    },
+    behaviors: [],
+  };
+
+  const frontMount = layeredRig
+    ? '<g data-kugutu-slot-mount="outfit" data-kugutu-slot-layer="front"></g>'
+    : "";
+  const svg =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+    '<g id="torso_group"><g data-kugutu-slot-mount="outfit"></g></g>' +
+    `<g id="neck_group"><rect width="10" height="20" />${frontMount}</g>` +
+    '<g id="head_group"></g><g id="eye_left"></g><g id="eye_right"></g>' +
+    '<g id="mouth_group"></g></svg>';
+  const asset = layeredAsset
+    ? '<g><path data-test-layer="base" d="M0 0h10v10z" />' +
+      '<path data-kugutu-part-layer="front" data-test-layer="front" d="M0 0h5v5z" /></g>'
+    : '<path data-test-layer="base" d="M0 0h10v10z" />';
+
+  return {
+    document,
+    svg,
+    partAssets: { "outfit-test-01": asset },
   };
 }
 
@@ -160,7 +214,11 @@ async function main(): Promise<void> {
           '<g transform="translate(188 134)"><g id="eye_right"><g data-kugutu-slot-mount="eye" transform="scale(-1 1)"></g></g></g>' +
           '<g id="mouth_group"></g></g></svg>';
         const composed = composeCharacterSvg(document, rig, {
-          partAssets: { "eye-dot-01": '<circle r="6" />' },
+          partAssets: {
+            "eye-dot-01":
+              '<ellipse rx="10" ry="8" fill="#FFFFFF" data-kugutu-color-preserve />' +
+              '<circle r="6" fill="#34344A" />',
+          },
         });
 
         const injected = (
@@ -173,6 +231,85 @@ async function main(): Promise<void> {
           "selected part transform is baked onto the variant group"
         );
         assert.match(composed, /data-kugutu-part-color="eye-dot-01"/, "color marker baked");
+        assert.match(
+          composed,
+          /\[fill\]:not\(\[fill="none"\]\):not\(\[data-kugutu-color-preserve\]\)/,
+          "authored colors can opt out of the part color override"
+        );
+        assert.match(
+          composed,
+          /fill="#FFFFFF" data-kugutu-color-preserve/,
+          "preserved eye artwork remains marked in the composed SVG"
+        );
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "layered parts preserve legacy rigs and target matching mounts",
+      validate: () => {
+        const count = (svg: string, pattern: RegExp): number =>
+          (svg.match(pattern) ?? []).length;
+
+        const legacyAsset = buildLayeredOutfitFixture(false, true);
+        const legacyAssetComposed = composeCharacterSvg(
+          legacyAsset.document,
+          legacyAsset.svg,
+          { partAssets: legacyAsset.partAssets }
+        );
+        assert.equal(
+          count(legacyAssetComposed, /data-test-layer="base"/g),
+          1,
+          "an unlayered asset is not duplicated into a layered mount"
+        );
+        assert.equal(
+          count(legacyAssetComposed, /<g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-test-01"/g),
+          1,
+          "legacy artwork stays in the default mount only"
+        );
+
+        const legacyRig = buildLayeredOutfitFixture(true, false);
+        const legacyRigComposed = composeCharacterSvg(
+          legacyRig.document,
+          legacyRig.svg,
+          { partAssets: legacyRig.partAssets }
+        );
+        assert.equal(count(legacyRigComposed, /data-test-layer="base"/g), 1);
+        assert.equal(
+          count(legacyRigComposed, /data-test-layer="front"/g),
+          1,
+          "a layered asset remains intact when the rig has no matching mount"
+        );
+        assert.equal(
+          count(legacyRigComposed, /<g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-test-01"/g),
+          1
+        );
+
+        const layered = buildLayeredOutfitFixture(true, true);
+        const layeredComposed = composeCharacterSvg(
+          layered.document,
+          layered.svg,
+          { partAssets: layered.partAssets }
+        );
+        assert.equal(count(layeredComposed, /data-test-layer="base"/g), 1);
+        assert.equal(count(layeredComposed, /data-test-layer="front"/g), 1);
+        assert.equal(
+          count(layeredComposed, /<g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-test-01"/g),
+          2,
+          "base and front layers share the same runtime-visible variant id"
+        );
+
+        const baseIndex = layeredComposed.indexOf('data-test-layer="base"');
+        const neckIndex = layeredComposed.indexOf('id="neck_group"');
+        const frontIndex = layeredComposed.indexOf('data-test-layer="front"');
+        assert.ok(
+          baseIndex !== -1 &&
+            neckIndex !== -1 &&
+            frontIndex !== -1 &&
+            baseIndex < neckIndex &&
+            neckIndex < frontIndex,
+          "layered artwork is ordered base/rear, neck, then front"
+        );
+
         return { valid: true, errors: [] };
       },
     },
@@ -199,6 +336,124 @@ async function main(): Promise<void> {
             `runtime.api includes ${method}`
           );
         }
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "wave and raise-hand keep face-clear arm profiles",
+      validate: () => {
+        const cases = [
+          {
+            id: "wave",
+            upperArm: [0, -60, -60, 0],
+            forearm: [0, 94, 82, 94, 82, 88, 0],
+          },
+          {
+            id: "raise-hand",
+            upperArm: [0, -76, -76, 0],
+            forearm: [0, 112, 112, 0],
+          },
+        ] as const;
+
+        for (const expected of cases) {
+          const gesture = DEFAULT_GESTURES.find((item) => item.id === expected.id);
+          assert.ok(gesture, "gesture is defined: " + expected.id);
+
+          const rotations = (slot: "upperArm.r" | "forearm.r") =>
+            gesture.tracks
+              .find((track) => track.slot === slot)
+              ?.keyframes.map((keyframe) =>
+                keyframe.rotate === 0 ? 0 : keyframe.rotate
+              );
+
+          assert.deepEqual(
+            rotations("upperArm.r"),
+            expected.upperArm,
+            "face-clear shoulder lift: " + expected.id
+          );
+          assert.deepEqual(
+            rotations("forearm.r"),
+            expected.forearm,
+            "face-clear elbow profile: " + expected.id
+          );
+        }
+
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "single-arm gestures provide mirrored left variants",
+      validate: () => {
+        const pairs = [
+          ["wave", "wave-left"],
+          ["raise-hand", "raise-hand-left"],
+          ["point", "point-left"],
+          ["ok", "ok-left"],
+        ] as const;
+
+        for (const [rightId, leftId] of pairs) {
+          const right = DEFAULT_GESTURES.find((item) => item.id === rightId);
+          const left = DEFAULT_GESTURES.find((item) => item.id === leftId);
+          assert.ok(right, "right gesture is defined: " + rightId);
+          assert.ok(left, "left gesture is defined: " + leftId);
+          assert.equal(left.durationMs, right.durationMs, "durations match: " + rightId);
+
+          for (const rightTrack of right.tracks) {
+            const leftSlot =
+              rightTrack.slot === "upperArm.r"
+                ? "upperArm.l"
+                : rightTrack.slot === "forearm.r"
+                  ? "forearm.l"
+                  : null;
+            assert.ok(leftSlot, "right-only arm track: " + rightTrack.slot);
+            const leftTrack: GestureTrack | undefined = left.tracks.find(
+              (track: GestureTrack) => track.slot === leftSlot
+            );
+            assert.ok(leftTrack, "mirrored track is defined: " + leftId + ":" + leftSlot);
+            assert.deepEqual(
+              leftTrack.keyframes.map((keyframe) => keyframe.t),
+              rightTrack.keyframes.map((keyframe) => keyframe.t),
+              "keyframe timing is mirrored: " + rightId
+            );
+            assert.deepEqual(
+              leftTrack.keyframes.map((keyframe) => {
+                const rotation = keyframe.rotate ?? 0;
+                return rotation === 0 ? 0 : rotation;
+              }),
+              rightTrack.keyframes.map((keyframe) => {
+                const rotation = keyframe.rotate ?? 0;
+                return rotation === 0 ? 0 : -rotation;
+              }),
+              "keyframe rotation is mirrored: " + rightId
+            );
+          }
+        }
+
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "thank-you keeps a relaxed mirrored elbow bend",
+      validate: () => {
+        const gesture = DEFAULT_GESTURES.find((item) => item.id === "thank-you");
+        assert.ok(gesture, "thank-you gesture is defined");
+
+        const right = gesture.tracks.find((track) => track.slot === "forearm.r");
+        const left = gesture.tracks.find((track) => track.slot === "forearm.l");
+        assert.deepEqual(
+          right?.keyframes.map((keyframe) =>
+            keyframe.rotate === 0 ? 0 : keyframe.rotate
+          ),
+          [0, -10, -10, 0],
+          "right elbow does not fold too tightly"
+        );
+        assert.deepEqual(
+          left?.keyframes.map((keyframe) =>
+            keyframe.rotate === 0 ? 0 : keyframe.rotate
+          ),
+          [0, 10, 10, 0],
+          "left elbow mirrors the relaxed bend"
+        );
         return { valid: true, errors: [] };
       },
     },

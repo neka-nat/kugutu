@@ -2,10 +2,13 @@ export const PART_SLOT_KEYS = [
   "face",
   "hair.front",
   "hair.back",
+  "hair.accessory",
   "eye",
   "brow",
   "nose",
   "mouth",
+  "glasses",
+  "beard",
   "outfit",
 ] as const;
 
@@ -44,6 +47,11 @@ export const PART_SLOT_DEFINITIONS = {
     paired: false,
     defaultEditable: ["position", "scale", "rotation", "color", "layer"],
   },
+  "hair.accessory": {
+    description: "Hair accessory such as a ribbon or hairpin, worn on top of the hair.",
+    paired: false,
+    defaultEditable: ["position", "scale", "rotation", "color", "layer"],
+  },
   eye: {
     description: "Paired eye shape and eye controls.",
     paired: true,
@@ -61,6 +69,16 @@ export const PART_SLOT_DEFINITIONS = {
   },
   mouth: {
     description: "Mouth shape and speech control.",
+    paired: false,
+    defaultEditable: ["position", "scale", "rotation", "color"],
+  },
+  glasses: {
+    description: "Eyewear worn across both eyes, such as glasses or sunglasses.",
+    paired: false,
+    defaultEditable: ["position", "scale", "rotation", "color"],
+  },
+  beard: {
+    description: "Facial hair around the mouth and chin, such as a beard or mustache.",
     paired: false,
     defaultEditable: ["position", "scale", "rotation", "color"],
   },

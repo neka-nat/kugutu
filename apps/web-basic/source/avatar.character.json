@@ -209,6 +209,66 @@
         "id": "outfit-turtleneck", "slot": "outfit", "displayName": "Turtleneck",
         "asset": "parts/outfit/outfit-turtleneck.svg",
         "editable": ["position", "scale", "color"], "defaults": { "scale": 1 }
+      },
+      "glasses-round": {
+        "id": "glasses-round", "slot": "glasses", "displayName": "Round glasses",
+        "asset": "parts/glasses/glasses-round.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "glasses-square": {
+        "id": "glasses-square", "slot": "glasses", "displayName": "Square glasses",
+        "asset": "parts/glasses/glasses-square.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "glasses-sunglasses": {
+        "id": "glasses-sunglasses", "slot": "glasses", "displayName": "Sunglasses",
+        "asset": "parts/glasses/glasses-sunglasses.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "glasses-none": {
+        "id": "glasses-none", "slot": "glasses", "displayName": "None",
+        "asset": "parts/glasses/glasses-none.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-accessory-ribbon": {
+        "id": "hair-accessory-ribbon", "slot": "hair.accessory", "displayName": "Ribbon",
+        "asset": "parts/hair.accessory/hair-accessory-ribbon.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-accessory-flower": {
+        "id": "hair-accessory-flower", "slot": "hair.accessory", "displayName": "Flower",
+        "asset": "parts/hair.accessory/hair-accessory-flower.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-accessory-hairpin": {
+        "id": "hair-accessory-hairpin", "slot": "hair.accessory", "displayName": "Hairpin",
+        "asset": "parts/hair.accessory/hair-accessory-hairpin.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "hair-accessory-none": {
+        "id": "hair-accessory-none", "slot": "hair.accessory", "displayName": "None",
+        "asset": "parts/hair.accessory/hair-accessory-none.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "beard-mustache": {
+        "id": "beard-mustache", "slot": "beard", "displayName": "Mustache",
+        "asset": "parts/beard/beard-mustache.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "beard-goatee": {
+        "id": "beard-goatee", "slot": "beard", "displayName": "Goatee",
+        "asset": "parts/beard/beard-goatee.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "beard-full": {
+        "id": "beard-full", "slot": "beard", "displayName": "Full beard",
+        "asset": "parts/beard/beard-full.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
+      },
+      "beard-none": {
+        "id": "beard-none", "slot": "beard", "displayName": "None",
+        "asset": "parts/beard/beard-none.svg",
+        "editable": ["position", "scale", "rotation", "color"], "defaults": { "scale": 1 }
       }
     },
     "selections": {
@@ -219,6 +279,9 @@
       "brow": { "partId": "brow-soft" },
       "nose": { "partId": "nose-dot" },
       "mouth": { "partId": "mouth-smile" },
+      "glasses": { "partId": "glasses-none" },
+      "hair.accessory": { "partId": "hair-accessory-none" },
+      "beard": { "partId": "beard-none" },
       "outfit": { "partId": "outfit-tee" }
     }
   },
@@ -235,6 +298,9 @@
         "brow": { "partId": "brow-soft" },
         "nose": { "partId": "nose-dot" },
         "mouth": { "partId": "mouth-smile" },
+        "glasses": { "partId": "glasses-round" },
+        "hair.accessory": { "partId": "hair-accessory-none" },
+        "beard": { "partId": "beard-none" },
         "outfit": { "partId": "outfit-turtleneck" }
       }
     },
@@ -250,6 +316,9 @@
         "brow": { "partId": "brow-raised" },
         "nose": { "partId": "nose-dot" },
         "mouth": { "partId": "mouth-grin" },
+        "glasses": { "partId": "glasses-none" },
+        "hair.accessory": { "partId": "hair-accessory-ribbon" },
+        "beard": { "partId": "beard-none" },
         "outfit": { "partId": "outfit-tee" }
       }
     },
@@ -265,6 +334,9 @@
         "brow": { "partId": "brow-flat" },
         "nose": { "partId": "nose-line" },
         "mouth": { "partId": "mouth-neutral" },
+        "glasses": { "partId": "glasses-square" },
+        "hair.accessory": { "partId": "hair-accessory-none" },
+        "beard": { "partId": "beard-none" },
         "outfit": { "partId": "outfit-turtleneck" }
       }
     },
@@ -280,6 +352,9 @@
         "brow": { "partId": "brow-worried" },
         "nose": { "partId": "nose-button" },
         "mouth": { "partId": "mouth-cat" },
+        "glasses": { "partId": "glasses-none" },
+        "hair.accessory": { "partId": "hair-accessory-none" },
+        "beard": { "partId": "beard-none" },
         "outfit": { "partId": "outfit-hoodie" }
       }
     }

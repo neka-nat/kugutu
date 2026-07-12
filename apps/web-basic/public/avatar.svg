@@ -19,6 +19,12 @@
 [data-kugutu-variant-slot="nose"][data-kugutu-variant-id="nose-dot"] { display: inline; }
 [data-kugutu-variant-slot="mouth"] { display: none; }
 [data-kugutu-variant-slot="mouth"][data-kugutu-variant-id="mouth-smile"] { display: inline; }
+[data-kugutu-variant-slot="glasses"] { display: none; }
+[data-kugutu-variant-slot="glasses"][data-kugutu-variant-id="glasses-none"] { display: inline; }
+[data-kugutu-variant-slot="hair.accessory"] { display: none; }
+[data-kugutu-variant-slot="hair.accessory"][data-kugutu-variant-id="hair-accessory-none"] { display: inline; }
+[data-kugutu-variant-slot="beard"] { display: none; }
+[data-kugutu-variant-slot="beard"][data-kugutu-variant-id="beard-none"] { display: inline; }
 [data-kugutu-variant-slot="outfit"] { display: none; }
 [data-kugutu-variant-slot="outfit"][data-kugutu-variant-id="outfit-tee"] { display: inline; }
 </style>
@@ -127,9 +133,24 @@
     <path d="M-40 -22 Q-66 -24 -74 -2 Q-76 13 -59 17 Q-46 7 -42 -10 Z" fill="#6C8FD6" />
     <path d="M-59 16 Q-73 11 -74 -2" fill="none" stroke="#5878BC" stroke-width="4" stroke-linecap="round" />
   </g>
-  <!-- Turtleneck collar band that rises to the jaw. -->
+  <!-- The full collar is the rear layer, behind the neck. Keeping the complete
+       silhouette here also prevents an antialiasing seam while it breathes. -->
   <path d="M-21 -31 Q0 -20 21 -31 L19 -42 Q0 -32 -19 -42 Z" fill="#5878BC" />
+
 </g></g></g>
+    </g>
+  </g>
+
+  <!-- The neck is sandwiched between an outfit's base/rear artwork and its
+       optional front layer, so collars can wrap around it naturally. -->
+  <g id="neck_group">
+    <rect x="146" y="192" width="28" height="30" rx="12" fill="#F3B591" />
+    <g transform="translate(160 250)">
+      <g data-kugutu-slot-mount="outfit" data-kugutu-slot-layer="front"><g data-kugutu-variant-slot="outfit" data-kugutu-variant-id="outfit-turtleneck"><g data-kugutu-part-layer="front">
+    <!-- This lower/front half is reinjected after the neck, so skin stays inside
+         the collar without bringing the rear rim in front. -->
+    <path d="M-21 -31 Q0 -20 21 -31 L20 -38 Q0 -28 -20 -38 Z" fill="#5878BC" />
+  </g></g></g>
     </g>
   </g>
 
@@ -148,10 +169,6 @@
   <g id="hand_r">
     <circle data-kugutu-pivot cx="230" cy="232" r="0.01" fill="none" />
     <ellipse cx="232" cy="228" rx="13" ry="14" fill="#FAD0B0" />
-  </g>
-
-  <g id="neck_group">
-    <rect x="146" y="192" width="28" height="30" rx="12" fill="#F3B591" />
   </g>
 
   <g id="head_group">
@@ -218,18 +235,18 @@
     <g transform="translate(132 132)">
       <g id="eye_left">
         <g data-kugutu-slot-mount="eye"><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-round"><g>
-  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" />
+  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="0" cy="2" r="7.5" fill="#34344A" />
-  <circle cx="-2.6" cy="-1.4" r="2.6" fill="#FFFFFF" />
+  <circle cx="-2.6" cy="-1.4" r="2.6" fill="#FFFFFF" data-kugutu-color-preserve />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-wide"><g>
   <!-- Wide-awake eye: tall aperture so sclera shows above and below a
        same-size pupil (not just a scaled-up round eye), two-tone iris and
        a second sparkle for an alert, surprised look. -->
-  <ellipse cx="0" cy="-0.5" rx="15.5" ry="18.5" fill="#FFFFFF" />
+  <ellipse cx="0" cy="-0.5" rx="15.5" ry="18.5" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="0" cy="1.5" r="7.6" fill="#34344A" />
   <circle cx="0" cy="1.5" r="3.6" fill="#566089" />
-  <circle cx="-2.8" cy="-1.6" r="3.1" fill="#FFFFFF" />
-  <circle cx="3.2" cy="3.6" r="1.6" fill="#FFFFFF" opacity="0.85" />
+  <circle cx="-2.8" cy="-1.6" r="3.1" fill="#FFFFFF" data-kugutu-color-preserve />
+  <circle cx="3.2" cy="3.6" r="1.6" fill="#FFFFFF" opacity="0.85" data-kugutu-color-preserve />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sleepy"><g>
   <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,
        with only the lower half of the iris peeking out beneath it and a faint
@@ -238,34 +255,34 @@
   <path d="M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z" fill="#34344A" />
   <path d="M-7 3.5 Q0 5.4 7 3.5" fill="none" stroke="#34344A" stroke-width="1.8" stroke-linecap="round" opacity="0.45" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sharp"><g>
-  <path d="M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z" fill="#FFFFFF" />
+  <path d="M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="1" cy="-1" r="6.5" fill="#34344A" />
-  <circle cx="-1.6" cy="-3.4" r="2.2" fill="#FFFFFF" />
+  <circle cx="-1.6" cy="-3.4" r="2.2" fill="#FFFFFF" data-kugutu-color-preserve />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-happy"><g>
   <path d="M-12 -2 Q0 8 12 -2" fill="none" stroke="#34344A" stroke-width="4.5" stroke-linecap="round" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sparkle"><g>
-  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" />
+  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="0" cy="2" r="7.5" fill="#34344A" />
-  <circle cx="-2.6" cy="-1.4" r="2.8" fill="#FFFFFF" />
-  <circle cx="2.6" cy="4.4" r="1.7" fill="#FFFFFF" />
+  <circle cx="-2.6" cy="-1.4" r="2.8" fill="#FFFFFF" data-kugutu-color-preserve />
+  <circle cx="2.6" cy="4.4" r="1.7" fill="#FFFFFF" data-kugutu-color-preserve />
 </g></g></g>
       </g>
     </g>
     <g transform="translate(188 132)">
       <g id="eye_right">
         <g data-kugutu-slot-mount="eye" transform="scale(-1 1)"><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-round"><g>
-  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" />
+  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="0" cy="2" r="7.5" fill="#34344A" />
-  <circle cx="-2.6" cy="-1.4" r="2.6" fill="#FFFFFF" />
+  <circle cx="-2.6" cy="-1.4" r="2.6" fill="#FFFFFF" data-kugutu-color-preserve />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-wide"><g>
   <!-- Wide-awake eye: tall aperture so sclera shows above and below a
        same-size pupil (not just a scaled-up round eye), two-tone iris and
        a second sparkle for an alert, surprised look. -->
-  <ellipse cx="0" cy="-0.5" rx="15.5" ry="18.5" fill="#FFFFFF" />
+  <ellipse cx="0" cy="-0.5" rx="15.5" ry="18.5" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="0" cy="1.5" r="7.6" fill="#34344A" />
   <circle cx="0" cy="1.5" r="3.6" fill="#566089" />
-  <circle cx="-2.8" cy="-1.6" r="3.1" fill="#FFFFFF" />
-  <circle cx="3.2" cy="3.6" r="1.6" fill="#FFFFFF" opacity="0.85" />
+  <circle cx="-2.8" cy="-1.6" r="3.1" fill="#FFFFFF" data-kugutu-color-preserve />
+  <circle cx="3.2" cy="3.6" r="1.6" fill="#FFFFFF" opacity="0.85" data-kugutu-color-preserve />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sleepy"><g>
   <!-- Half-lidded sleepy eye: a heavy upper lid drooping at the outer corner,
        with only the lower half of the iris peeking out beneath it and a faint
@@ -274,16 +291,16 @@
   <path d="M-6.5 2.5 A6.5 6.5 0 0 0 6.5 2.5 Z" fill="#34344A" />
   <path d="M-7 3.5 Q0 5.4 7 3.5" fill="none" stroke="#34344A" stroke-width="1.8" stroke-linecap="round" opacity="0.45" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sharp"><g>
-  <path d="M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z" fill="#FFFFFF" />
+  <path d="M-14 1 Q0 -13 14 -1 Q0 9 -14 1 Z" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="1" cy="-1" r="6.5" fill="#34344A" />
-  <circle cx="-1.6" cy="-3.4" r="2.2" fill="#FFFFFF" />
+  <circle cx="-1.6" cy="-3.4" r="2.2" fill="#FFFFFF" data-kugutu-color-preserve />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-happy"><g>
   <path d="M-12 -2 Q0 8 12 -2" fill="none" stroke="#34344A" stroke-width="4.5" stroke-linecap="round" />
 </g></g><g data-kugutu-variant-slot="eye" data-kugutu-variant-id="eye-sparkle"><g>
-  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" />
+  <ellipse cx="0" cy="0" rx="13" ry="15" fill="#FFFFFF" data-kugutu-color-preserve />
   <circle cx="0" cy="2" r="7.5" fill="#34344A" />
-  <circle cx="-2.6" cy="-1.4" r="2.8" fill="#FFFFFF" />
-  <circle cx="2.6" cy="4.4" r="1.7" fill="#FFFFFF" />
+  <circle cx="-2.6" cy="-1.4" r="2.8" fill="#FFFFFF" data-kugutu-color-preserve />
+  <circle cx="2.6" cy="4.4" r="1.7" fill="#FFFFFF" data-kugutu-color-preserve />
 </g></g></g>
       </g>
     </g>
@@ -298,6 +315,20 @@
   <path d="M1 -4 Q-2 3 -4 4" fill="none" stroke="#E0916F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
 </g></g></g>
       </g>
+    </g>
+
+    <!-- Beard sits under the mouth so lips/teeth stay readable on top of it.
+         Anchored at the mouth origin: mustaches draw above y=0, chin beards below. -->
+    <g transform="translate(160 170)">
+      <g data-kugutu-slot-mount="beard"><g data-kugutu-variant-slot="beard" data-kugutu-variant-id="beard-mustache"><g>
+  <path d="M0 -7 Q-4 -15 -13 -16 Q-25 -17 -27 -8 Q-28 -1 -19 -2 Q-8 -3 0 -7 Z" fill="#7C6CF0" />
+  <path d="M0 -7 Q4 -15 13 -16 Q25 -17 27 -8 Q28 -1 19 -2 Q8 -3 0 -7 Z" fill="#7C6CF0" />
+</g></g><g data-kugutu-variant-slot="beard" data-kugutu-variant-id="beard-goatee"><g>
+  <path d="M-14 16 Q-16 31 0 35 Q16 31 14 16 Q8 23 0 23 Q-8 23 -14 16 Z" fill="#7C6CF0" />
+</g></g><g data-kugutu-variant-slot="beard" data-kugutu-variant-id="beard-full"><g>
+  <path d="M-68 -6 Q-70 14 -48 28 Q-24 40 0 40 Q24 40 48 28 Q70 14 68 -6 Q56 -18 36 -15 Q18 -20 4 -10 Q0 -7 -4 -10 Q-18 -20 -36 -15 Q-56 -18 -68 -6 Z" fill="#7C6CF0" />
+  <path d="M-4 -10 Q0 -7 4 -10 Q14 -17 26 -16 Q14 -12 8 -4 Q0 2 -8 -4 Q-14 -12 -26 -16 Q-14 -17 -4 -10 Z" fill="#34344A" opacity="0.15" data-kugutu-color-preserve />
+</g></g><g data-kugutu-variant-slot="beard" data-kugutu-variant-id="beard-none"><g><!-- no beard --></g></g></g>
     </g>
 
     <g transform="translate(160 170)">
@@ -387,6 +418,56 @@
   <path d="M-80 -6 Q-82 -78 0 -82 Q-40 -70 -56 -34 Q-70 -22 -80 -6 Z" fill="#8A7BF5" />
 </g></g></g>
       </g>
+    </g>
+
+    <!-- Accessories render above the front hair (Mii-style) so they never get
+         buried under bangs. Glasses are anchored at the eye line midpoint;
+         hair accessories share the head origin like the hair mounts. -->
+    <g transform="translate(160 132)">
+      <g data-kugutu-slot-mount="glasses"><g data-kugutu-variant-slot="glasses" data-kugutu-variant-id="glasses-round"><g>
+  <line x1="-46" y1="-2" x2="-76" y2="-9" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="46" y1="-2" x2="76" y2="-9" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M-10 -3 Q0 -9 10 -3" fill="none" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <circle cx="-28" cy="0" r="18" fill="#FFFFFF" opacity="0.22" data-kugutu-color-preserve />
+  <circle cx="28" cy="0" r="18" fill="#FFFFFF" opacity="0.22" data-kugutu-color-preserve />
+  <circle cx="-28" cy="0" r="18" fill="none" stroke="#34344A" stroke-width="3.5" />
+  <circle cx="28" cy="0" r="18" fill="none" stroke="#34344A" stroke-width="3.5" />
+</g></g><g data-kugutu-variant-slot="glasses" data-kugutu-variant-id="glasses-square"><g>
+  <line x1="-47" y1="-4" x2="-76" y2="-10" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="47" y1="-4" x2="76" y2="-10" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M-10 -4 Q0 -9 10 -4" fill="none" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <rect x="-47" y="-15" width="38" height="30" rx="7" fill="#FFFFFF" opacity="0.22" data-kugutu-color-preserve />
+  <rect x="9" y="-15" width="38" height="30" rx="7" fill="#FFFFFF" opacity="0.22" data-kugutu-color-preserve />
+  <rect x="-47" y="-15" width="38" height="30" rx="7" fill="none" stroke="#34344A" stroke-width="3.5" />
+  <rect x="9" y="-15" width="38" height="30" rx="7" fill="none" stroke="#34344A" stroke-width="3.5" />
+</g></g><g data-kugutu-variant-slot="glasses" data-kugutu-variant-id="glasses-sunglasses"><g>
+  <line x1="-46" y1="-3" x2="-76" y2="-10" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <line x1="46" y1="-3" x2="76" y2="-10" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M-10 -4 Q0 -10 10 -4" fill="none" stroke="#34344A" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M-46 -13 Q-28 -17 -10 -13 Q-8 12 -26 15 Q-44 17 -46 -13 Z" fill="#34344A" />
+  <path d="M46 -13 Q28 -17 10 -13 Q8 12 26 15 Q44 17 46 -13 Z" fill="#34344A" />
+  <path d="M-40 -8 Q-32 -11 -24 -9" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.55" data-kugutu-color-preserve />
+  <path d="M16 -8 Q24 -11 32 -9" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.55" data-kugutu-color-preserve />
+</g></g><g data-kugutu-variant-slot="glasses" data-kugutu-variant-id="glasses-none"><g><!-- no glasses --></g></g></g>
+    </g>
+
+    <g transform="translate(160 126)">
+      <g data-kugutu-slot-mount="hair.accessory"><g data-kugutu-variant-slot="hair.accessory" data-kugutu-variant-id="hair-accessory-ribbon"><g>
+  <path d="M46 -64 Q26 -80 20 -70 Q16 -60 30 -52 Q40 -56 46 -64 Z" fill="#FF8360" />
+  <path d="M46 -64 Q66 -82 74 -70 Q78 -58 62 -50 Q52 -54 46 -64 Z" fill="#FF8360" />
+  <circle cx="46" cy="-64" r="6.5" fill="#FF8360" />
+  <circle cx="46" cy="-64" r="6.5" fill="#34344A" opacity="0.2" data-kugutu-color-preserve />
+</g></g><g data-kugutu-variant-slot="hair.accessory" data-kugutu-variant-id="hair-accessory-flower"><g>
+  <circle cx="-46" cy="-71" r="6" fill="#FF9E9E" />
+  <circle cx="-54.6" cy="-64.8" r="6" fill="#FF9E9E" />
+  <circle cx="-51.3" cy="-54.7" r="6" fill="#FF9E9E" />
+  <circle cx="-40.7" cy="-54.7" r="6" fill="#FF9E9E" />
+  <circle cx="-37.4" cy="-64.8" r="6" fill="#FF9E9E" />
+  <circle cx="-46" cy="-62" r="4.5" fill="#F6D365" data-kugutu-color-preserve />
+</g></g><g data-kugutu-variant-slot="hair.accessory" data-kugutu-variant-id="hair-accessory-hairpin"><g>
+  <line x1="-60" y1="-30" x2="-40" y2="-16" stroke="#46C2A8" stroke-width="4" stroke-linecap="round" />
+  <line x1="-42" y1="-30" x2="-60" y2="-17" stroke="#46C2A8" stroke-width="4" stroke-linecap="round" />
+</g></g><g data-kugutu-variant-slot="hair.accessory" data-kugutu-variant-id="hair-accessory-none"><g><!-- no hair accessory --></g></g></g>
     </g>
   </g>
 </svg>
