@@ -1,15 +1,24 @@
 # `@kugutu/schema`
 
-Schema and validation primitives for Kugutu character source files, compiled bundles, and charpacks.
+Types, validators, and taxonomies for
+[Kugutu](https://github.com/neka-nat/kugutu) character source files, compiled
+bundles, and charpacks. Dependency-free.
 
-Contents:
+```bash
+npm install @kugutu/schema
+```
 
-- `character.schema.json`: source document shape
-- `charbundle.schema.json`: compiled bundle shape
-- `src/slots.js`: slot taxonomy
-- `src/parts.js`: parts catalog taxonomy and transform constraints
-- `src/behaviors.js`: behavior specs
-- `src/templates.js`: template presets
-- `src/validate.js`: dependency-free validators
+## Contents
 
-Examples live in [`examples/`](./examples).
+- TypeScript types: `CharacterDefinition`, `CharBundle`, `CharPack`, …
+- Dependency-free validators: `validateCharacterDefinition`, `validateCharBundle`
+- Slot taxonomy (16 semantic slots) and part-slot taxonomy
+- Behavior specs (`blink`, `look-at`, `breathing`, `mouth-open`, `arm-idle`)
+- Character templates (`avatar-lite`, `mascot-upper`, `vtuber-lite`)
+- JSON Schemas, importable as
+  `@kugutu/schema/character.schema.json` and
+  `@kugutu/schema/charbundle.schema.json`
+- Example documents in [`examples/`](./examples)
+
+Format specs live in the
+[project docs](https://github.com/neka-nat/kugutu/tree/main/docs).

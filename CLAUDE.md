@@ -77,3 +77,5 @@ Source (.character.json) → [Validator] → [Compiler] → CharBundle (.charbun
 - `execution-plan.md` — Implementation roadmap with phases (Japanese)
 - `docs/schema-v0.md` — Schema design goals and source format spec
 - `docs/charbundle-v0.md` — Runtime bundle format spec
+- `docs/charpack-v0.md` — Single-file `.charpack` format spec
+- `docs/parts-v0.md` — Parts rendering model and art direction
