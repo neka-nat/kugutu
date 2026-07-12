@@ -15,7 +15,23 @@ import {
   type PartSlotKey,
   type PartTransform,
   type SlotKey,
+  type VisemeCue,
 } from "@kugutu/schema";
+
+export {
+  visemesFromText,
+  type VisemeCue,
+  type VisemesFromTextOptions,
+} from "@kugutu/schema";
+export {
+  attachAudioLipSync,
+  mouthCurveFromAudioBuffer,
+  mouthCurveFromSamples,
+  type AudioLipSyncHandle,
+  type AudioLipSyncOptions,
+  type LipSyncEnvelopeOptions,
+  type MouthCurveOptions,
+} from "./lipsync.js";
 
 const PART_COLOR_PRESERVE_ATTR = "data-kugutu-color-preserve";
 
@@ -24,17 +40,6 @@ const SVG_NS = "http://www.w3.org/2000/svg";
 export interface LookAtPoint {
   x: number;
   y: number;
-}
-
-/**
- * A single timed lip-sync cue. `startMs`/`endMs` are relative to the `speak()`
- * call (matching how TTS engines emit viseme events by audio offset). When
- * `endMs` is omitted it runs until the next cue starts.
- */
-export interface VisemeCue {
-  viseme: string;
-  startMs: number;
-  endMs?: number;
 }
 
 export interface SpeakOptions {
@@ -349,10 +354,25 @@ function applyCssTransform(node: SVGGraphicsElement, transform: TransformState):
   ].join(" ");
 }
 
+export interface CreateCharacterPlayerOptions {
+  /**
+   * Random source for idle-behavior variation (currently the blink interval,
+   * drawn uniformly from the behavior's `[minIntervalMs, maxIntervalMs]`).
+   * Defaults to a constant midpoint so playback is DETERMINISTIC: driving the
+   * player with `step(deltaMs)` and the same API-call sequence reproduces the
+   * exact same frames — the contract frame-stepped (e.g. MP4 screenshot)
+   * pipelines rely on. Pass `Math.random` for natural jitter in live apps, or
+   * a seeded PRNG for reproducible-but-varied renders.
+   */
+  random?: () => number;
+}
+
 export function createCharacterPlayer(
   bundle: CharBundle,
-  svgRoot: SVGSVGElement
+  svgRoot: SVGSVGElement,
+  options: CreateCharacterPlayerOptions = {}
 ): CharacterPlayer {
+  const random = options.random ?? (() => 0.5);
   const nodes = querySlotNodes(bundle, svgRoot);
   const transforms = new Map<SlotKey, TransformState>();
 
@@ -780,7 +800,9 @@ export function createCharacterPlayer(
     if (progress >= 1) {
       state.blink.phase = "idle";
       state.blink.elapsedMs = 0;
-      state.blink.nextBlinkMs = (minIntervalMs + maxIntervalMs) / 2;
+      state.blink.nextBlinkMs =
+        minIntervalMs +
+        (maxIntervalMs - minIntervalMs) * clamp(random(), 0, 1);
       return 1;
     }
 
@@ -1311,10 +1333,15 @@ export function createCharacterPlayer(
   };
 }
 
+export interface CreatePlayerFromPackOptions
+  extends CreateCharacterPlayerOptions {
+  autoStart?: boolean;
+}
+
 export function createCharacterPlayerFromPack(
   pack: CharPack,
   container: HTMLElement,
-  options: { autoStart?: boolean } = {}
+  options: CreatePlayerFromPackOptions = {}
 ): CharacterPlayer {
   const svgAsset =
     pack.assets.find((asset) => asset.id === "primary-svg" && asset.type === "svg") ??
@@ -1329,7 +1356,11 @@ export function createCharacterPlayerFromPack(
     throw new Error("SVG root not found in CharPack asset.");
   }
 
-  const player = createCharacterPlayer(pack.bundle, svgRoot);
+  const player = createCharacterPlayer(
+    pack.bundle,
+    svgRoot,
+    options.random ? { random: options.random } : {}
+  );
   if (options.autoStart ?? true) {
     player.start();
   }
@@ -1337,9 +1368,7 @@ export function createCharacterPlayerFromPack(
   return player;
 }
 
-export interface LoadOptions {
-  autoStart?: boolean;
-}
+export interface LoadOptions extends CreatePlayerFromPackOptions {}
 
 async function fetchPack(url: string): Promise<CharPack> {
   const response = await fetch(url);

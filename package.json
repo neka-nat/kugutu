@@ -5,6 +5,7 @@
   "packageManager": "pnpm@9.15.1",
   "scripts": {
     "build": "tsc -b",
+    "build:runtime-global": "pnpm run build && pnpm --filter @kugutu/runtime-web run build:global",
     "typecheck": "tsc -b && tsc -p tsconfig.apps.json",
     "clean": "tsc -b --clean && rm -rf dist",
     "check": "pnpm run build && node dist/scripts/check.js",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@kugutu/compiler": "workspace:*",
+    "@kugutu/runtime-web": "workspace:*",
     "@kugutu/schema": "workspace:*",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

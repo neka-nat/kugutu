@@ -45,9 +45,9 @@ Source (.character.json) → [Validator] → [Compiler] → CharBundle (.charbun
 
 ### Monorepo Packages
 
-- **`packages/schema`** — Type definitions, slot taxonomy (16 semantic slots), behavior definitions (blink, look-at, breathing, mouth-open), validation logic, JSON Schemas, and character templates. This is the foundational package everything else depends on.
+- **`packages/schema`** — Type definitions, slot taxonomy (16 semantic slots), behavior definitions (blink, look-at, breathing, mouth-open), validation logic, JSON Schemas, character templates, and text-based lip-sync cue generation (`visemesFromText`, Japanese mora model). This is the foundational package everything else depends on.
 - **`packages/compiler`** — Transforms `CharacterDefinition` → `CharBundle`. Maps semantic slots to SVG transform channels and compiles behavior targets into animation channels. Entry point: `buildCharacterBundle()`.
-- **`packages/runtime-web`** — Browser runtime that animates SVG elements using CSS transforms. Entry point: `createCharacterPlayer(bundle, svgRoot)` returns a `CharacterPlayer` with methods like `lookAt()`, `playBehavior()`, `setEmotion()`, `setMouthOpen()`, `start()/stop()`.
+- **`packages/runtime-web`** — Browser runtime that animates SVG elements using CSS transforms. Entry point: `createCharacterPlayer(bundle, svgRoot, options?)` returns a `CharacterPlayer` with methods like `lookAt()`, `playBehavior()`, `setEmotion()`, `setMouthOpen()`, `speak()`, `start()/stop()`. Also ships audio-driven lip-sync (`attachAudioLipSync` realtime, `mouthCurveFromAudioBuffer` offline/deterministic) in `src/lipsync.ts`, and an IIFE build (`pnpm run build:global` → `dist/kugutu.global.js`, `Kugutu` global) for script-tag/CDN usage. The animation model is deterministic (no wall-clock/random in `step()`); randomness must be injected via the `random` player option.
 - **`packages/cli`** — CLI wrapping compiler with `validate` and `build` commands.
 - **`packages/react`** — React binding. Exports `KugutuCharacter` (bundle + SVG via `svgText`/`svgUrl`) and `KugutuCharacterPack` (single `.charpack` prop) components that manage player lifecycle, plus `onPlayerReady` for imperative access to the `CharacterPlayer` API. Supports React 18/19.
 
@@ -79,3 +79,4 @@ Source (.character.json) → [Validator] → [Compiler] → CharBundle (.charbun
 - `docs/charbundle-v0.md` — Runtime bundle format spec
 - `docs/charpack-v0.md` — Single-file `.charpack` format spec
 - `docs/parts-v0.md` — Parts rendering model and art direction
+- `docs/lipsync-v0.md` — Lip-sync timing sources (viseme cues, audio RMS, text), IIFE build, deterministic frame-stepped rendering

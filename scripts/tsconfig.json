@@ -8,6 +8,7 @@
   "include": ["**/*.ts"],
   "references": [
     { "path": "../packages/schema" },
-    { "path": "../packages/compiler" }
+    { "path": "../packages/compiler" },
+    { "path": "../packages/runtime-web" }
   ]
 }

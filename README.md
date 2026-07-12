@@ -23,8 +23,10 @@ required, and the whole pipeline is friendly to git diffs and AI agents.
   transforms on SVG; no WebGL, no canvas.
 - **Data-driven expressions & gestures** — emotions and gestures are bundle
   data, not hard-coded runtime logic. Override or extend them per character.
-- **Lip-sync via visemes** — feed `speak()` the timed viseme cues a TTS engine
-  emits and the mouth follows.
+- **Lip-sync from any TTS** — feed `speak()` timed viseme cues, or, when your
+  TTS returns only audio (e.g. Gemini TTS), drive the mouth from the audio
+  itself (`attachAudioLipSync`) or from the script text (`visemesFromText`).
+  See [`docs/lipsync-v0.md`](./docs/lipsync-v0.md).
 - **Mii-style parts** — swap hair, eyes, outfits and more at runtime
   (`setPart`, `tunePart`), backed by a parts catalog in the source document.
 - **React binding** — drop-in `<KugutuCharacterPack>` component.
@@ -89,6 +91,20 @@ actor.tunePart("eye", { scale: 1.1, spacing: 8 });
 `HTMLElement` instead of a selector. Lower-level entry points
 (`createCharacterPlayer(bundle, svgRoot)`,
 `createCharacterPlayerFromPack(pack, container)`) remain available.
+
+### Script tag (no bundler)
+
+For standalone HTML pages, load the IIFE build from a CDN — the full API is
+exposed on the `Kugutu` global:
+
+```html
+<script src="https://unpkg.com/@kugutu/runtime-web/dist/kugutu.global.js"></script>
+<script>
+  Kugutu.load("./mascot.charpack", "#stage").then((actor) => {
+    actor.setEmotion("happy", 0.8);
+  });
+</script>
+```
 
 ### Try it with the bundled sample
 
@@ -160,7 +176,10 @@ head, …); the character document maps **semantic slots** (`eye.l`, `mouth`,
   be overridden per character.
 - **Lip-sync** — `speak(cues)` interpolates a built-in 15-shape viseme library
   (`sil`, `aa`, `E`, `O`, `PP`, …) with smoothing; `stopSpeaking()` returns to
-  rest.
+  rest. No timestamps from your TTS? Use `attachAudioLipSync` (realtime RMS),
+  `mouthCurveFromAudioBuffer` (offline, deterministic), or `visemesFromText`
+  (script text → synthetic cues). See
+  [`docs/lipsync-v0.md`](./docs/lipsync-v0.md).
 - **Parts** — a catalog of swappable artwork (hair, eyes, outfit, glasses, …)
   with per-slot transforms. See [`docs/parts-v0.md`](./docs/parts-v0.md) for
   how parts are composed into the SVG.
@@ -171,6 +190,7 @@ head, …); the character document maps **semantic slots** (`eye.l`, `mouth`,
 - [`docs/charbundle-v0.md`](./docs/charbundle-v0.md) — compiled bundle format
 - [`docs/charpack-v0.md`](./docs/charpack-v0.md) — single-file `.charpack` format
 - [`docs/parts-v0.md`](./docs/parts-v0.md) — parts rendering model and art direction
+- [`docs/lipsync-v0.md`](./docs/lipsync-v0.md) — lip-sync timing sources, audio-driven mouths, deterministic frame rendering
 
 ## Demos (in this repo)
 

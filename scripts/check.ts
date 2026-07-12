@@ -11,12 +11,15 @@ import {
 import {
   CHARACTER_SCHEMA_VERSION,
   DEFAULT_GESTURES,
+  DEFAULT_VISEMES,
   validateCharBundle,
   validateCharacterDefinition,
+  visemesFromText,
   type CharBundle,
   type CharacterDefinition,
   type GestureTrack,
 } from "@kugutu/schema";
+import { mouthCurveFromSamples } from "@kugutu/runtime-web";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 // Compiled output lives in dist/scripts, so the repository root is two levels up.
@@ -556,6 +559,83 @@ async function main(): Promise<void> {
         assert.ok(
           bundle.gestures.some((gesture) => gesture.id === "nod"),
           "default head gesture retained"
+        );
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "visemesFromText produces a contiguous timed ja cue track",
+      validate: () => {
+        const durationMs = 1200;
+        const cues = visemesFromText("こんにちは、世界！", { durationMs });
+        assert.ok(cues.length > 0, "expected cues for mixed kana/kanji text");
+        assert.equal(cues[0]!.startMs, 0, "track starts at 0");
+        assert.equal(
+          cues[cues.length - 1]!.endMs,
+          durationMs,
+          "track ends exactly at durationMs"
+        );
+
+        let previousEndMs = 0;
+        for (const cue of cues) {
+          assert.equal(cue.startMs, previousEndMs, "cues are contiguous");
+          assert.ok(cue.endMs! > cue.startMs, "cues have positive length");
+          assert.ok(
+            cue.viseme in DEFAULT_VISEMES,
+            `viseme "${cue.viseme}" exists in the built-in library`
+          );
+          previousEndMs = cue.endMs!;
+        }
+
+        const bilabial = visemesFromText("まんまるパン", { durationMs: 1000 });
+        assert.ok(
+          bilabial.some((cue) => cue.viseme === "PP"),
+          "bilabial rows get a PP lip-close onset"
+        );
+        assert.ok(
+          bilabial.some((cue) => cue.viseme === "nn"),
+          "moraic nasal maps to nn"
+        );
+
+        assert.deepEqual(
+          cues,
+          visemesFromText("こんにちは、世界！", { durationMs }),
+          "output is deterministic"
+        );
+        assert.deepEqual(visemesFromText("", { durationMs }), []);
+        return { valid: true, errors: [] };
+      },
+    },
+    {
+      label: "mouthCurveFromSamples opens on voice and closes on silence",
+      validate: () => {
+        const sampleRate = 16000;
+        const fps = 30;
+        // 1s clip: a 440Hz tone in the first half, silence in the second.
+        const samples = new Float32Array(sampleRate);
+        for (let index = 0; index < sampleRate / 2; index += 1) {
+          samples[index] =
+            0.4 * Math.sin((2 * Math.PI * 440 * index) / sampleRate);
+        }
+
+        const curve = mouthCurveFromSamples(samples, sampleRate, { fps });
+        assert.equal(curve.length, fps, "one value per output frame");
+        assert.ok(
+          curve.every((value) => value >= 0 && value <= 1),
+          "values stay in [0, 1]"
+        );
+        assert.ok(
+          Math.max(...curve.slice(3, 15)) > 0.5,
+          "voiced region opens the mouth"
+        );
+        assert.ok(
+          curve[curve.length - 1]! < 0.1,
+          "trailing silence closes the mouth"
+        );
+        assert.deepEqual(
+          curve,
+          mouthCurveFromSamples(samples, sampleRate, { fps }),
+          "curve is deterministic"
         );
         return { valid: true, errors: [] };
       },

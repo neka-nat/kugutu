@@ -75,6 +75,11 @@ export {
   type VisemePose,
 } from "./visemes.js";
 export {
+  visemesFromText,
+  type VisemeCue,
+  type VisemesFromTextOptions,
+} from "./text-visemes.js";
+export {
   validateCharBundle,
   validateCharacterDefinition,
 } from "./validate.js";
