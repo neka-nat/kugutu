@@ -54,8 +54,13 @@ export function KugutuCharacter({
 }: KugutuCharacterProps): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<CharacterPlayer | null>(null);
+  const onPlayerReadyRef = useRef(onPlayerReady);
   const [resolvedSvgText, setResolvedSvgText] = useState(svgText ?? "");
   const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    onPlayerReadyRef.current = onPlayerReady;
+  }, [onPlayerReady]);
 
   useEffect(() => {
     let cancelled = false;
@@ -98,7 +103,7 @@ export function KugutuCharacter({
 
     playerRef.current?.destroy();
     playerRef.current = null;
-    onPlayerReady?.(null);
+    onPlayerReadyRef.current?.(null);
 
     if (!resolvedSvgText) {
       container.textContent = loadError ?? "";
@@ -115,20 +120,20 @@ export function KugutuCharacter({
 
     const player = createCharacterPlayer(bundle, svgRoot);
     playerRef.current = player;
-    onPlayerReady?.(player);
+    onPlayerReadyRef.current?.(player);
 
     if (autoStart) {
       player.start();
     }
 
     return () => {
-      onPlayerReady?.(null);
+      onPlayerReadyRef.current?.(null);
       player.destroy();
       if (playerRef.current === player) {
         playerRef.current = null;
       }
     };
-  }, [autoStart, bundle, loadError, onPlayerReady, resolvedSvgText]);
+  }, [autoStart, bundle, loadError, resolvedSvgText]);
 
   return createElement("div", {
     ref: containerRef,
@@ -147,7 +152,12 @@ export function KugutuCharacterPack({
 }: KugutuCharacterPackProps): ReactElement {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<CharacterPlayer | null>(null);
+  const onPlayerReadyRef = useRef(onPlayerReady);
   const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    onPlayerReadyRef.current = onPlayerReady;
+  }, [onPlayerReady]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -157,16 +167,16 @@ export function KugutuCharacterPack({
 
     playerRef.current?.destroy();
     playerRef.current = null;
-    onPlayerReady?.(null);
+    onPlayerReadyRef.current?.(null);
 
     try {
       const player = createCharacterPlayerFromPack(pack, container, { autoStart });
       playerRef.current = player;
       setLoadError(null);
-      onPlayerReady?.(player);
+      onPlayerReadyRef.current?.(player);
 
       return () => {
-        onPlayerReady?.(null);
+        onPlayerReadyRef.current?.(null);
         player.destroy();
         if (playerRef.current === player) {
           playerRef.current = null;
@@ -178,7 +188,7 @@ export function KugutuCharacterPack({
       container.textContent = message;
       return undefined;
     }
-  }, [autoStart, onPlayerReady, pack]);
+  }, [autoStart, pack]);
 
   return createElement("div", {
     ref: containerRef,

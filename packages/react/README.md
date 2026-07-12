@@ -18,3 +18,8 @@ import { KugutuCharacterPack } from "@kugutu/react";
   onPlayerReady={(player) => player?.lookAt({ x: 0, y: 0 })}
 />;
 ```
+
+Requires React 18 or 19.
+
+> **Note:** `KugutuCharacter` injects the provided SVG markup into the DOM as-is.
+> Only pass SVG content from sources you trust.
