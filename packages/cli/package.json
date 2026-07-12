@@ -2,14 +2,41 @@
   "name": "@kugutu/cli",
   "version": "0.1.0",
   "description": "Command-line interface for authoring and building Kugutu characters.",
+  "keywords": [
+    "kugutu",
+    "character",
+    "avatar",
+    "mascot",
+    "animation",
+    "svg",
+    "2d",
+    "cli"
+  ],
   "license": "MIT",
+  "author": "neka-nat <nekanat.stock@gmail.com>",
+  "homepage": "https://github.com/neka-nat/kugutu#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neka-nat/kugutu.git",
+    "directory": "packages/cli"
+  },
+  "bugs": "https://github.com/neka-nat/kugutu/issues",
   "type": "module",
   "bin": {
     "kugutu": "./dist/main.js"
   },
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js"
+    }
+  },
   "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -b",
     "clean": "rm -rf dist tsconfig.tsbuildinfo"

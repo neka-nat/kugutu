@@ -2,8 +2,27 @@
   "name": "@kugutu/react",
   "version": "0.1.0",
   "description": "React binding for embedding Kugutu characters.",
+  "keywords": [
+    "kugutu",
+    "character",
+    "avatar",
+    "mascot",
+    "animation",
+    "svg",
+    "2d",
+    "react"
+  ],
   "license": "MIT",
+  "author": "neka-nat <nekanat.stock@gmail.com>",
+  "homepage": "https://github.com/neka-nat/kugutu#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neka-nat/kugutu.git",
+    "directory": "packages/react"
+  },
+  "bugs": "https://github.com/neka-nat/kugutu/issues",
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,6 +33,9 @@
     }
   },
   "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -b",
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
